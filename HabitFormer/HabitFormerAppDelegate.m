@@ -7,6 +7,7 @@
 //
 
 #import "HabitFormerAppDelegate.h"
+#import "MainViewController.h"
 
 @implementation HabitFormerAppDelegate
 
@@ -14,7 +15,20 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    
+    /*
+    MainViewController *viewController = [[MainViewController alloc] init];
+    self.window.rootViewController = viewController;
+    */
+    
+    //testing navigation controller
+    MainViewController *viewController = [[MainViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
+    viewController.title = @"Habits";
+    
+    self.window.rootViewController = nav;
+    //end testing nav
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -29,6 +43,7 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [self saveDataToDisk];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -44,6 +59,34 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [self saveDataToDisk];
 }
+
+- (NSString *)pathForDataFile
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *file = [documentsDirectory stringByAppendingPathComponent:@"HabitFormer.HabitStore"];
+    
+    return file;
+}
+
+
+-(void)saveDataToDisk
+{
+    UINavigationController *navigationController = (UINavigationController*)self.window.rootViewController;
+    MainViewController *viewController = (MainViewController*)navigationController.topViewController;
+    
+    NSString *folder = [self pathForDataFile];
+    
+    if ([NSKeyedArchiver archiveRootObject:viewController.habits toFile:folder]) {
+        viewController.label.text = @"saved";
+    }
+    else
+    {
+        viewController.label.text = [folder substringFromIndex:110];
+    }
+}
+
 
 @end

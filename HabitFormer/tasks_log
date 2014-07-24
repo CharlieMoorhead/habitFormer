@@ -1,0 +1,8 @@
+
+
+7/15/14:    Started this log
+            Played with dates. Need to figure out how to represent/calculate habit completion dates.
+            
+7/21:14:    Played with dates more. Getting a firmer grasp.
+            Rearranged methods to make things more clear.
+            Change Habit.creationDate to Habit.lastCompletion

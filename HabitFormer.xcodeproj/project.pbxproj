@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB2C1897194140AD0013628B /* NewHabitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB2C1896194140AD0013628B /* NewHabitViewController.m */; };
+		CBC0931F1975ECC500CB4274 /* tasks_log in Resources */ = {isa = PBXBuildFile; fileRef = CBC0931E1975ECC500CB4274 /* tasks_log */; };
 		CBEB2A04193E3CD0006BD85E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEB2A03193E3CD0006BD85E /* Foundation.framework */; };
 		CBEB2A06193E3CD0006BD85E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEB2A05193E3CD0006BD85E /* CoreGraphics.framework */; };
 		CBEB2A08193E3CD0006BD85E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEB2A07193E3CD0006BD85E /* UIKit.framework */; };
@@ -19,6 +21,8 @@
 		CBEB2A1F193E3CD0006BD85E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEB2A07193E3CD0006BD85E /* UIKit.framework */; };
 		CBEB2A27193E3CD0006BD85E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CBEB2A25193E3CD0006BD85E /* InfoPlist.strings */; };
 		CBEB2A29193E3CD0006BD85E /* HabitFormerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CBEB2A28193E3CD0006BD85E /* HabitFormerTests.m */; };
+		CBEB2A36193E3D5C006BD85E /* Habit.m in Sources */ = {isa = PBXBuildFile; fileRef = CBEB2A33193E3D5C006BD85E /* Habit.m */; };
+		CBEB2A37193E3D5C006BD85E /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBEB2A35193E3D5C006BD85E /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB2C1895194140AD0013628B /* NewHabitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHabitViewController.h; sourceTree = "<group>"; };
+		CB2C1896194140AD0013628B /* NewHabitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHabitViewController.m; sourceTree = "<group>"; };
+		CBC0931E1975ECC500CB4274 /* tasks_log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tasks_log; sourceTree = "<group>"; };
 		CBEB2A00193E3CD0006BD85E /* HabitFormer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitFormer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBEB2A03193E3CD0006BD85E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CBEB2A05193E3CD0006BD85E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -48,6 +55,10 @@
 		CBEB2A24193E3CD0006BD85E /* HabitFormerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HabitFormerTests-Info.plist"; sourceTree = "<group>"; };
 		CBEB2A26193E3CD0006BD85E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CBEB2A28193E3CD0006BD85E /* HabitFormerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HabitFormerTests.m; sourceTree = "<group>"; };
+		CBEB2A32193E3D5C006BD85E /* Habit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Habit.h; path = ../../HabitFormer_old/HabitFormer/Habit.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		CBEB2A33193E3D5C006BD85E /* Habit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = Habit.m; path = ../../HabitFormer_old/HabitFormer/Habit.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CBEB2A34193E3D5C006BD85E /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../../HabitFormer_old/MainViewController.h; sourceTree = "<group>"; };
+		CBEB2A35193E3D5C006BD85E /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MainViewController.m; path = ../../HabitFormer_old/MainViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +118,13 @@
 		CBEB2A09193E3CD0006BD85E /* HabitFormer */ = {
 			isa = PBXGroup;
 			children = (
+				CB2C1895194140AD0013628B /* NewHabitViewController.h */,
+				CB2C1896194140AD0013628B /* NewHabitViewController.m */,
+				CBC0931E1975ECC500CB4274 /* tasks_log */,
+				CBEB2A32193E3D5C006BD85E /* Habit.h */,
+				CBEB2A33193E3D5C006BD85E /* Habit.m */,
+				CBEB2A34193E3D5C006BD85E /* MainViewController.h */,
+				CBEB2A35193E3D5C006BD85E /* MainViewController.m */,
 				CBEB2A12193E3CD0006BD85E /* HabitFormerAppDelegate.h */,
 				CBEB2A13193E3CD0006BD85E /* HabitFormerAppDelegate.m */,
 				CBEB2A15193E3CD0006BD85E /* Images.xcassets */,
@@ -222,6 +240,7 @@
 			files = (
 				CBEB2A0E193E3CD0006BD85E /* InfoPlist.strings in Resources */,
 				CBEB2A16193E3CD0006BD85E /* Images.xcassets in Resources */,
+				CBC0931F1975ECC500CB4274 /* tasks_log in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,8 +259,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBEB2A36193E3D5C006BD85E /* Habit.m in Sources */,
+				CB2C1897194140AD0013628B /* NewHabitViewController.m in Sources */,
 				CBEB2A14193E3CD0006BD85E /* HabitFormerAppDelegate.m in Sources */,
 				CBEB2A10193E3CD0006BD85E /* main.m in Sources */,
+				CBEB2A37193E3D5C006BD85E /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +462,7 @@
 				CBEB2A2E193E3CD0006BD85E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CBEB2A2F193E3CD0006BD85E /* Build configuration list for PBXNativeTarget "HabitFormerTests" */ = {
 			isa = XCConfigurationList;
@@ -448,6 +471,7 @@
 				CBEB2A31193E3CD0006BD85E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
