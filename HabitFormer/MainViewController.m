@@ -126,6 +126,8 @@
     */
     
     
+    [self startingDate];
+    
 }
 
 /*
@@ -142,11 +144,24 @@
 
 - (void)createHabit:(NSString *)name
 {
-    Habit *h = [[Habit alloc] init];
-    h.name = name;
-    h.lastCompletion = [NSDate date];
-    [self.habits setObject:h forKey:h.name];
-    [self displayHabit:h];
+    if ([self.habits objectForKey:name] != nil)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                message:@"You're already building that habit!"
+                                                delegate:nil
+                                                cancelButtonTitle:@"Oh, ok"
+                                                otherButtonTitles:nil];
+        [alert show];
+    }
+    else
+    {
+        Habit *h = [[Habit alloc] init];
+        h.name = name;
+        h.lastCompletion = [self startingDate];
+        [self.habits setObject:h forKey:h.name];
+        [self removeAllHabits];
+        [self viewAllHabits];
+    }
 }
 
 - (void)displayHabit:(Habit *)habit
@@ -189,15 +204,23 @@
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"dd-MMM-yy, HH:mm:ss"];
-    lastCompletionLabel.text = [dateFormatter stringFromDate:habit.lastCompletion];
+    
+    if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
+    {
+        lastCompletionLabel.text = @"never";
+    }
+    else
+    {
+        lastCompletionLabel.text = [dateFormatter stringFromDate:habit.lastCompletion];
+    }
     
     [lastCompletionLabel setFont:[UIFont systemFontOfSize:10]];
     [lastCompletionLabel sizeToFit];
     [labelView addSubview:lastCompletionLabel];
     //last completion date
     
-    [self.scrollView setContentSize:CGSizeMake(320, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta)];
     [self.habitSubviews addObject:labelView];
+    [self.scrollView setContentSize:CGSizeMake(320, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta)];
     [self.view addSubview:labelView];
     
 }
@@ -265,6 +288,13 @@
     cutoffDate = [calendar dateByAddingComponents:dateComponents toDate:cutoffDate options:0];
     
     return [cutoffDate compare:habit.lastCompletion] == NSOrderedDescending;
+}
+
+- (NSDate *)startingDate
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"dd-MMM-yyyy"];
+    return [dateFormatter dateFromString:@"01-jan-1900"];
 }
 
 //newHabit: push to the new habit view controller

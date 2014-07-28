@@ -16,4 +16,8 @@
             Trying to work out how to figure out when to show/hide labels. my brain hurts.
             
 7/27/14:    Figured out how to know when to show/hide labels. It wasn't really that hard.
-            Need to how to work with completion dates of newly created habits
+            Need to learn how to work with completion dates of newly created habits
+            
+7/28/14:    Added a starting date (01-Jan-1900) for newly created habits.
+            Checks if a habit with the same name already exists before creating.
+            Strips whitespace from the start and end of new habit names.

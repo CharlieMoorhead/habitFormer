@@ -79,7 +79,8 @@
     }
     else
     {
-        [self.delegate addNewHabit:self newHabitName:self.name.text];
+        NSString *habitName = [self.name.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        [self.delegate addNewHabit:self newHabitName:habitName];
         [[self navigationController] popToRootViewControllerAnimated:YES];
     }
 }
