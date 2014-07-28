@@ -57,7 +57,7 @@
 		CBEB2A28193E3CD0006BD85E /* HabitFormerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HabitFormerTests.m; sourceTree = "<group>"; };
 		CBEB2A32193E3D5C006BD85E /* Habit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Habit.h; path = ../../HabitFormer_old/HabitFormer/Habit.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CBEB2A33193E3D5C006BD85E /* Habit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = Habit.m; path = ../../HabitFormer_old/HabitFormer/Habit.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		CBEB2A34193E3D5C006BD85E /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../../HabitFormer_old/MainViewController.h; sourceTree = "<group>"; };
+		CBEB2A34193E3D5C006BD85E /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MainViewController.h; path = ../../HabitFormer_old/MainViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CBEB2A35193E3D5C006BD85E /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MainViewController.m; path = ../../HabitFormer_old/MainViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 /* End PBXFileReference section */
 

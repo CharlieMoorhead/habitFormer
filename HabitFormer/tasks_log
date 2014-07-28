@@ -6,3 +6,14 @@
 7/21:14:    Played with dates more. Getting a firmer grasp.
             Rearranged methods to make things more clear.
             Change Habit.creationDate to Habit.lastCompletion
+            
+7/24/14:    Learned how to sort arrays.
+            Added a UIView to hold each habit's label, button, etc.
+                Easier to add and remove elements in the future.
+            Started using git!
+            
+            habitLabels now sort by lastCompletionDate
+            Trying to work out how to figure out when to show/hide labels. my brain hurts.
+            
+7/27/14:    Figured out how to know when to show/hide labels. It wasn't really that hard.
+            Need to how to work with completion dates of newly created habits
