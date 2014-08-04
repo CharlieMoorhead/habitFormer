@@ -55,7 +55,12 @@
     //new button on nav bar
     UIBarButtonItem *newButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newHabit)];
     self.navigationItem.rightBarButtonItems = @[newButton];
-    //end nav bar button
+    //end nav new button
+    
+    //add edit button on nav bar
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editHabits)];
+    self.navigationItem.leftBarButtonItems = @[editButton];
+    //end nav edit button
     
     //adding refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -76,7 +81,7 @@
     if ([self.habits objectForKey:name] != nil)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                message:@"You're already building that habit!"
+                                                message:@"That habit already exists"
                                                 delegate:nil
                                                 cancelButtonTitle:@"Oh, ok"
                                                 otherButtonTitles:nil];
@@ -102,103 +107,147 @@
     }
 }
 
-- (void)displayHabit:(Habit *)habit
+- (void)displayHabit:(Habit *)habit editHabit:(BOOL) editHabit
 {
     NSInteger labelHeight = 45;
     NSInteger labelBuffer = 10;
-    NSInteger labelDelta = 20;
+    NSInteger labelDelta = 10;
     
     UIView *labelView = [[UIView alloc] initWithFrame:CGRectMake(0, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta, 320, labelHeight + labelBuffer)];
-    UILabel *newLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, labelHeight)];
-    newLabel.text = habit.name;
+    UILabel *habitLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, labelHeight)];
+    habitLabel.text = habit.name;
 
-    newLabel.textAlignment = NSTextAlignmentCenter;
-    newLabel.layer.cornerRadius = 5;
-    newLabel.layer.masksToBounds = YES;
-    newLabel.backgroundColor = [UIColor lightGrayColor];
+    habitLabel.textAlignment = NSTextAlignmentCenter;
+    habitLabel.layer.cornerRadius = 5;
+    habitLabel.layer.masksToBounds = YES;
+    habitLabel.backgroundColor = [UIColor lightGrayColor];
     
-    newLabel.tag = self.habitSubviews.count+1;
-    [labelView addSubview:newLabel];
+    habitLabel.tag = self.habitSubviews.count+1;
+    [labelView addSubview:habitLabel];
     
-    //add 'done' button
-    UIButton *done = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [done setTitle:@"done" forState:UIControlStateNormal];
-    [done sizeToFit];
-    done.center = CGPointMake(260, labelHeight / 2.0f);
-    done.tag = newLabel.tag + 100;
-    [done addTarget:self action:@selector(completeHabit:) forControlEvents:UIControlEventTouchDown];
-    [labelView addSubview:done];
-    [labelView bringSubviewToFront:done];
-    //'done' button
-    
-    //add last completion date
-    UILabel *lastCompletionLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 0, 0)];
-    
-    /* //Adding "X Days Ago" instead
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"dd-MMM-yy, HH:mm:ss"];
-     
-    if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
+    if (editHabit)
     {
-        lastCompletionLabel.text = @"never";
+        //add 'delete' button
+        UIButton *delete = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [delete setTitle:@"delete" forState:UIControlStateNormal];
+        [delete sizeToFit];
+        delete.center = CGPointMake(40, labelHeight / 2.0f);
+        delete.tag = habitLabel.tag + 200;
+        [delete addTarget:self action:@selector(deleteHabit:) forControlEvents:UIControlEventTouchDown];
+        [labelView addSubview:delete];
+        [labelView bringSubviewToFront:delete];
+        //delete button
     }
     else
     {
-        lastCompletionLabel.text = [dateFormatter stringFromDate:habit.lastCompletion];
-    }
-    */
     
-    //adding "X Days Ago"
-    if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
-    {
-        lastCompletionLabel.text = @"Never done";
-    }
-    else if ([self daysBetween:habit.lastCompletion and:[NSDate date]] == 1)
-    {
-        lastCompletionLabel.text = @"Last done: 1 day ago";
-    }
-    else
-    {
-        lastCompletionLabel.text =
-            [NSString stringWithFormat:@"Last done: %d days ago", [self daysBetween:habit.lastCompletion and:[NSDate date]]];
-    }
-    //added "X Days Ago"
+        //add 'done' button
+        UIButton *done = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [done setTitle:@"done" forState:UIControlStateNormal];
+        [done sizeToFit];
+        done.center = CGPointMake(285, labelHeight / 2.0f);
+        done.tag = habitLabel.tag + 100;
+        [done addTarget:self action:@selector(completeHabit:) forControlEvents:UIControlEventTouchDown];
+        [labelView addSubview:done];
+        [labelView bringSubviewToFront:done];
+        //'done' button
     
+        //add last completion date
+        UILabel *lastCompletionLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 0, 0)];
     
-    [lastCompletionLabel setFont:[UIFont systemFontOfSize:10]];
-    [lastCompletionLabel sizeToFit];
-    [labelView addSubview:lastCompletionLabel];
-    //last completion date added
+        if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
+        {
+            lastCompletionLabel.text = @"Never done";
+        }
+        else if ([self daysBetween:habit.lastCompletion and:[NSDate date]] == 1)
+        {
+            lastCompletionLabel.text = @"Last done: 1 day ago";
+        }
+        else
+        {
+            lastCompletionLabel.text =
+                [NSString stringWithFormat:@"Last done: %d days ago",
+                [self daysBetween:habit.lastCompletion and:[NSDate date]]];
+        }
+    
+        [lastCompletionLabel setFont:[UIFont systemFontOfSize:10]];
+        [lastCompletionLabel sizeToFit];
+        [labelView addSubview:lastCompletionLabel];
+        //last completion date added
+    }
     
     
     [self.habitSubviews addObject:labelView];
-    //[self.scrollView setContentSize:CGSizeMake(320, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta)];
+    if (self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta > self.scrollView.contentSize.height)
+    {
+        [self.scrollView setContentSize:CGSizeMake(320, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta)];
+    }
     [self.view addSubview:labelView];
     
 }
 
--(void) refreshHabits
+- (void)refreshHabits
 {
     [self removeAllHabits];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastCompletion" ascending:true];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    
-    NSArray *allHabits = [[self.habits allValues] sortedArrayUsingDescriptors:sortDescriptors];
-    for (Habit *habit in allHabits)
-    {
-        if ([self shouldViewHabit:habit])
-        {
-            [self displayHabit:habit];
-        }
-    }
+    [self showHabits:false];
     
     UIRefreshControl *refreshControl = (UIRefreshControl *)[self.view viewWithTag:999];
     [refreshControl endRefreshing];
     
 }
 
--(void) removeAllHabits
+- (void)editHabits
+{
+    [self removeAllHabits];
+    [self showHabits:true];
+    
+    UIBarButtonItem *doneButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(finishEdit)];
+    self.navigationItem.leftBarButtonItems = @[doneButton];
+    
+    [[self.view viewWithTag:999] removeFromSuperview];
+}
+
+- (void)deleteHabit: (id)sender
+{
+    NSInteger tag = [(UIButton*)sender tag];
+    UILabel *lbl = (UILabel*)[self.view viewWithTag:tag%200];
+    NSString *habitKey = lbl.text;
+    
+    [self.habits removeObjectForKey:habitKey];
+    
+    [self editHabits];
+}
+
+- (void)finishEdit
+{
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editHabits)];
+    self.navigationItem.leftBarButtonItems = @[editButton];
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshHabits) forControlEvents:UIControlEventValueChanged];
+    refreshControl.tag = 999;
+    [self.view addSubview:refreshControl];
+    
+    [self refreshHabits];
+}
+
+- (void)showHabits: (BOOL)editHabits
+{
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastCompletion" ascending:true];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    
+    NSArray *allHabits = [[self.habits allValues] sortedArrayUsingDescriptors:sortDescriptors];
+    for (Habit *habit in allHabits)
+    {
+        if (editHabits || [self shouldViewHabit:habit])
+        {
+            [self displayHabit:habit editHabit:editHabits];
+        }
+    }
+}
+
+- (void)removeAllHabits
 {
     for (UIView *view in self.habitSubviews) {
         [view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -255,7 +304,7 @@
 }
 
 //newHabit: push to the new habit view controller
--(void) newHabit
+- (void)newHabit
 {
     NewHabitViewController *secondView = [[NewHabitViewController alloc] init];
     secondView.delegate = self;
@@ -270,7 +319,7 @@
     return file;
 }
 
--(void)loadDataFromDisk
+- (void)loadDataFromDisk
 {
     NSString *file = [self pathForDataFile];
     
@@ -300,6 +349,12 @@
     NSDateComponents *components = [calendar components:unitFlags fromDate:fromDate toDate:toDate options:0];
     
     return [components day];
+}
+
+- (void)test
+{
+    NSLog(@"hi");
+    
 }
 
 @end

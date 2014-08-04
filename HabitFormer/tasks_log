@@ -27,3 +27,8 @@
 
 8/3/14:     Added pull-to-refresh
             Playing with dates. Time zones are weird!
+            
+8/4/14:     Turns out time zones weren't causing problems. Still, dates are hard.
+            Labels now display days since habit was last completed
+            Added an edit button to the nav bar
+                When pressed, switches to a view that allows deletion of habits
