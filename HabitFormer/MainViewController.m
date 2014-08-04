@@ -33,108 +33,37 @@
     
     //creatng a scroll view
     CGRect fullScreenRect = [[UIScreen mainScreen] applicationFrame];
-    self.scrollView = [[UIScrollView alloc] initWithFrame:fullScreenRect];
-    self.scrollView.contentSize = CGSizeMake(320,0);
+    CGFloat height = fullScreenRect.size.height - self.navigationController.navigationBar.frame.size.height;
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, fullScreenRect.size.width, height)];
+    //1 is added to scrollview.contentsize height so that you can always scroll a little bit,
+    //so you can always activate the refresh control
+    self.scrollView.contentSize = CGSizeMake(fullScreenRect.size.width,height+1);
     self.scrollView.backgroundColor = [UIColor colorWithRed:255/255.0f green:247/255.0f blue:145/255.0f alpha:1.0f];
     self.view = self.scrollView;
     //scroll view created
     
-    /*
-    //creating main label
-    self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-    self.label.backgroundColor = [UIColor grayColor];
-    self.label.text = @"Hello World!";
-    self.label.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:self.label];
-    //main label created
-    
-    //adding tap recognicition to main label
-    self.label.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapLabel:)];
-    [self.label addGestureRecognizer:tapGesture];
-    //tap recognicition added
-     */
-    
     //initializing habits array
     self.habits = [[NSMutableDictionary alloc] init];
     [self loadDataFromDisk];
-    //self.label.text = [NSString stringWithFormat:@"%lu", (unsigned long)[self.habits count]];
     //habits array initialized
     
-    //init habitSubviews array
+    //init habitSubviews array and displaying habits
     self.habitSubviews = [[NSMutableArray alloc] init];
-    [self viewAllHabits];
-    //habitSubviews array initialized
-    
-    /*
-    //new button
-    UIButton *newButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [newButton setTitle:@"New" forState:UIControlStateNormal];
-    [newButton sizeToFit];
-    newButton.center = CGPointMake(245, 25);
-    [newButton addTarget:self action:@selector(newHabit) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:newButton];
-    //end new button
-    */
+    [self refreshHabits];
+    //habitSubviews array initialized and habits displayed
     
     //new button on nav bar
     UIBarButtonItem *newButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newHabit)];
     self.navigationItem.rightBarButtonItems = @[newButton];
     //end nav bar button
     
-    //testing dates
-    /*
-    NSDate *d = [[NSDate alloc] init];
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"dd-MMM-yy, HH:mm:ss"];
-    
-    NSDate *d2;
-    d2 = [df dateFromString:@"17-Jun-14, 09:00:00"];
-    
-    
-    NSLog([df dateFormat]);
-    NSLog([df stringFromDate:d2]);
-    
-    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-    NSDateComponents *dateComponents = [calendar components:NSDayCalendarUnit fromDate:d];
-    [dateComponents setDay:dateComponents.day + 3];
-    
-    d = [calendar dateFromComponents:dateComponents];
-    NSLog([df stringFromDate:d]);
-    
-    NSLog([NSString stringWithFormat:@"%i", dateComponents.day]);
-    
-    Habit *h = [self.habits valueForKey:@"Cheeseburgers"];
-    d = h.lastCompletion;
-    NSLog(h.name);
-    NSLog([df stringFromDate:d]);
-    NSLog([df stringFromDate:[[self.habits valueForKey:@"Cheeseburgers"] lastCompletion]]);
-    */
-    //end testing dates
-    
-    /* testing sorting arrays
-    NSArray *allHabits = [self.habits allValues];
-    NSLog([NSString stringWithFormat:@"%i", allHabits.count]);
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastCompletion" ascending:false];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    
-    allHabits = [allHabits sortedArrayUsingDescriptors:sortDescriptors];
-    for (Habit *n in allHabits)
-    {
-        NSLog(n.name);
-    }
-    */
-    
-    
-    [self startingDate];
-    
+    //adding refresh
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshHabits) forControlEvents:UIControlEventValueChanged];
+    refreshControl.tag = 999;
+    [self.view addSubview:refreshControl];
+    //refresh added
 }
-
-/*
-- (void)didTapLabel:(UITapGestureRecognizer *)tapGesture {
-    [self createHabit:@"Cheese"];
-}
- */
 
 //addNewHabit: called when returning from the new habit view
 - (void)addNewHabit:(NewHabitViewController *)controller newHabitName:(NSString *)name
@@ -153,14 +82,23 @@
                                                 otherButtonTitles:nil];
         [alert show];
     }
+    else if (self.habits.count >= 99)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                message:@"Maybe you should focus on\nyour 99 other habits..."
+                                                delegate:nil
+                                                cancelButtonTitle:@"Fine"
+                                                otherButtonTitles:nil];
+        
+        [alert show];
+    }
     else
     {
         Habit *h = [[Habit alloc] init];
         h.name = name;
         h.lastCompletion = [self startingDate];
         [self.habits setObject:h forKey:h.name];
-        [self removeAllHabits];
-        [self viewAllHabits];
+        [self refreshHabits];
     }
 }
 
@@ -173,13 +111,7 @@
     UIView *labelView = [[UIView alloc] initWithFrame:CGRectMake(0, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta, 320, labelHeight + labelBuffer)];
     UILabel *newLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, labelHeight)];
     newLabel.text = habit.name;
-    /*
-    //testing to display completion date
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"dd-MMM-yy, HH:mm"];
-    newLabel.text = [NSString stringWithFormat:@"%@", [df stringFromDate:habit.lastCompletion]];
-    //done testing
-    */
+
     newLabel.textAlignment = NSTextAlignmentCenter;
     newLabel.layer.cornerRadius = 5;
     newLabel.layer.masksToBounds = YES;
@@ -202,9 +134,10 @@
     //add last completion date
     UILabel *lastCompletionLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 0, 0)];
     
+    /* //Adding "X Days Ago" instead
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"dd-MMM-yy, HH:mm:ss"];
-    
+     
     if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
     {
         lastCompletionLabel.text = @"never";
@@ -213,20 +146,41 @@
     {
         lastCompletionLabel.text = [dateFormatter stringFromDate:habit.lastCompletion];
     }
+    */
+    
+    //adding "X Days Ago"
+    if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
+    {
+        lastCompletionLabel.text = @"Never done";
+    }
+    else if ([self daysBetween:habit.lastCompletion and:[NSDate date]] == 1)
+    {
+        lastCompletionLabel.text = @"Last done: 1 day ago";
+    }
+    else
+    {
+        lastCompletionLabel.text =
+            [NSString stringWithFormat:@"Last done: %d days ago", [self daysBetween:habit.lastCompletion and:[NSDate date]]];
+    }
+    //added "X Days Ago"
+    
     
     [lastCompletionLabel setFont:[UIFont systemFontOfSize:10]];
     [lastCompletionLabel sizeToFit];
     [labelView addSubview:lastCompletionLabel];
-    //last completion date
+    //last completion date added
+    
     
     [self.habitSubviews addObject:labelView];
-    [self.scrollView setContentSize:CGSizeMake(320, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta)];
+    //[self.scrollView setContentSize:CGSizeMake(320, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta)];
     [self.view addSubview:labelView];
     
 }
 
--(void) viewAllHabits
+-(void) refreshHabits
 {
+    [self removeAllHabits];
+    
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastCompletion" ascending:true];
     NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
@@ -238,6 +192,10 @@
             [self displayHabit:habit];
         }
     }
+    
+    UIRefreshControl *refreshControl = (UIRefreshControl *)[self.view viewWithTag:999];
+    [refreshControl endRefreshing];
+    
 }
 
 -(void) removeAllHabits
@@ -254,17 +212,16 @@
     NSInteger tag = [(UIButton*)sender tag];
     UILabel *lbl = (UILabel*)[self.view viewWithTag:tag%100];
     NSString *habitKey = lbl.text;
-    [self removeAllHabits];
     
     Habit *h = [self.habits objectForKey:habitKey];
     h.lastCompletion = [NSDate date];
     
-    [self viewAllHabits];
+    [self refreshHabits];
 }
 
 - (BOOL)shouldViewHabit: (Habit *)habit
 {
-    NSInteger cutoffHour = 7;
+    NSInteger cutoffHour = 0;
     NSDate *cutoffDate = [NSDate alloc];
     
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
@@ -327,6 +284,22 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (int)daysBetween:(NSDate *)date1 and:(NSDate *)date2
+{
+    NSDate *fromDate;
+    NSDate *toDate;
+    
+    NSUInteger unitFlags = NSDayCalendarUnit;
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+    
+    [calendar rangeOfUnit:unitFlags startDate:&fromDate interval:nil forDate:date1];
+    [calendar rangeOfUnit:unitFlags startDate:&toDate interval:nil forDate:date2];
+    
+    NSDateComponents *components = [calendar components:unitFlags fromDate:fromDate toDate:toDate options:0];
+    
+    return [components day];
 }
 
 @end

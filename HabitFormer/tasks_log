@@ -21,3 +21,9 @@
 7/28/14:    Added a starting date (01-Jan-1900) for newly created habits.
             Checks if a habit with the same name already exists before creating.
             Strips whitespace from the start and end of new habit names.
+            
+            Playing with adding in a pull-to-refresh
+            Combined removeAllHabits and displayAllHabits into a single refreshHabits method
+
+8/3/14:     Added pull-to-refresh
+            Playing with dates. Time zones are weird!
