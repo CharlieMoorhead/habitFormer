@@ -32,12 +32,12 @@
 	// Do any additional setup after loading the view.
     
     //creatng a scroll view
-    CGRect fullScreenRect = [[UIScreen mainScreen] applicationFrame];
-    CGFloat height = fullScreenRect.size.height - self.navigationController.navigationBar.frame.size.height;
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, fullScreenRect.size.width, height)];
+    
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [self fullWidth], [self fullHeight])];
     //1 is added to scrollview.contentsize height so that you can always scroll a little bit,
     //so you can always activate the refresh control
-    self.scrollView.contentSize = CGSizeMake(fullScreenRect.size.width,height+1);
+    self.scrollView.contentSize = CGSizeMake([self fullWidth],[self fullHeight]+1);
     self.scrollView.backgroundColor = [UIColor colorWithRed:255/255.0f green:247/255.0f blue:145/255.0f alpha:1.0f];
     self.view = self.scrollView;
     //scroll view created
@@ -113,14 +113,14 @@
     NSInteger labelBuffer = 10;
     NSInteger labelDelta = 10;
     
-    UIView *labelView = [[UIView alloc] initWithFrame:CGRectMake(0, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta, 320, labelHeight + labelBuffer)];
-    UILabel *habitLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, labelHeight)];
+    UIView *labelView = [[UIView alloc] initWithFrame:CGRectMake(0, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta, [self fullWidth], labelHeight + labelBuffer)];
+    UILabel *habitLabel = [[UILabel alloc] initWithFrame:CGRectMake(-10, 0, [self fullWidth]+20, labelHeight)];
     habitLabel.text = habit.name;
 
     habitLabel.textAlignment = NSTextAlignmentCenter;
-    habitLabel.layer.cornerRadius = 5;
-    habitLabel.layer.masksToBounds = YES;
     habitLabel.backgroundColor = [UIColor lightGrayColor];
+    habitLabel.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    habitLabel.layer.borderWidth = 1.0f;
     
     habitLabel.tag = self.habitSubviews.count+1;
     [labelView addSubview:habitLabel];
@@ -128,10 +128,13 @@
     if (editHabit)
     {
         //add 'delete' button
-        UIButton *delete = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        UIButton *delete = [UIButton buttonWithType:UIButtonTypeCustom];
         [delete setTitle:@"delete" forState:UIControlStateNormal];
-        [delete sizeToFit];
-        delete.center = CGPointMake(40, labelHeight / 2.0f);
+        [delete setBackgroundColor:[UIColor colorWithRed:147/255.0f green:18/255.0f blue:0/255.0f alpha:1.0f]];
+        delete.frame = CGRectMake(0, 0, 50, labelHeight - 2.0f);
+        delete.center = CGPointMake(25, labelHeight / 2.0f);
+        [delete.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        [delete.titleLabel setTextColor:[UIColor colorWithRed:223/255.0f green:27/255.0f blue:0/255.0f alpha:1.0f]];
         delete.tag = habitLabel.tag + 200;
         [delete addTarget:self action:@selector(deleteHabit:) forControlEvents:UIControlEventTouchDown];
         [labelView addSubview:delete];
@@ -140,12 +143,14 @@
     }
     else
     {
-    
         //add 'done' button
-        UIButton *done = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
         [done setTitle:@"done" forState:UIControlStateNormal];
-        [done sizeToFit];
-        done.center = CGPointMake(285, labelHeight / 2.0f);
+        [done setBackgroundColor:[UIColor colorWithRed:0/255.0f green:150/255.0f blue:43/255.0f alpha:1.0f]];
+        done.frame = CGRectMake(0, 0, 50, labelHeight - 2.0f);
+        done.center = CGPointMake([self fullWidth] - 25, labelHeight / 2.0f);
+        [done.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        [done.titleLabel setTextColor:[UIColor colorWithRed:30/255.0f green:198/255.0f blue:20/255.0f alpha:1.0f]];
         done.tag = habitLabel.tag + 100;
         [done addTarget:self action:@selector(completeHabit:) forControlEvents:UIControlEventTouchDown];
         [labelView addSubview:done];
@@ -178,9 +183,10 @@
     
     
     [self.habitSubviews addObject:labelView];
-    if (self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta > self.scrollView.contentSize.height)
+    if (self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta > [self fullHeight])
     {
-        [self.scrollView setContentSize:CGSizeMake(320, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta)];
+        [self.scrollView setContentSize:CGSizeMake([self fullWidth],
+                                                   self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta)];
     }
     [self.view addSubview:labelView];
     
@@ -205,6 +211,8 @@
     UIBarButtonItem *doneButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(finishEdit)];
     self.navigationItem.leftBarButtonItems = @[doneButton];
     
+    self.navigationItem.rightBarButtonItems = @[];
+    
     [[self.view viewWithTag:999] removeFromSuperview];
 }
 
@@ -228,6 +236,9 @@
     [refreshControl addTarget:self action:@selector(refreshHabits) forControlEvents:UIControlEventValueChanged];
     refreshControl.tag = 999;
     [self.view addSubview:refreshControl];
+    
+    UIBarButtonItem *newButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newHabit)];
+    self.navigationItem.rightBarButtonItems = @[newButton];
     
     [self refreshHabits];
 }
@@ -355,6 +366,20 @@
 {
     NSLog(@"hi");
     
+}
+
+- (CGFloat)fullHeight
+{
+    CGRect fullScreenRect = [[UIScreen mainScreen] applicationFrame];
+    CGFloat height = fullScreenRect.size.height - self.navigationController.navigationBar.frame.size.height;
+    return height;
+}
+
+- (CGFloat)fullWidth
+{
+    CGRect fullScreenRect = [[UIScreen mainScreen] applicationFrame];
+    CGFloat width = fullScreenRect.size.width;
+    return width;
 }
 
 @end
