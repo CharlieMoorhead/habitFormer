@@ -80,8 +80,81 @@
     else
     {
         NSString *habitName = [self.name.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        [self.delegate addNewHabit:self newHabitName:habitName];
-        [[self navigationController] popToRootViewControllerAnimated:YES];
+        
+        NSInteger statusCode = [self.delegate addNewHabit:self newHabitName:habitName];
+        
+        switch (statusCode) {
+            case 1: //name is already used
+            {
+                UIAlertController *inUseAlert = [UIAlertController
+                                                 alertControllerWithTitle:nil
+                                                 message:@"That habit already exists!"
+                                                 preferredStyle:UIAlertControllerStyleAlert];
+                
+                
+                UIAlertAction *okAction = [UIAlertAction
+                                           actionWithTitle:@"Oh, ok"
+                                           style:UIAlertActionStyleCancel
+                                           handler:^(UIAlertAction *action)
+                                           {
+                                               //okay...
+                                           }];
+                
+                [inUseAlert addAction:okAction];
+                
+                [self presentViewController:inUseAlert animated:YES completion:nil];
+                break;
+            }
+                
+            case 2: //already 99 habits
+            {
+                UIAlertController *tooManyAlert = [UIAlertController
+                                                   alertControllerWithTitle:nil
+                                                   message:@"Maybe you should focus on\nyour 99 other habits"
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *okAction = [UIAlertAction
+                                           actionWithTitle:@"Fine"
+                                           style:UIAlertActionStyleCancel
+                                           handler:^(UIAlertAction *action)
+                                           {
+                                               //fine...
+                                           }];
+                
+                [tooManyAlert addAction:okAction];
+                
+                [self presentViewController:tooManyAlert animated:YES completion:nil];
+                break;
+            }
+            
+            case 3: //name is too long to be displayed
+            {
+                UIAlertController *tooLongAlert = [UIAlertController
+                                                   alertControllerWithTitle:nil
+                                                   message:@"That name is too long"
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *okAction = [UIAlertAction
+                                           actionWithTitle:@"Ok"
+                                           style:UIAlertActionStyleCancel
+                                           handler:^(UIAlertAction *action)
+                                           {
+                                               //Ok
+                                           }];
+                
+                [tooLongAlert addAction:okAction];
+                
+                [self presentViewController:tooLongAlert animated:YES completion:nil];
+                break;
+            }
+                
+            case 0: //habit created successfully
+            default:
+                [[self navigationController] popToRootViewControllerAnimated:YES];
+                break;
+        }
+        
+        
     }
 }
 

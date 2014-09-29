@@ -71,31 +71,29 @@
 }
 
 //addNewHabit: called when returning from the new habit view
-- (void)addNewHabit:(NewHabitViewController *)controller newHabitName:(NSString *)name
+- (NSInteger)addNewHabit:(NewHabitViewController *)controller newHabitName:(NSString *)name
 {
-    [self createHabit:name];
+    return [self createHabit:name];
 }
 
-- (void)createHabit:(NSString *)name
+
+//createHabit:  returns 0 on if succesfully adds habit
+//              returns 1 if name is already used
+//              returns 2 if there's 99 habits already
+- (NSInteger)createHabit:(NSString *)name
 {
     if ([self.habits objectForKey:name] != nil)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                message:@"That habit already exists"
-                                                delegate:nil
-                                                cancelButtonTitle:@"Oh, ok"
-                                                otherButtonTitles:nil];
-        [alert show];
+    {//habit already exists
+        return 1;
     }
     else if (self.habits.count >= 99)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                message:@"Maybe you should focus on\nyour 99 other habits..."
-                                                delegate:nil
-                                                cancelButtonTitle:@"Fine"
-                                                otherButtonTitles:nil];
-        
-        [alert show];
+    {//already 99 habits
+        return 2;
+    }
+    else if
+        ([name sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]}].width > [self fullWidth] - 100)
+    {//habit name would be too long to display
+        return 3;
     }
     else
     {
@@ -104,6 +102,8 @@
         h.lastCompletion = [self startingDate];
         [self.habits setObject:h forKey:h.name];
         [self refreshHabits];
+        
+        return 0;
     }
 }
 
@@ -172,7 +172,7 @@
         {
             lastCompletionLabel.text =
                 [NSString stringWithFormat:@"Last done: %d days ago",
-                [self daysBetween:habit.lastCompletion and:[NSDate date]]];
+                (int)[self daysBetween:habit.lastCompletion and:[NSDate date]]];
         }
     
         [lastCompletionLabel setFont:[UIFont systemFontOfSize:10]];
@@ -188,6 +188,10 @@
         [self.scrollView setContentSize:CGSizeMake([self fullWidth],
                                                    self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta)];
     }
+    else
+    {
+        [self.scrollView setContentSize:CGSizeMake([self fullWidth], [self fullHeight] + 1)];
+    }
     [self.view addSubview:labelView];
     
 }
@@ -196,7 +200,7 @@
 {
     [self removeAllHabits];
     
-    [self showHabits:false];
+    [self showHabits:NO];
     
     UIRefreshControl *refreshControl = (UIRefreshControl *)[self.view viewWithTag:999];
     [refreshControl endRefreshing];
@@ -206,7 +210,7 @@
 - (void)editHabits
 {
     [self removeAllHabits];
-    [self showHabits:true];
+    [self showHabits:YES];
     
     UIBarButtonItem *doneButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(finishEdit)];
     self.navigationItem.leftBarButtonItems = @[doneButton];
@@ -222,9 +226,34 @@
     UILabel *lbl = (UILabel*)[self.view viewWithTag:tag%200];
     NSString *habitKey = lbl.text;
     
-    [self.habits removeObjectForKey:habitKey];
+    //confirm deleting
+    UIAlertController *deleteConfirmAlert = [UIAlertController
+                                             alertControllerWithTitle:[NSString stringWithFormat:@"Delete \"%@\"", habitKey]
+                                             message:@"Are you sure?"
+                                             preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [self editHabits];
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       //nop!
+                                   }];
+    UIAlertAction *deleteAction = [UIAlertAction
+                                   actionWithTitle:@"Yes"
+                                   style:UIAlertActionStyleDestructive
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       [self.habits removeObjectForKey:habitKey];
+                                       [self editHabits];
+                                   }];
+    
+    [deleteConfirmAlert addAction:cancelAction];
+    [deleteConfirmAlert addAction:deleteAction];
+    
+    [self presentViewController:deleteConfirmAlert animated:YES completion:nil];
+    //end confirm deleting
+    
 }
 
 - (void)finishEdit
@@ -245,7 +274,7 @@
 
 - (void)showHabits: (BOOL)editHabits
 {
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastCompletion" ascending:true];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastCompletion" ascending:YES];
     NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
     NSArray *allHabits = [[self.habits allValues] sortedArrayUsingDescriptors:sortDescriptors];
@@ -346,7 +375,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (int)daysBetween:(NSDate *)date1 and:(NSDate *)date2
+- (NSInteger)daysBetween:(NSDate *)date1 and:(NSDate *)date2
 {
     NSDate *fromDate;
     NSDate *toDate;

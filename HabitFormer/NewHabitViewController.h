@@ -11,7 +11,7 @@
 @class NewHabitViewController;
 @protocol NewHabitViewControllerDelegate <NSObject>
 
-- (void)addNewHabit:(NewHabitViewController *)controller newHabitName:(NSString *)name;
+- (NSInteger)addNewHabit:(NewHabitViewController *)controller newHabitName:(NSString *)name;
 
 @end
 
