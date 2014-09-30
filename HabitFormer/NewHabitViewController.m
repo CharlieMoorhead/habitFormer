@@ -74,13 +74,29 @@
 }
 
 -(void)createHabit {
-    if (self.name.text.length == 0) {
-        self.nameLabel.textColor = [UIColor redColor];
+    NSString *habitName = [self.name.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    if (habitName.length == 0) {
+        UIAlertController *tooShortAlert = [UIAlertController
+                                         alertControllerWithTitle:nil
+                                         message:@"Please enter a name"
+                                         preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        UIAlertAction *okAction = [UIAlertAction
+                                   actionWithTitle:@"of course"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       //of course...
+                                   }];
+        
+        [tooShortAlert addAction:okAction];
+        
+        [self presentViewController:tooShortAlert animated:YES completion:nil];
     }
     else
     {
-        NSString *habitName = [self.name.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        
         NSInteger statusCode = [self.delegate addNewHabit:self newHabitName:habitName];
         
         switch (statusCode) {
@@ -93,7 +109,7 @@
                 
                 
                 UIAlertAction *okAction = [UIAlertAction
-                                           actionWithTitle:@"Oh, ok"
+                                           actionWithTitle:@"oh, ok"
                                            style:UIAlertActionStyleCancel
                                            handler:^(UIAlertAction *action)
                                            {
@@ -114,7 +130,7 @@
                                                    preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction *okAction = [UIAlertAction
-                                           actionWithTitle:@"Fine"
+                                           actionWithTitle:@"fine"
                                            style:UIAlertActionStyleCancel
                                            handler:^(UIAlertAction *action)
                                            {
@@ -135,11 +151,11 @@
                                                    preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction *okAction = [UIAlertAction
-                                           actionWithTitle:@"Ok"
+                                           actionWithTitle:@"ok"
                                            style:UIAlertActionStyleCancel
                                            handler:^(UIAlertAction *action)
                                            {
-                                               //Ok
+                                               //Ok...
                                            }];
                 
                 [tooLongAlert addAction:okAction];
