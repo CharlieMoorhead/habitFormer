@@ -79,12 +79,13 @@
     
     NSString *folder = [self pathForDataFile];
     
+    
     if ([NSKeyedArchiver archiveRootObject:viewController.habits toFile:folder]) {
-        viewController.label.text = @"saved";
+        //viewController.label.text = @"saved";
     }
     else
     {
-        viewController.label.text = [folder substringFromIndex:110];
+        //viewController.label.text = [folder substringFromIndex:110];
     }
 }
 

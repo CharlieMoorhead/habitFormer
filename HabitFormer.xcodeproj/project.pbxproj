@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CB2C1897194140AD0013628B /* NewHabitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB2C1896194140AD0013628B /* NewHabitViewController.m */; };
+		CB61096619DB648F00734843 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB61096519DB648F00734843 /* SettingsViewController.m */; };
+		CBB3631C19DE092D00FBCA5E /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB3631B19DE092D00FBCA5E /* utils.m */; };
 		CBC0931F1975ECC500CB4274 /* tasks_log in Resources */ = {isa = PBXBuildFile; fileRef = CBC0931E1975ECC500CB4274 /* tasks_log */; };
 		CBEB2A04193E3CD0006BD85E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEB2A03193E3CD0006BD85E /* Foundation.framework */; };
 		CBEB2A06193E3CD0006BD85E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEB2A05193E3CD0006BD85E /* CoreGraphics.framework */; };
@@ -38,6 +40,10 @@
 /* Begin PBXFileReference section */
 		CB2C1895194140AD0013628B /* NewHabitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHabitViewController.h; sourceTree = "<group>"; };
 		CB2C1896194140AD0013628B /* NewHabitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHabitViewController.m; sourceTree = "<group>"; };
+		CB61096419DB648F00734843 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		CB61096519DB648F00734843 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		CBB3631A19DE092D00FBCA5E /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		CBB3631B19DE092D00FBCA5E /* utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
 		CBC0931E1975ECC500CB4274 /* tasks_log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tasks_log; sourceTree = "<group>"; };
 		CBEB2A00193E3CD0006BD85E /* HabitFormer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitFormer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBEB2A03193E3CD0006BD85E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -129,6 +135,10 @@
 				CBEB2A13193E3CD0006BD85E /* HabitFormerAppDelegate.m */,
 				CBEB2A15193E3CD0006BD85E /* Images.xcassets */,
 				CBEB2A0A193E3CD0006BD85E /* Supporting Files */,
+				CB61096419DB648F00734843 /* SettingsViewController.h */,
+				CB61096519DB648F00734843 /* SettingsViewController.m */,
+				CBB3631A19DE092D00FBCA5E /* utils.h */,
+				CBB3631B19DE092D00FBCA5E /* utils.m */,
 			);
 			path = HabitFormer;
 			sourceTree = "<group>";
@@ -262,6 +272,8 @@
 				CBEB2A36193E3D5C006BD85E /* Habit.m in Sources */,
 				CB2C1897194140AD0013628B /* NewHabitViewController.m in Sources */,
 				CBEB2A14193E3CD0006BD85E /* HabitFormerAppDelegate.m in Sources */,
+				CBB3631C19DE092D00FBCA5E /* utils.m in Sources */,
+				CB61096619DB648F00734843 /* SettingsViewController.m in Sources */,
 				CBEB2A10193E3CD0006BD85E /* main.m in Sources */,
 				CBEB2A37193E3D5C006BD85E /* MainViewController.m in Sources */,
 			);

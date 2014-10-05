@@ -6,9 +6,11 @@
 //  Copyright (c) 2014 Charlie Moorhead. All rights reserved.
 //
 
+#import "SettingsViewController.h"
 #import "NewHabitViewController.h"
 #import "MainViewController.h"
 #import "Habit.h"
+#import "utils.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface MainViewController ()
@@ -16,6 +18,7 @@
 @end
 
 @implementation MainViewController
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,12 +35,10 @@
 	// Do any additional setup after loading the view.
     
     //creatng a scroll view
-    
-    
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [self fullWidth], [self fullHeight])];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [utils fullWidth], [self fullHeight])];
     //1 is added to scrollview.contentsize height so that you can always scroll a little bit,
     //so you can always activate the refresh control
-    self.scrollView.contentSize = CGSizeMake([self fullWidth],[self fullHeight]+1);
+    self.scrollView.contentSize = CGSizeMake([utils fullWidth],[self fullHeight]+1);
     self.scrollView.backgroundColor = [UIColor colorWithRed:255/255.0f green:247/255.0f blue:145/255.0f alpha:1.0f];
     self.view = self.scrollView;
     //scroll view created
@@ -47,27 +48,16 @@
     [self loadDataFromDisk];
     //habits array initialized
     
+    //initialize reset time
+    self.resetTime = [NSDate date];
+    //reset time initialized
+    
     //init habitSubviews array and displaying habits
     self.habitSubviews = [[NSMutableArray alloc] init];
     [self refreshHabits];
     //habitSubviews array initialized and habits displayed
     
-    //new button on nav bar
-    UIBarButtonItem *newButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newHabit)];
-    self.navigationItem.rightBarButtonItems = @[newButton];
-    //end nav new button
-    
-    //add edit button on nav bar
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editHabits)];
-    self.navigationItem.leftBarButtonItems = @[editButton];
-    //end nav edit button
-    
-    //adding refresh
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refreshHabits) forControlEvents:UIControlEventValueChanged];
-    refreshControl.tag = 999;
-    [self.view addSubview:refreshControl];
-    //refresh added
+    [self setNavBarToDisplay];
 }
 
 //addNewHabit: called when returning from the new habit view
@@ -91,7 +81,7 @@
         return 2;
     }
     else if
-        ([name sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]}].width > [self fullWidth] - 100)
+        ([name sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]}].width > [utils fullWidth] - 100)
     {//habit name would be too long to display
         return 3;
     }
@@ -110,11 +100,11 @@
 - (void)displayHabit:(Habit *)habit editHabit:(BOOL) editHabit
 {
     NSInteger labelHeight = 45;
-    NSInteger labelBuffer = 10;
-    NSInteger labelDelta = 10;
+    NSInteger labelBuffer = 10; //space between the top habit label and the nav bar
+    NSInteger labelDelta = 10; //space between each habit label
     
-    UIView *labelView = [[UIView alloc] initWithFrame:CGRectMake(0, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta, [self fullWidth], labelHeight + labelBuffer)];
-    UILabel *habitLabel = [[UILabel alloc] initWithFrame:CGRectMake(-10, 0, [self fullWidth]+20, labelHeight)];
+    UIView *labelView = [[UIView alloc] initWithFrame:CGRectMake(0, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta, [utils fullWidth], labelHeight + labelBuffer)];
+    UILabel *habitLabel = [[UILabel alloc] initWithFrame:CGRectMake(-10, 0, [utils fullWidth]+20, labelHeight)];
     habitLabel.text = habit.name;
 
     habitLabel.textAlignment = NSTextAlignmentCenter;
@@ -148,7 +138,7 @@
         [done setTitle:@"done" forState:UIControlStateNormal];
         [done setBackgroundColor:[UIColor colorWithRed:0/255.0f green:150/255.0f blue:43/255.0f alpha:1.0f]];
         done.frame = CGRectMake(0, 0, 50, labelHeight - 2.0f);
-        done.center = CGPointMake([self fullWidth] - 25, labelHeight / 2.0f);
+        done.center = CGPointMake([utils fullWidth] - 25, labelHeight / 2.0f);
         [done.titleLabel setFont:[UIFont systemFontOfSize:12]];
         [done.titleLabel setTextColor:[UIColor colorWithRed:30/255.0f green:198/255.0f blue:20/255.0f alpha:1.0f]];
         done.tag = habitLabel.tag + 100;
@@ -164,7 +154,7 @@
         {
             lastCompletionLabel.text = @"Never done";
         }
-        else if ([self daysBetween:habit.lastCompletion and:[NSDate date]] == 1)
+        else if ([utils daysBetween:habit.lastCompletion and:[NSDate date]] == 1)
         {
             lastCompletionLabel.text = @"Last done: 1 day ago";
         }
@@ -172,7 +162,7 @@
         {
             lastCompletionLabel.text =
                 [NSString stringWithFormat:@"Last done: %d days ago",
-                (int)[self daysBetween:habit.lastCompletion and:[NSDate date]]];
+                (int)[utils daysBetween:habit.lastCompletion and:[NSDate date]]];
         }
     
         [lastCompletionLabel setFont:[UIFont systemFontOfSize:10]];
@@ -185,12 +175,12 @@
     [self.habitSubviews addObject:labelView];
     if (self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta > [self fullHeight])
     {
-        [self.scrollView setContentSize:CGSizeMake([self fullWidth],
+        [self.scrollView setContentSize:CGSizeMake([utils fullWidth],
                                                    self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta)];
     }
     else
     {
-        [self.scrollView setContentSize:CGSizeMake([self fullWidth], [self fullHeight] + 1)];
+        [self.scrollView setContentSize:CGSizeMake([utils fullWidth], [self fullHeight] + 1)];
     }
     [self.view addSubview:labelView];
     
@@ -258,17 +248,7 @@
 
 - (void)finishEdit
 {
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editHabits)];
-    self.navigationItem.leftBarButtonItems = @[editButton];
-    
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refreshHabits) forControlEvents:UIControlEventValueChanged];
-    refreshControl.tag = 999;
-    [self.view addSubview:refreshControl];
-    
-    UIBarButtonItem *newButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newHabit)];
-    self.navigationItem.rightBarButtonItems = @[newButton];
-    
+    [self setNavBarToDisplay];
     [self refreshHabits];
 }
 
@@ -311,7 +291,7 @@
 - (BOOL)shouldViewHabit: (Habit *)habit
 {
     NSInteger cutoffHour = 0;
-    NSDate *cutoffDate = [NSDate alloc];
+    NSDate *cutoffDate = [NSDate date];
     
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
     NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
@@ -344,11 +324,11 @@
 }
 
 //newHabit: push to the new habit view controller
-- (void)newHabit
+- (void)pushToNewHabitView
 {
-    NewHabitViewController *secondView = [[NewHabitViewController alloc] init];
-    secondView.delegate = self;
-    [self.navigationController pushViewController:secondView animated:YES];
+    NewHabitViewController *newHabitView = [[NewHabitViewController alloc] init];
+    newHabitView.delegate = self;
+    [self.navigationController pushViewController:newHabitView animated:YES];
 }
 
 - (NSString *)pathForDataFile
@@ -365,7 +345,6 @@
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:file]) {
         self.habits = (NSMutableDictionary *)[NSKeyedUnarchiver unarchiveObjectWithFile:file];
-        self.label.text = [NSString stringWithFormat:@"%lu", (unsigned long)[self.habits count]];
     }
 }
 
@@ -375,40 +354,55 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (NSInteger)daysBetween:(NSDate *)date1 and:(NSDate *)date2
+- (void)pushToSettingsView
 {
-    NSDate *fromDate;
-    NSDate *toDate;
-    
-    NSUInteger unitFlags = NSDayCalendarUnit;
-    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-    
-    [calendar rangeOfUnit:unitFlags startDate:&fromDate interval:nil forDate:date1];
-    [calendar rangeOfUnit:unitFlags startDate:&toDate interval:nil forDate:date2];
-    
-    NSDateComponents *components = [calendar components:unitFlags fromDate:fromDate toDate:toDate options:0];
-    
-    return [components day];
-}
-
-- (void)test
-{
-    NSLog(@"hi");
-    
+    SettingsViewController *settingsView = [[SettingsViewController alloc] init];
+    [self.navigationController pushViewController:settingsView animated:YES];
 }
 
 - (CGFloat)fullHeight
 {
-    CGRect fullScreenRect = [[UIScreen mainScreen] applicationFrame];
-    CGFloat height = fullScreenRect.size.height - self.navigationController.navigationBar.frame.size.height;
-    return height;
+    return [utils fullHeight] - self.navigationController.navigationBar.frame.size.height;
 }
 
-- (CGFloat)fullWidth
+- (void)setNavBarToDisplay
 {
-    CGRect fullScreenRect = [[UIScreen mainScreen] applicationFrame];
-    CGFloat width = fullScreenRect.size.width;
-    return width;
+    //new button on nav bar
+    UIBarButtonItem *newButton = [[UIBarButtonItem alloc]
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                  target:self
+                                  action:@selector(pushToNewHabitView)];
+    self.navigationItem.rightBarButtonItems = @[newButton];
+    //end nav new button
+    
+    //add edit button on nav bar
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]
+                                   initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                   target:self
+                                   action:@selector(editHabits)];
+    self.navigationItem.leftBarButtonItems = @[editButton];
+    //end nav edit button
+    
+    //add settings button on nav bar
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc]
+                                       initWithTitle:@"\u2699"
+                                       style:UIBarButtonItemStyleBordered
+                                       target:self
+                                       action:@selector(pushToSettingsView)];
+    [settingsButton setTitleTextAttributes:@{
+                                             NSFontAttributeName: [UIFont systemFontOfSize:22]
+                                             }forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItems = @[newButton, settingsButton];
+    //end settings button
+    
+    //adding refresh
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self
+                       action:@selector(refreshHabits)
+             forControlEvents:UIControlEventValueChanged];
+    refreshControl.tag = 999;
+    [self.view addSubview:refreshControl];
+    //refresh added
 }
 
 @end

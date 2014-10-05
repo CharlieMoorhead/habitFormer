@@ -12,9 +12,8 @@
 @interface MainViewController : UIViewController <NewHabitViewControllerDelegate>
 
 @property (nonatomic,strong) UIScrollView *scrollView;
-@property (nonatomic,strong) UILabel *label;
 @property (nonatomic,strong) NSMutableDictionary *habits;
 @property (nonatomic,strong) NSMutableArray *habitSubviews;
-
+@property (nonatomic,strong) NSDate *resetTime;
 
 @end
