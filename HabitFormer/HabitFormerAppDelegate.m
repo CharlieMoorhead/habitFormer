@@ -24,6 +24,7 @@
     //testing navigation controller
     MainViewController *viewController = [[MainViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [nav setDelegate:viewController];
     viewController.title = @"Habits";
     
     self.window.rootViewController = nav;

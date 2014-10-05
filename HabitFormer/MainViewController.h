@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NewHabitViewController.h"
 
-@interface MainViewController : UIViewController <NewHabitViewControllerDelegate>
+@interface MainViewController : UIViewController <NewHabitViewControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic,strong) UIScrollView *scrollView;
 @property (nonatomic,strong) NSMutableDictionary *habits;

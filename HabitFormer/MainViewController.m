@@ -52,7 +52,7 @@
     
     //init habitSubviews array and displaying habits
     self.habitSubviews = [[NSMutableArray alloc] init];
-    [self refreshHabits];
+    //[self refreshHabits]; //it now refreshes because of the uinavigation controller delegate method
     //habitSubviews array initialized and habits displayed
     
     [self setNavBarToDisplay];
@@ -89,7 +89,6 @@
         h.name = name;
         h.lastCompletion = [self startingDate];
         [self.habits setObject:h forKey:h.name];
-        [self refreshHabits];
         
         return 0;
     }
@@ -451,6 +450,14 @@
     refreshControl.tag = 999;
     [self.view addSubview:refreshControl];
     //refresh added
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (self == viewController)
+    {
+        [self refreshHabits];
+    }
 }
 
 @end
