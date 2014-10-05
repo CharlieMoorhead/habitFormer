@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 #import "MainViewController.h"
 #import "utils.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface SettingsViewController ()
 
@@ -30,30 +31,26 @@
     [self.view addSubview:self.settingsView];
     
     //time label
-    UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(-10, 10, [utils fullWidth]+20, 45)];
+    UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, [utils fullWidth], 45)];
     timeView.backgroundColor = [UIColor lightGrayColor];
     
-    timeView.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    timeView.layer.borderWidth = 1.0f;
     [self.settingsView addSubview:timeView];
     
-    UILabel *timeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 0, 0, 0)];
+    UILabel *timeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 0, 0)];
     timeTitleLabel.text = @"daily reset time";
     [timeTitleLabel sizeToFit];
     timeTitleLabel.center = CGPointMake(timeTitleLabel.center.x, 45.0/2);
     [timeView addSubview:timeTitleLabel];
     
-    self.timeViewLabel = [[UILabel alloc] initWithFrame:CGRectMake([utils fullWidth]-150, 0, 100, 50)];
+    self.timeViewLabel = [[UILabel alloc] init];
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"hh:mm a"];
     MainViewController *mainView = (MainViewController *)self.navigationController.viewControllers[0];
     
     
-    self.timeViewLabel.text = [dateFormatter stringFromDate:mainView.resetTime];
+    self.timeViewLabel.text = [utils getStringFromDate:mainView.resetTime format:@"hh:mm a"];
     [self.timeViewLabel sizeToFit];
     self.timeViewLabel.center = CGPointMake(self.timeViewLabel.center.x, 45.0/2);
-    self.timeViewLabel.frame = CGRectMake([utils fullWidth]+20 - 25 - self.timeViewLabel.frame.size.width, self.timeViewLabel.frame.origin.y, self.timeViewLabel.frame.size.width, self.timeViewLabel.frame.size.height);
+    self.timeViewLabel.frame = CGRectMake([utils fullWidth] - 15 - self.timeViewLabel.frame.size.width, self.timeViewLabel.frame.origin.y, self.timeViewLabel.frame.size.width, self.timeViewLabel.frame.size.height);
     
     [timeView addSubview:self.timeViewLabel];
     //end time label
@@ -65,11 +62,16 @@
     [self.settingsView addSubview:timePickerHider];
     
     //testing border
-    /*
-    UIView *border = [[UIView alloc] initWithFrame:CGRectMake(0, self.timePicker.frame.origin.y + self.timePicker.frame.size.height, [utils fullWidth], 1)];
-    border.backgroundColor = [UIColor darkGrayColor];
-    [settingsView addSubview:border];
-    //end border test*/
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0, timeView.frame.size.height, timeView.frame.size.width, 1);
+    bottomBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
+    [timeView.layer addSublayer:bottomBorder];
+    
+    CALayer *topBorder = [CALayer layer];
+    topBorder.frame = CGRectMake(0, 0, timeView.frame.size.width, 1);
+    topBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
+    [timeView.layer addSublayer:topBorder];
+    //end border test
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePicker:)];
     [timeView addGestureRecognizer:tapGestureRecognizer];
@@ -78,10 +80,10 @@
 
 - (void) timePickerValueChanged
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"hh:mm a"];
+    self.timeViewLabel.text = [utils getStringFromDate:[self.timePicker date] format:@"hh:mm a"];
     
-    self.timeViewLabel.text = [dateFormatter stringFromDate:[self.timePicker date]];
+    MainViewController *mainView = (MainViewController *)self.navigationController.viewControllers[0];
+    mainView.resetTime = [self.timePicker date];
 }
 
 - (void) togglePicker: (id) sender
@@ -96,10 +98,12 @@
         self.timePicker.datePickerMode = UIDatePickerModeTime;
         self.timePicker.backgroundColor = [UIColor lightGrayColor];
         
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"hh:mm a"];
+        CALayer *bottomBorder = [CALayer layer];
+        bottomBorder.frame = CGRectMake(0, self.timePicker.frame.size.height, self.timePicker.frame.size.width, 1);
+        bottomBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
+        [self.timePicker.layer addSublayer:bottomBorder];
         
-        self.timePicker.date = [dateFormatter dateFromString:self.timeViewLabel.text];
+        self.timePicker.date = [utils getDateFromString:self.timeViewLabel.text format:@"hh:mm a"];
         
         [self.settingsView addSubview:self.timePicker];
         [self.settingsView sendSubviewToBack:self.timePicker];

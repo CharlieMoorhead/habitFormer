@@ -34,6 +34,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    //NSLog(NSHomeDirectory()); //uncomment to find where to delete the iphone simulator data
+    
     //creatng a scroll view
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [utils fullWidth], [self fullHeight])];
     //1 is added to scrollview.contentsize height so that you can always scroll a little bit,
@@ -47,10 +49,6 @@
     self.habits = [[NSMutableDictionary alloc] init];
     [self loadDataFromDisk];
     //habits array initialized
-    
-    //initialize reset time
-    self.resetTime = [NSDate date];
-    //reset time initialized
     
     //init habitSubviews array and displaying habits
     self.habitSubviews = [[NSMutableArray alloc] init];
@@ -104,13 +102,22 @@
     NSInteger labelDelta = 10; //space between each habit label
     
     UIView *labelView = [[UIView alloc] initWithFrame:CGRectMake(0, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta, [utils fullWidth], labelHeight + labelBuffer)];
-    UILabel *habitLabel = [[UILabel alloc] initWithFrame:CGRectMake(-10, 0, [utils fullWidth]+20, labelHeight)];
+    UILabel *habitLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [utils fullWidth], labelHeight)];
     habitLabel.text = habit.name;
 
     habitLabel.textAlignment = NSTextAlignmentCenter;
     habitLabel.backgroundColor = [UIColor lightGrayColor];
-    habitLabel.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    habitLabel.layer.borderWidth = 1.0f;
+    habitLabel.textAlignment = NSTextAlignmentCenter;
+    
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0, habitLabel.frame.size.height-1, habitLabel.frame.size.width, 1);
+    bottomBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
+    [habitLabel.layer addSublayer:bottomBorder];
+    
+    CALayer *topBorder = [CALayer layer];
+    topBorder.frame = CGRectMake(0, 0, habitLabel.frame.size.width, 1);
+    topBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
+    [habitLabel.layer addSublayer:topBorder];
     
     habitLabel.tag = self.habitSubviews.count+1;
     [labelView addSubview:habitLabel];
@@ -130,6 +137,25 @@
         [labelView addSubview:delete];
         [labelView bringSubviewToFront:delete];
         //delete button
+        
+        //add last completion date
+        UILabel *lastCompletionLabel = [[UILabel alloc] init];
+        
+        if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
+        {
+            lastCompletionLabel.text = @"never done";
+        }
+        else
+        {
+            lastCompletionLabel.text = [NSString stringWithFormat:@"last: %@", [utils getStringFromDate:habit.lastCompletion format:@"MM/dd/yy hh:mma"]];
+        }
+        
+        [lastCompletionLabel setFont:[UIFont systemFontOfSize:10]];
+        [lastCompletionLabel sizeToFit];
+        lastCompletionLabel.frame = CGRectMake([utils fullWidth]-15-lastCompletionLabel.frame.size.width, lastCompletionLabel.frame.origin.y, lastCompletionLabel.frame.size.width, lastCompletionLabel.frame.size.height);
+        [labelView addSubview:lastCompletionLabel];
+        //last completion date added
+        
     }
     else
     {
@@ -290,37 +316,35 @@
 
 - (BOOL)shouldViewHabit: (Habit *)habit
 {
-    NSInteger cutoffHour = 0;
     NSDate *cutoffDate = [NSDate date];
     
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
     NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
     cutoffDate = [calendar dateFromComponents:[calendar components:preservedComponents fromDate:[NSDate date]]];
     
-    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    NSDateComponents *currentTime = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
+    NSDateComponents *cutoffTime = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:self.resetTime];
     
-    dateComponents = [calendar components:NSHourCalendarUnit fromDate:[NSDate date]];
     
-    if (dateComponents.hour < cutoffHour)
+    if (currentTime.hour + (1.0f/60)*currentTime.minute < cutoffTime.hour + (1.0f/60)*cutoffTime.minute)
     {
-        dateComponents.day = -1;
+        currentTime.day = -1;
     }
     else
     {
-        dateComponents.day = 0;
+        currentTime.day = 0;
     }
-    dateComponents.hour = cutoffHour;
+    currentTime.hour = cutoffTime.hour;
+    currentTime.minute = cutoffTime.minute;
     
-    cutoffDate = [calendar dateByAddingComponents:dateComponents toDate:cutoffDate options:0];
+    cutoffDate = [calendar dateByAddingComponents:currentTime toDate:cutoffDate options:0];
     
     return [cutoffDate compare:habit.lastCompletion] == NSOrderedDescending;
 }
 
 - (NSDate *)startingDate
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"dd-MMM-yyyy"];
-    return [dateFormatter dateFromString:@"01-jan-1900"];
+    return [utils getDateFromString:@"01-jan-1900" format:@"dd-MMM-yyyy"];
 }
 
 //newHabit: push to the new habit view controller
@@ -344,7 +368,31 @@
     NSString *file = [self pathForDataFile];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:file]) {
-        self.habits = (NSMutableDictionary *)[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+        NSMutableDictionary *data = (NSMutableDictionary *)[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+        
+        if ([data objectForKey:@"habits"] != nil)
+        {
+            self.habits = [data objectForKey:@"habits"];
+        }
+        else
+        {
+            self.habits = [[NSMutableDictionary alloc] init];
+        }
+        
+        if ([data objectForKey:@"resetTime"] != nil)
+        {
+            self.resetTime = [data objectForKey:@"resetTime"];
+        }
+        else
+        {
+            self.resetTime = [utils getDateFromString:@"12:00 am" format:@"hh:mm a"];
+        }
+    }
+    else
+    {
+        self.habits = [[NSMutableDictionary alloc] init];
+        
+        self.resetTime = [utils getDateFromString:@"12:00 am" format:@"hh:mm a"];
     }
 }
 

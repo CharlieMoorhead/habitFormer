@@ -79,8 +79,17 @@
     
     NSString *folder = [self pathForDataFile];
     
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+    if (viewController.habits != nil)
+    {
+        [data setObject:viewController.habits forKey:@"habits"];
+    }
+    if (viewController.resetTime != nil)
+    {
+        [data setObject:viewController.resetTime forKey:@"resetTime"];
+    }
     
-    if ([NSKeyedArchiver archiveRootObject:viewController.habits toFile:folder]) {
+    if ([NSKeyedArchiver archiveRootObject:data toFile:folder]) {
         //viewController.label.text = @"saved";
     }
     else

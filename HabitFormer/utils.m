@@ -40,4 +40,18 @@
     return [components day];
 }
 
++ (NSDate *) getDateFromString:(NSString *)dateString format:(NSString *)formatString
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:formatString];
+    return [dateFormatter dateFromString:dateString];
+}
+
++ (NSString *) getStringFromDate:(NSDate *)date format:(NSString *)formatString
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:formatString];
+    return [dateFormatter stringFromDate:date];
+}
+
 @end
