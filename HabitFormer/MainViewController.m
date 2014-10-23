@@ -108,6 +108,7 @@
     habitLabel.backgroundColor = [UIColor lightGrayColor];
     habitLabel.textAlignment = NSTextAlignmentCenter;
     
+    /*
     CALayer *bottomBorder = [CALayer layer];
     bottomBorder.frame = CGRectMake(0, habitLabel.frame.size.height-1, habitLabel.frame.size.width, 1);
     bottomBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
@@ -117,8 +118,10 @@
     topBorder.frame = CGRectMake(0, 0, habitLabel.frame.size.width, 1);
     topBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
     [habitLabel.layer addSublayer:topBorder];
+     */
     
     habitLabel.tag = self.habitSubviews.count+1;
+    
     [labelView addSubview:habitLabel];
     
     if (editHabit)
@@ -127,7 +130,7 @@
         UIButton *delete = [UIButton buttonWithType:UIButtonTypeCustom];
         [delete setTitle:@"delete" forState:UIControlStateNormal];
         [delete setBackgroundColor:[UIColor colorWithRed:147/255.0f green:18/255.0f blue:0/255.0f alpha:1.0f]];
-        delete.frame = CGRectMake(0, 0, 50, labelHeight - 2.0f);
+        delete.frame = CGRectMake(0, 0, 50, labelHeight);// - 2.0f);
         delete.center = CGPointMake(25, labelHeight / 2.0f);
         [delete.titleLabel setFont:[UIFont systemFontOfSize:12]];
         [delete.titleLabel setTextColor:[UIColor colorWithRed:223/255.0f green:27/255.0f blue:0/255.0f alpha:1.0f]];
@@ -162,7 +165,7 @@
         UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
         [done setTitle:@"done" forState:UIControlStateNormal];
         [done setBackgroundColor:[UIColor colorWithRed:0/255.0f green:150/255.0f blue:43/255.0f alpha:1.0f]];
-        done.frame = CGRectMake(0, 0, 50, labelHeight - 2.0f);
+        done.frame = CGRectMake(0, 0, 50, labelHeight);// - 2.0f);
         done.center = CGPointMake([utils fullWidth] - 25, labelHeight / 2.0f);
         [done.titleLabel setFont:[UIFont systemFontOfSize:12]];
         [done.titleLabel setTextColor:[UIColor colorWithRed:30/255.0f green:198/255.0f blue:20/255.0f alpha:1.0f]];

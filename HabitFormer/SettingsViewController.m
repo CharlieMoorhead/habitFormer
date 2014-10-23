@@ -61,7 +61,7 @@
     timePickerHider.backgroundColor = [UIColor colorWithRed:255/255.0f green:247/255.0f blue:145/255.0f alpha:1.0f];
     [self.settingsView addSubview:timePickerHider];
     
-    //testing border
+    /*//testing border
     CALayer *bottomBorder = [CALayer layer];
     bottomBorder.frame = CGRectMake(0, timeView.frame.size.height, timeView.frame.size.width, 1);
     bottomBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
@@ -71,7 +71,7 @@
     topBorder.frame = CGRectMake(0, 0, timeView.frame.size.width, 1);
     topBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
     [timeView.layer addSublayer:topBorder];
-    //end border test
+    *///end border test
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePicker:)];
     [timeView addGestureRecognizer:tapGestureRecognizer];
@@ -98,10 +98,12 @@
         self.timePicker.datePickerMode = UIDatePickerModeTime;
         self.timePicker.backgroundColor = [UIColor lightGrayColor];
         
+        /*
         CALayer *bottomBorder = [CALayer layer];
         bottomBorder.frame = CGRectMake(0, self.timePicker.frame.size.height, self.timePicker.frame.size.width, 1);
         bottomBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
         [self.timePicker.layer addSublayer:bottomBorder];
+         */
         
         self.timePicker.date = [utils getDateFromString:self.timeViewLabel.text format:@"hh:mm a"];
         

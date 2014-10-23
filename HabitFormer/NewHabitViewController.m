@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "Habit.h"
+#import "utils.h"
 #import "NewHabitViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -36,30 +37,26 @@
     self.title = @"New Habit";
     UIColor *labelColor = [UIColor lightGrayColor];
     
-    //set up connecting label between name label and text field
+    /*//set up connecting label between name label and text field
     UILabel *connectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(43, 150, 10, 30)];
     connectionLabel.backgroundColor = labelColor;
     [self.view addSubview:connectionLabel];
-    //end connection
+    *///end connection
     
     //set up name textfield
-    self.name = [[UITextField alloc] initWithFrame:CGRectMake(48, 150, 262, 30)];
+    self.name = [[UITextField alloc] initWithFrame:CGRectMake(50, 150, [utils fullWidth] - 50, 45)];
     self.name.backgroundColor = labelColor;
     self.name.delegate = self;
-    self.name.layer.cornerRadius = 5;
-    self.name.layer.masksToBounds = YES;
     [self.view addSubview:self.name];
     //end name text field
     
     //set up name label
-    self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 150, 38,30)];
+    self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, 50, 45)];
     self.nameLabel.backgroundColor = labelColor;
     [self.nameLabel setFont:[UIFont systemFontOfSize:12]];
     self.nameLabel.textColor = [UIColor whiteColor];
     self.nameLabel.text = @"name";
     self.nameLabel.textAlignment = NSTextAlignmentCenter;
-    self.nameLabel.layer.cornerRadius = 5;
-    self.nameLabel.layer.masksToBounds = YES;
     [self.view addSubview:self.nameLabel];
     //end name label
     
