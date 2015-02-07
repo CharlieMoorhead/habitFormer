@@ -20,7 +20,7 @@
 + (CGFloat)fullHeight
 {
     CGRect fullScreenRect = [[UIScreen mainScreen] applicationFrame];
-    CGFloat height = fullScreenRect.size.height;// - self.navigationController.navigationBar.frame.size.height;
+    CGFloat height = fullScreenRect.size.height;
     return height;
 }
 
@@ -52,6 +52,21 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:formatString];
     return [dateFormatter stringFromDate:date];
+}
+
++ (UIColor *) labelColor
+{
+    return [UIColor lightGrayColor];
+}
+
++ (UIColor *) backgroundColor
+{
+    return [UIColor colorWithRed:255/255.0f green:247/255.0f blue:145/255.0f alpha:1.0f];
+}
+
++ (UIColor *) subtitleColor
+{
+    return [UIColor darkGrayColor];
 }
 
 @end

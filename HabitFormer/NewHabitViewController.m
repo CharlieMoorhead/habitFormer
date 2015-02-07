@@ -6,12 +6,11 @@
 //  Copyright (c) 2014 Charlie Moorhead. All rights reserved.
 //
 
+
+#import "NewHabitViewController.h"
 #import "MainViewController.h"
 #import "Habit.h"
 #import "utils.h"
-#import "NewHabitViewController.h"
-#import <QuartzCore/QuartzCore.h>
-
 
 @interface NewHabitViewController ()
 
@@ -33,9 +32,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor colorWithRed:255/255.0f green:247/255.0f blue:145/255.0f alpha:1.0f];
+    self.view.backgroundColor = [utils backgroundColor];
     self.title = @"New Habit";
-    UIColor *labelColor = [UIColor lightGrayColor];
+    UIColor *labelColor = [utils labelColor];
     
     /*//set up connecting label between name label and text field
     UILabel *connectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(43, 150, 10, 30)];

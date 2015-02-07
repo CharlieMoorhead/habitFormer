@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB00EC4D1A7E184300C2D920 /* HabitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB00EC4C1A7E184300C2D920 /* HabitCell.m */; };
 		CB2C1897194140AD0013628B /* NewHabitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB2C1896194140AD0013628B /* NewHabitViewController.m */; };
 		CB61096619DB648F00734843 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB61096519DB648F00734843 /* SettingsViewController.m */; };
 		CBB3631C19DE092D00FBCA5E /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB3631B19DE092D00FBCA5E /* utils.m */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB00EC4B1A7E184300C2D920 /* HabitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitCell.h; sourceTree = "<group>"; };
+		CB00EC4C1A7E184300C2D920 /* HabitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitCell.m; sourceTree = "<group>"; };
 		CB2C1895194140AD0013628B /* NewHabitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHabitViewController.h; sourceTree = "<group>"; };
 		CB2C1896194140AD0013628B /* NewHabitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHabitViewController.m; sourceTree = "<group>"; };
 		CB61096419DB648F00734843 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -139,6 +142,8 @@
 				CB61096519DB648F00734843 /* SettingsViewController.m */,
 				CBB3631A19DE092D00FBCA5E /* utils.h */,
 				CBB3631B19DE092D00FBCA5E /* utils.m */,
+				CB00EC4B1A7E184300C2D920 /* HabitCell.h */,
+				CB00EC4C1A7E184300C2D920 /* HabitCell.m */,
 			);
 			path = HabitFormer;
 			sourceTree = "<group>";
@@ -278,6 +283,7 @@
 				CBB3631C19DE092D00FBCA5E /* utils.m in Sources */,
 				CB61096619DB648F00734843 /* SettingsViewController.m in Sources */,
 				CBEB2A10193E3CD0006BD85E /* main.m in Sources */,
+				CB00EC4D1A7E184300C2D920 /* HabitCell.m in Sources */,
 				CBEB2A37193E3D5C006BD85E /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,7 +9,6 @@
 #import "SettingsViewController.h"
 #import "MainViewController.h"
 #import "utils.h"
-#import <QuartzCore/QuartzCore.h>
 
 @interface SettingsViewController ()
 
@@ -20,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:255/255.0f green:247/255.0f blue:145/255.0f alpha:1.0f];
+    self.view.backgroundColor = [utils backgroundColor];
     self.title = @"Settings";
     
     self.settingsView = [[UIView alloc] initWithFrame:CGRectMake(0,
@@ -32,7 +31,7 @@
     
     //time label
     UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, [utils fullWidth], 45)];
-    timeView.backgroundColor = [UIColor lightGrayColor];
+    timeView.backgroundColor = [utils labelColor];
     
     [self.settingsView addSubview:timeView];
     
@@ -58,7 +57,7 @@
     [self.settingsView bringSubviewToFront:timeView];
     
     UIView *timePickerHider = [[UIView alloc] initWithFrame:CGRectMake(0,-200, [utils fullWidth] ,210)];
-    timePickerHider.backgroundColor = [UIColor colorWithRed:255/255.0f green:247/255.0f blue:145/255.0f alpha:1.0f];
+    timePickerHider.backgroundColor = [utils backgroundColor];
     [self.settingsView addSubview:timePickerHider];
     
     /*//testing border
@@ -96,7 +95,7 @@
         self.timePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, -1000, 0, 0)];
         self.timePicker.frame = CGRectMake(0, 55 - self.timePicker.frame.size.height, 0, 0);
         self.timePicker.datePickerMode = UIDatePickerModeTime;
-        self.timePicker.backgroundColor = [UIColor lightGrayColor];
+        self.timePicker.backgroundColor = [utils labelColor];
         
         /*
         CALayer *bottomBorder = [CALayer layer];
