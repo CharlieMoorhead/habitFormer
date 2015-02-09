@@ -26,25 +26,13 @@
     
     //NSLog(NSHomeDirectory()); //uncomment to find where to delete the iphone simulator data
     
-    /*
-    //creatng a scroll view
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [utils fullWidth], [self fullHeight])];
-    //1 is added to scrollview.contentsize height so that you can always scroll a little bit,
-    //so you can always activate the refresh control
-    self.scrollView.contentSize = CGSizeMake([utils fullWidth],[self fullHeight]+1);
-    self.scrollView.backgroundColor = [UIColor colorWithRed:255/255.0f green:247/255.0f blue:145/255.0f alpha:1.0f];
-    self.view = self.scrollView;
-    //scroll view created
-     */
-    
     //creating table view
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [utils fullWidth], [utils fullHeight]) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:[self.view frame] style:UITableViewStylePlain];
     self.tableView.backgroundColor = [utils backgroundColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.allowsSelection = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    //self.view = self.tableView;//
     [self.view addSubview:self.tableView];
     //table view created
     
@@ -55,17 +43,13 @@
     [self refreshHabits];
     //habits array initialized
     
-    //init habitSubviews array and displaying habits
-    //self.habitSubviews = [[NSMutableArray alloc] init];
-    //[self refreshHabits]; //it now refreshes because of the uinavigation controller delegate method
-    //habitSubviews array initialized and habits displayed
-    
     [self setNavBarToDisplay];
 }
 
+//one section for each habit
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-        return self.habitsToView.count;
+    return self.habitsToView.count;
 }
 
 //each 'section' is a single cell so that there is whitespace between each cell
@@ -100,9 +84,11 @@
     static NSString *cellIdentifier = @"Cell";
     
     HabitCell *cell = (HabitCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil)
     {
         cell = [[HabitCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        //cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
     [cell setBackgroundColor:[utils labelColor]];
@@ -114,23 +100,22 @@
     cell.habitLabel.text = [habit name];
     
     //add 'done' button
-    cell.doneButton.tag = [indexPath section];
     [cell.doneButton addTarget:self action:@selector(completeHabit:) forControlEvents:UIControlEventTouchDown];
     //'done' button
     
     //add days ago label
     if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
     {
-        cell.daysAgoLabel.text = @"Never done";
+        cell.daysAgoLabel.text = @"never done";
     }
     else if ([utils daysBetween:habit.lastCompletion and:[NSDate date]] == 1)
     {
-        cell.daysAgoLabel.text = @"Last done: 1 day ago";
+        cell.daysAgoLabel.text = @"last done: 1 day ago";
     }
     else
     {
         cell.daysAgoLabel.text =
-        [NSString stringWithFormat:@"Last done: %d days ago",
+        [NSString stringWithFormat:@"last done: %d days ago",
          (int)[utils daysBetween:habit.lastCompletion and:[NSDate date]]];
     }
     //days ago label added
@@ -155,15 +140,16 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        [tableView beginUpdates];
         Habit *habit = (Habit *)[self.habitsToView objectAtIndex:[indexPath section]];
         [self.habits removeObjectForKey:habit.name];
-        [self determineViewableHabits:YES];
-        [tableView deleteSections:[NSIndexSet indexSetWithIndex:[indexPath section]] withRowAnimation:UITableViewRowAnimationBottom];
+        [self.habitsToView removeObjectAtIndex:[indexPath section]];
+        [tableView beginUpdates];
+        [tableView deleteSections:[NSIndexSet indexSetWithIndex:[indexPath section]] withRowAnimation:UITableViewRowAnimationRight];
         [tableView endUpdates];
     }
     else
     {
+        NSLog(@"error");
         //shouldn't be able to get here
     }
 }
@@ -205,237 +191,30 @@
     }
 }
 
-- (void)displayHabit:(Habit *)habit editHabit:(BOOL) editHabit
-{
-    NSInteger labelHeight = 45;
-    NSInteger labelBuffer = 10; //space between the top habit label and the nav bar
-    NSInteger labelDelta = 10; //space between each habit label
-    
-    UIView *labelView = [[UIView alloc] initWithFrame:CGRectMake(0, self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta, [utils fullWidth], labelHeight + labelBuffer)];
-    UILabel *habitLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [utils fullWidth], labelHeight)];
-    habitLabel.text = habit.name;
 
-    habitLabel.textAlignment = NSTextAlignmentCenter;
-    habitLabel.backgroundColor = [UIColor lightGrayColor];
-    habitLabel.textAlignment = NSTextAlignmentCenter;
-    
-    /*
-    CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0, habitLabel.frame.size.height-1, habitLabel.frame.size.width, 1);
-    bottomBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
-    [habitLabel.layer addSublayer:bottomBorder];
-    
-    CALayer *topBorder = [CALayer layer];
-    topBorder.frame = CGRectMake(0, 0, habitLabel.frame.size.width, 1);
-    topBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
-    [habitLabel.layer addSublayer:topBorder];
-     */
-    
-    habitLabel.tag = self.habitSubviews.count+1;
-    
-    [labelView addSubview:habitLabel];
-    
-    if (editHabit)
-    {
-        //add 'delete' button
-        UIButton *delete = [UIButton buttonWithType:UIButtonTypeCustom];
-        [delete setTitle:@"delete" forState:UIControlStateNormal];
-        [delete setBackgroundColor:[UIColor colorWithRed:147/255.0f green:18/255.0f blue:0/255.0f alpha:1.0f]];
-        delete.frame = CGRectMake(0, 0, 50, labelHeight);// - 2.0f);
-        delete.center = CGPointMake(25, labelHeight / 2.0f);
-        [delete.titleLabel setFont:[UIFont systemFontOfSize:12]];
-        [delete.titleLabel setTextColor:[UIColor colorWithRed:223/255.0f green:27/255.0f blue:0/255.0f alpha:1.0f]];
-        delete.tag = habitLabel.tag + 200;
-        [delete addTarget:self action:@selector(deleteHabit:) forControlEvents:UIControlEventTouchDown];
-        [labelView addSubview:delete];
-        [labelView bringSubviewToFront:delete];
-        //delete button
-        
-        //add last completion date
-        UILabel *lastCompletionLabel = [[UILabel alloc] init];
-        
-        if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
-        {
-            lastCompletionLabel.text = @"never done";
-        }
-        else
-        {
-            lastCompletionLabel.text = [NSString stringWithFormat:@"last: %@", [utils getStringFromDate:habit.lastCompletion format:@"MM/dd/yy hh:mma"]];
-        }
-        
-        [lastCompletionLabel setFont:[UIFont systemFontOfSize:10]];
-        [lastCompletionLabel sizeToFit];
-        lastCompletionLabel.frame = CGRectMake([utils fullWidth]-15-lastCompletionLabel.frame.size.width, lastCompletionLabel.frame.origin.y, lastCompletionLabel.frame.size.width, lastCompletionLabel.frame.size.height);
-        [labelView addSubview:lastCompletionLabel];
-        //last completion date added
-        
-    }
-    else
-    {
-        //add 'done' button
-        UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
-        [done setTitle:@"done" forState:UIControlStateNormal];
-        [done setBackgroundColor:[UIColor colorWithRed:0/255.0f green:150/255.0f blue:43/255.0f alpha:1.0f]];
-        done.frame = CGRectMake(0, 0, 50, labelHeight);// - 2.0f);
-        done.center = CGPointMake([utils fullWidth] - 25, labelHeight / 2.0f);
-        [done.titleLabel setFont:[UIFont systemFontOfSize:12]];
-        [done.titleLabel setTextColor:[UIColor colorWithRed:30/255.0f green:198/255.0f blue:20/255.0f alpha:1.0f]];
-        done.tag = habitLabel.tag + 100;
-        [done addTarget:self action:@selector(completeHabit:) forControlEvents:UIControlEventTouchDown];
-        [labelView addSubview:done];
-        [labelView bringSubviewToFront:done];
-        //'done' button
-    
-        //add last completion date
-        UILabel *lastCompletionLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 0, 0)];
-    
-        if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
-        {
-            lastCompletionLabel.text = @"Never done";
-        }
-        else if ([utils daysBetween:habit.lastCompletion and:[NSDate date]] == 1)
-        {
-            lastCompletionLabel.text = @"Last done: 1 day ago";
-        }
-        else
-        {
-            lastCompletionLabel.text =
-                [NSString stringWithFormat:@"Last done: %d days ago",
-                (int)[utils daysBetween:habit.lastCompletion and:[NSDate date]]];
-        }
-    
-        [lastCompletionLabel setFont:[UIFont systemFontOfSize:10]];
-        [lastCompletionLabel sizeToFit];
-        [labelView addSubview:lastCompletionLabel];
-        //last completion date added
-    }
-    
-    
-    [self.habitSubviews addObject:labelView];
-    if (self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta > [self fullHeight])
-    {
-        [self.scrollView setContentSize:CGSizeMake([utils fullWidth],
-                                                   self.habitSubviews.count*(labelHeight + labelBuffer) + labelDelta)];
-    }
-    else
-    {
-        [self.scrollView setContentSize:CGSizeMake([utils fullWidth], [self fullHeight] + 1)];
-    }
-    [self.view addSubview:labelView];
-    
-}
 
 - (void)refreshHabits
 {
-    //[self removeAllHabits];
-    
-    //[self showHabits:NO];
-    
-    [self determineViewableHabits:self.tableView.editing];
+    [self determineViewableHabitsForEditing:self.tableView.editing];
     [self.tableView reloadData];
     
     UIRefreshControl *refreshControl = (UIRefreshControl *)[self.view viewWithTag:999];
     [refreshControl endRefreshing];
-}
-
-- (void)refreshAfterExitingEditMode
-{
-    [self determineViewableHabits:NO];
-    [self.tableView reloadData];
-    
-    UIRefreshControl *refreshControl = (UIRefreshControl *)[self.view viewWithTag:999];
-    [refreshControl endRefreshing];
-}
-
-- (void)editHabits
-{
-    [self removeAllHabits];
-    [self showHabits:YES];
-    
-    UIBarButtonItem *doneButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(finishEdit)];
-    self.navigationItem.leftBarButtonItems = @[doneButton];
-    
-    self.navigationItem.rightBarButtonItems = @[];
-    
-    [[self.view viewWithTag:999] removeFromSuperview];
-}
-
-- (void)deleteHabit: (id)sender
-{
-    NSInteger tag = [(UIButton*)sender tag];
-    UILabel *lbl = (UILabel*)[self.view viewWithTag:tag%200];
-    NSString *habitKey = lbl.text;
-    
-    //confirm deleting
-    UIAlertController *deleteConfirmAlert = [UIAlertController
-                                             alertControllerWithTitle:[NSString stringWithFormat:@"Delete \"%@\"", habitKey]
-                                             message:@"Are you sure?"
-                                             preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *cancelAction = [UIAlertAction
-                                   actionWithTitle:@"Cancel"
-                                   style:UIAlertActionStyleCancel
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       //nop!
-                                   }];
-    UIAlertAction *deleteAction = [UIAlertAction
-                                   actionWithTitle:@"Yes"
-                                   style:UIAlertActionStyleDestructive
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       [self.habits removeObjectForKey:habitKey];
-                                       [self editHabits];
-                                   }];
-    
-    [deleteConfirmAlert addAction:cancelAction];
-    [deleteConfirmAlert addAction:deleteAction];
-    
-    [self presentViewController:deleteConfirmAlert animated:YES completion:nil];
-    //end confirm deleting
-    
-}
-
-- (void)finishEdit
-{
-    [self setNavBarToDisplay];
-    [self refreshHabits];
-}
-
-- (void)showHabits: (BOOL)editHabits
-{
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastCompletion" ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    
-    NSArray *allHabits = [[self.habits allValues] sortedArrayUsingDescriptors:sortDescriptors];
-    for (Habit *habit in allHabits)
-    {
-        if (editHabits || [self shouldViewHabit:habit])
-        {
-            [self displayHabit:habit editHabit:editHabits];
-        }
-    }
-}
-
-- (void)removeAllHabits
-{
-    for (UIView *view in self.habitSubviews) {
-        [view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [view removeFromSuperview];
-    }
-    [self.habitSubviews removeAllObjects];
 }
 
 - (void)completeHabit: (id)sender
 {
-    NSInteger tag = [(UIButton*)sender tag];
-    //UILabel *lbl = (UILabel*)[self.view viewWithTag:tag%100];
-    //NSString *habitKey = lbl.text;
-    HabitCell *cell = (HabitCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:tag]];
+    HabitCell *cell = (HabitCell *)[[sender superview] superview];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSInteger section = indexPath.section;
     NSString *habitKey = cell.habitLabel.text;
     Habit *h = [self.habits objectForKey:habitKey];
     h.lastCompletion = [NSDate date];
-    [self refreshHabits];
+    
+    [self.tableView beginUpdates];
+    [self.habitsToView removeObjectAtIndex:section];
+    [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationLeft];
+    [self.tableView endUpdates];
 }
 
 - (BOOL)shouldViewHabit: (Habit *)habit
@@ -475,7 +254,7 @@
     
 }
 
-- (void)determineViewableHabits:(BOOL) editMode
+- (void)determineViewableHabitsForEditing:(BOOL) editMode
 {
     [self.habitsToView removeAllObjects];
     
@@ -564,7 +343,6 @@
 - (CGFloat)fullHeight
 {
     return [utils fullHeight] - self.navigationController.navigationBar.frame.size.height;
-    
 }
 
 //sets up the nav bar
@@ -579,11 +357,6 @@
     //end nav new button
     
     //add edit button on nav bar
-    //UIBarButtonItem *editButton = [[UIBarButtonItem alloc]
-    //                               initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-    //                               target:self
-    //                               action:@selector(editHabits)];
-    //self.navigationItem.leftBarButtonItems = @[editButton];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     //end nav edit button
     
@@ -614,22 +387,41 @@
 //tells the tableview to switch to editing mode
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
-    //if exiting edit mode, remove the rows that shouldn't be viewed
-    // before the animation starts
-    if (!editing)
+    if (editing)
     {
-        [CATransaction begin];
-        [self refreshAfterExitingEditMode];
-        [CATransaction commit];
+        [self.tableView setEditing:editing animated:animated];
+        [super setEditing:editing animated:animated];
+        
+        [self determineViewableHabitsForEditing:YES];
+        if (self.habitsToView.count > self.tableView.numberOfSections)
+        {
+            [self.tableView beginUpdates];
+            NSRange r = NSMakeRange(self.tableView.numberOfSections, self.habitsToView.count - self.tableView.numberOfSections);
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndexesInRange:r] withRowAnimation:UITableViewRowAnimationLeft];
+            [self.tableView endUpdates];
+        }
     }
-    
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        [self refreshHabits];
-    }];
-    [self.tableView setEditing:editing animated:animated];
-    [super setEditing:editing animated:animated];
-    [CATransaction commit];
+    else
+    {
+        if(!animated)
+        {//this stops the animated transition to !editing mode
+            [self.tableView reloadData];
+        }
+        else
+        {
+            [self determineViewableHabitsForEditing:NO];
+            if (self.habitsToView.count < self.tableView.numberOfSections)
+            {
+                [self.tableView beginUpdates];
+                NSRange r = NSMakeRange(self.habitsToView.count, self.tableView.numberOfSections - self.habitsToView.count);
+                [self.tableView deleteSections:[NSIndexSet indexSetWithIndexesInRange:r] withRowAnimation:UITableViewRowAnimationLeft];
+                [self.tableView endUpdates];
+            }
+        }
+        
+        [self.tableView setEditing:editing animated:animated];
+        [super setEditing:editing animated:animated];
+    }
 }
 
 
@@ -639,6 +431,7 @@
 {
     if (self == viewController)
     {
+        [self setEditing:NO animated:NO];
         [self refreshHabits];
     }
 }
