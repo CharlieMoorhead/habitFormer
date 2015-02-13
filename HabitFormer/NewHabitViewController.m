@@ -62,8 +62,8 @@
     //set up create button
     self.create = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [self.create setTitle:@"Create" forState:UIControlStateNormal];
-    [self.create sizeToFit];
-    self.create.center = CGPointMake(160, 210);
+    [self.create setFrame:CGRectMake(0, 210, [utils fullWidth], 20)];
+    [self.create.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [self.create addTarget:self action:@selector(createHabit) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.create];
     //end create button

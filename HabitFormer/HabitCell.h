@@ -14,5 +14,6 @@
 @property (nonatomic, strong) UILabel *daysAgoLabel;
 @property (nonatomic, strong) UILabel *lastCompletionLabel;
 @property (nonatomic, strong) UIButton *doneButton;
+@property (nonatomic, strong) UIButton *deleteButton;
 
 @end

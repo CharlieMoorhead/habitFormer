@@ -78,17 +78,26 @@
     return YES;
 }
 
+//next two methods make it so the '-' delete button doesn't slide in while entering edit mode
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleNone;
+}
+
 //makes the cells
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"Cell";
     
     HabitCell *cell = (HabitCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil)
     {
         cell = [[HabitCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        //cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
     [cell setBackgroundColor:[utils labelColor]];
@@ -102,6 +111,10 @@
     //add 'done' button
     [cell.doneButton addTarget:self action:@selector(completeHabit:) forControlEvents:UIControlEventTouchDown];
     //'done' button
+    
+    //add 'delete' button
+    [cell.deleteButton addTarget:self action:@selector(deleteHabit:) forControlEvents:UIControlEventTouchDown];
+    //'delete' button
     
     //add days ago label
     if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
@@ -135,23 +148,44 @@
     return cell;
 }
 
-//deletes the cells
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)deleteHabit: (id)sender
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
-        Habit *habit = (Habit *)[self.habitsToView objectAtIndex:[indexPath section]];
-        [self.habits removeObjectForKey:habit.name];
-        [self.habitsToView removeObjectAtIndex:[indexPath section]];
-        [tableView beginUpdates];
-        [tableView deleteSections:[NSIndexSet indexSetWithIndex:[indexPath section]] withRowAnimation:UITableViewRowAnimationRight];
-        [tableView endUpdates];
-    }
-    else
-    {
-        NSLog(@"error");
-        //shouldn't be able to get here
-    }
+    HabitCell *cell = (HabitCell *)[[sender superview] superview];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSInteger section = indexPath.section;
+    NSString *habitKey = cell.habitLabel.text;
+    
+    //confirm deleting
+    UIAlertController *deleteConfirmAlert = [UIAlertController
+                                             alertControllerWithTitle:[NSString stringWithFormat:@"Delete \"%@\"", habitKey]
+                                             message:@"Are you sure?"
+                                             preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       //don't do it!!!
+                                   }];
+    UIAlertAction *deleteAction = [UIAlertAction
+                                   actionWithTitle:@"Yes"
+                                   style:UIAlertActionStyleDestructive
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       [self.tableView beginUpdates];
+                                       [self.habits removeObjectForKey:habitKey];
+                                       [self.habitsToView removeObjectAtIndex:section];
+                                       [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:section]
+                                                     withRowAnimation:UITableViewRowAnimationLeft];
+                                       [self.tableView endUpdates];
+                                   }];
+    
+    [deleteConfirmAlert addAction:cancelAction];
+    [deleteConfirmAlert addAction:deleteAction];
+    
+    [self presentViewController:deleteConfirmAlert animated:YES completion:nil];
+    //end confirm deleting
 }
 
 //addNewHabit: called when returning from the new habit view
@@ -394,7 +428,7 @@
         
         [self determineViewableHabitsForEditing:YES];
         if (self.habitsToView.count > self.tableView.numberOfSections)
-        {
+        {//this makes sure ALL habits are viewable while editing
             [self.tableView beginUpdates];
             NSRange r = NSMakeRange(self.tableView.numberOfSections, self.habitsToView.count - self.tableView.numberOfSections);
             [self.tableView insertSections:[NSIndexSet indexSetWithIndexesInRange:r] withRowAnimation:UITableViewRowAnimationLeft];
@@ -411,7 +445,7 @@
         {
             [self determineViewableHabitsForEditing:NO];
             if (self.habitsToView.count < self.tableView.numberOfSections)
-            {
+            {//this hides habits that have been completed in the last day
                 [self.tableView beginUpdates];
                 NSRange r = NSMakeRange(self.habitsToView.count, self.tableView.numberOfSections - self.habitsToView.count);
                 [self.tableView deleteSections:[NSIndexSet indexSetWithIndexesInRange:r] withRowAnimation:UITableViewRowAnimationLeft];
@@ -423,7 +457,6 @@
         [super setEditing:editing animated:animated];
     }
 }
-
 
 // this goes off when another view pops back to the main view controller
 // ** used to refresh the habits after coming back from another view  **

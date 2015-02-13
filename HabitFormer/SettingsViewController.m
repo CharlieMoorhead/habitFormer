@@ -93,7 +93,7 @@
     if (self.timePicker.superview == nil)
     {
         self.timePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, -1000, 0, 0)];
-        self.timePicker.frame = CGRectMake(0, 55 - self.timePicker.frame.size.height, 0, 0);
+        self.timePicker.frame = CGRectMake(0, 55 - self.timePicker.frame.size.height, [utils fullWidth], 0);
         self.timePicker.datePickerMode = UIDatePickerModeTime;
         self.timePicker.backgroundColor = [utils labelColor];
         
@@ -110,7 +110,7 @@
         [self.settingsView sendSubviewToBack:self.timePicker];
         
         [UIView animateWithDuration:0.6 animations:^{
-            self.timePicker.frame = CGRectMake(0, 55, 0, 0);
+            self.timePicker.frame = CGRectMake(0, 55, [utils fullWidth], 0);
         }completion:^(BOOL done){
             if (done)
             {
@@ -124,7 +124,7 @@
     {
         [self.timePicker removeTarget:self action:@selector(timePickerValueChanged) forControlEvents:UIControlEventValueChanged];
         [UIView animateWithDuration:0.6 animations:^{
-            self.timePicker.frame = CGRectMake(0,55-self.timePicker.frame.size.height, 0, 0);
+            self.timePicker.frame = CGRectMake(0,55-self.timePicker.frame.size.height, [utils fullWidth], 0);
         }completion:^(BOOL done){
             if (done)
             {

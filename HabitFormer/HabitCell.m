@@ -48,6 +48,15 @@
         [self.doneButton.titleLabel setTextColor:[UIColor colorWithRed:30/255.0f green:198/255.0f blue:20/255.0f alpha:1.0f]];
         [self.contentView addSubview:self.doneButton];
         //'done' button added
+        
+        //add 'delete' button
+        self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.deleteButton setTitle:@"delete" forState:UIControlStateNormal];
+        [self.deleteButton setBackgroundColor:[UIColor colorWithRed:147/255.0f green:18/255.0f blue:0/255.0f alpha:1.0f]];
+        self.deleteButton.frame = CGRectMake(0, 0, 50, self.frame.size.height);
+        [self.deleteButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        [self.deleteButton.titleLabel setTextColor:[UIColor colorWithRed:30/255.0f green:198/255.0f blue:20/255.0f alpha:1.0f]];
+        [self.contentView addSubview:self.deleteButton];
     }
     return self;
 }
@@ -56,6 +65,8 @@
 {
     [super willTransitionToState:state];
     
+    //this is not really necessary at this point
+    //  but it probably doesn't hurt anything
     //show the done button before it animates back into view
     if (state == UITableViewCellStateDefaultMask)
     {
@@ -67,6 +78,8 @@
 {
     [super didTransitionToState:state];
     
+    //this is not really necessary at this point
+    //  but it probably doesn't hurt anything
     //hide the done button after it animates off view
     if (state == UITableViewCellStateEditingMask)
     {
@@ -78,27 +91,23 @@
 {
     if(self.editing)
     {
-        [self.habitLabel setFrame:CGRectMake(0-38, 0, [utils fullWidth], 44)];
-        
         [self.daysAgoLabel setAlpha:0];
-        [self.daysAgoLabel setFrame:CGRectMake(15-38, 0, 120, 12)];
         
         [self.lastCompletionLabel setAlpha:1];
-        [self.lastCompletionLabel setFrame:CGRectMake([utils fullWidth]-120-15-38, 0, 120, 12)];
         
-        [self.doneButton setFrame:CGRectMake(self.frame.size.width-50+12, 0, 50, self.frame.size.height)];
+        [self.doneButton setFrame:CGRectMake(self.frame.size.width, 0, 50, self.frame.size.height)];
+        
+        [self.deleteButton setFrame:CGRectMake(0, 0, 50, self.frame.size.height)];
     }
     else
     {
-        [self.habitLabel setFrame:CGRectMake(0, 0, [utils fullWidth], 44)];
-
         [self.daysAgoLabel setAlpha:1];
-        [self.daysAgoLabel setFrame:CGRectMake(15, 0, 120, 12)];
         
         [self.lastCompletionLabel setAlpha:0];
-        [self.lastCompletionLabel setFrame:CGRectMake([utils fullWidth]-120-15, 0, 120, 12)];
         
         [self.doneButton setFrame:CGRectMake(self.frame.size.width-50, 0, 50, self.frame.size.height)];
+        
+        [self.deleteButton setFrame:CGRectMake(-50, 0, 50, self.frame.size.height)];
     }
     
     [super layoutSubviews];
