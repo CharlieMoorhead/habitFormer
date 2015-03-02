@@ -104,7 +104,7 @@
     [cell.contentView setBackgroundColor:[utils labelColor]];
     [cell.textLabel setBackgroundColor:[UIColor clearColor]];
     
-    Habit *habit = (Habit *)[self.habitsToView objectAtIndex:[indexPath section]];
+    Habit *habit = (Habit *)[self.habits objectForKey:[self.habitsToView objectAtIndex:[indexPath section]]];
     
     cell.habitLabel.text = [habit name];
     
@@ -290,7 +290,7 @@
 
 - (void)determineViewableHabitsForEditing:(BOOL) editMode
 {
-    [self.habitsToView removeAllObjects];
+    /*[self.habitsToView removeAllObjects];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastCompletion" ascending:YES];
     NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
@@ -301,6 +301,22 @@
         if ([self shouldViewHabit:habit] || editMode)
         {
             [self.habitsToView addObject:habit];
+        }
+    }*/
+    
+    NSArray *sortedHabitKeys = [[self.habits allKeys] sortedArrayUsingComparator:^NSComparisonResult(id a, id b)
+                         {
+                             NSDate *dateA = ((Habit *)[self.habits valueForKey:a]).lastCompletion;
+                             NSDate *dateB = ((Habit *)[self.habits valueForKey:b]).lastCompletion;
+                             
+                             return [dateA compare:dateB];
+                         }];
+    [self.habitsToView removeAllObjects];
+    for (NSString *key in sortedHabitKeys)
+    {
+        if ([self shouldViewHabit:(Habit *)[self.habits objectForKey:key]] || editMode)
+        {
+            [self.habitsToView addObject:key];
         }
     }
 }
