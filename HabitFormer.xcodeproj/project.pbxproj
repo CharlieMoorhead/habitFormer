@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		CB00EC4D1A7E184300C2D920 /* HabitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB00EC4C1A7E184300C2D920 /* HabitCell.m */; };
+		CB111CDF1AA5F3070018A202 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CB111CDE1AA5F3070018A202 /* libsqlite3.dylib */; };
+		CB111CE21AA5F3530018A202 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CB111CE11AA5F3530018A202 /* DBManager.m */; };
 		CB2C1897194140AD0013628B /* NewHabitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB2C1896194140AD0013628B /* NewHabitViewController.m */; };
 		CB61096619DB648F00734843 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB61096519DB648F00734843 /* SettingsViewController.m */; };
+		CB9DB5F61B0D40D600304C23 /* sampledb.db in Resources */ = {isa = PBXBuildFile; fileRef = CB9DB5F51B0D40D600304C23 /* sampledb.db */; };
 		CBB3631C19DE092D00FBCA5E /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB3631B19DE092D00FBCA5E /* utils.m */; };
 		CBC0931F1975ECC500CB4274 /* tasks_log in Resources */ = {isa = PBXBuildFile; fileRef = CBC0931E1975ECC500CB4274 /* tasks_log */; };
 		CBEB2A04193E3CD0006BD85E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEB2A03193E3CD0006BD85E /* Foundation.framework */; };
@@ -41,10 +44,14 @@
 /* Begin PBXFileReference section */
 		CB00EC4B1A7E184300C2D920 /* HabitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitCell.h; sourceTree = "<group>"; };
 		CB00EC4C1A7E184300C2D920 /* HabitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitCell.m; sourceTree = "<group>"; };
+		CB111CDE1AA5F3070018A202 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		CB111CE01AA5F3530018A202 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		CB111CE11AA5F3530018A202 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		CB2C1895194140AD0013628B /* NewHabitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHabitViewController.h; sourceTree = "<group>"; };
 		CB2C1896194140AD0013628B /* NewHabitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHabitViewController.m; sourceTree = "<group>"; };
 		CB61096419DB648F00734843 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		CB61096519DB648F00734843 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		CB9DB5F51B0D40D600304C23 /* sampledb.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampledb.db; sourceTree = "<group>"; };
 		CBB3631A19DE092D00FBCA5E /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		CBB3631B19DE092D00FBCA5E /* utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
 		CBC0931E1975ECC500CB4274 /* tasks_log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tasks_log; sourceTree = "<group>"; };
@@ -75,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB111CDF1AA5F3070018A202 /* libsqlite3.dylib in Frameworks */,
 				CBEB2A06193E3CD0006BD85E /* CoreGraphics.framework in Frameworks */,
 				CBEB2A08193E3CD0006BD85E /* UIKit.framework in Frameworks */,
 				CBEB2A04193E3CD0006BD85E /* Foundation.framework in Frameworks */,
@@ -116,6 +124,7 @@
 		CBEB2A02193E3CD0006BD85E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB111CDE1AA5F3070018A202 /* libsqlite3.dylib */,
 				CBEB2A03193E3CD0006BD85E /* Foundation.framework */,
 				CBEB2A05193E3CD0006BD85E /* CoreGraphics.framework */,
 				CBEB2A07193E3CD0006BD85E /* UIKit.framework */,
@@ -134,6 +143,9 @@
 				CBEB2A33193E3D5C006BD85E /* Habit.m */,
 				CBEB2A34193E3D5C006BD85E /* MainViewController.h */,
 				CBEB2A35193E3D5C006BD85E /* MainViewController.m */,
+				CB111CE01AA5F3530018A202 /* DBManager.h */,
+				CB111CE11AA5F3530018A202 /* DBManager.m */,
+				CB9DB5F51B0D40D600304C23 /* sampledb.db */,
 				CBEB2A12193E3CD0006BD85E /* HabitFormerAppDelegate.h */,
 				CBEB2A13193E3CD0006BD85E /* HabitFormerAppDelegate.m */,
 				CBEB2A15193E3CD0006BD85E /* Images.xcassets */,
@@ -259,6 +271,7 @@
 				CBEB2A0E193E3CD0006BD85E /* InfoPlist.strings in Resources */,
 				CBEB2A16193E3CD0006BD85E /* Images.xcassets in Resources */,
 				CBC0931F1975ECC500CB4274 /* tasks_log in Resources */,
+				CB9DB5F61B0D40D600304C23 /* sampledb.db in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +293,7 @@
 				CBEB2A36193E3D5C006BD85E /* Habit.m in Sources */,
 				CB2C1897194140AD0013628B /* NewHabitViewController.m in Sources */,
 				CBEB2A14193E3CD0006BD85E /* HabitFormerAppDelegate.m in Sources */,
+				CB111CE21AA5F3530018A202 /* DBManager.m in Sources */,
 				CBB3631C19DE092D00FBCA5E /* utils.m in Sources */,
 				CB61096619DB648F00734843 /* SettingsViewController.m in Sources */,
 				CBEB2A10193E3CD0006BD85E /* main.m in Sources */,

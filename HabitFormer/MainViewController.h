@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NewHabitViewController.h"
+#import "DBManager.h"
 
 
 @interface MainViewController : UIViewController <NewHabitViewControllerDelegate,
@@ -20,7 +21,8 @@
 @property (nonatomic,strong) UIScrollView *scrollView;
 @property (nonatomic,strong) NSMutableDictionary *habits;
 @property (nonatomic,strong) NSMutableArray *habitsToView;
-@property (nonatomic,strong) NSMutableArray *habitSubviews;
 @property (nonatomic,strong) NSDate *resetTime;
+
+@property (nonatomic, strong) DBManager *dbManager;
 
 @end

@@ -44,6 +44,29 @@
     //habits array initialized
     
     [self setNavBarToDisplay];
+    
+    //test with DataBases!!
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"sampledb.db"];
+    
+    NSString *query = @"INSERT INTO peopleInfo VALUES(NULL, 'charlie', 'moorhead', 27);";
+    
+    [self.dbManager executeQuery:query];
+    
+    if(self.dbManager.affectedRows != 0)
+    {
+        NSLog(@"Query was executed successfully. Affected rows = %d", self.dbManager.affectedRows);
+    }
+    else
+    {
+        NSLog(@"Could not execute query. %d", self.dbManager.affectedRows);
+    }
+    
+    query = @"select * from peopleinfo";
+    
+    NSArray *arrPeopleInfo;
+    arrPeopleInfo = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
+    NSLog(@"%@", arrPeopleInfo);
+    //end testing
 }
 
 //one section for each habit
