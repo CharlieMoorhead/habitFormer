@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NewHabitViewController.h"
 #import "DBManager.h"
+#import "HabitDB.h"
 
 
 @interface MainViewController : UIViewController <NewHabitViewControllerDelegate,
@@ -17,12 +18,9 @@
                                                     UITableViewDelegate>
 
 @property (nonatomic,strong) UITableView *tableView;
-
-@property (nonatomic,strong) UIScrollView *scrollView;
 @property (nonatomic,strong) NSMutableDictionary *habits;
 @property (nonatomic,strong) NSMutableArray *habitsToView;
+@property (nonatomic,strong) HabitDB *habitDB;
 @property (nonatomic,strong) NSDate *resetTime;
-
-@property (nonatomic, strong) DBManager *dbManager;
 
 @end

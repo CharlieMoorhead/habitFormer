@@ -15,6 +15,7 @@
 + (NSInteger)daysBetween:(NSDate *)date1 and:(NSDate *)date2;
 + (NSDate *) getDateFromString:(NSString *)dateString format:(NSString *)formatString;
 + (NSString *) getStringFromDate:(NSDate *)date format:(NSString *)formatString;
++ (NSDate *)startingDate;
 + (UIColor *) labelColor;
 + (UIColor *) backgroundColor;
 + (UIColor *) subtitleColor;

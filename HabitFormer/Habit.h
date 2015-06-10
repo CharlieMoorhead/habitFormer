@@ -10,6 +10,10 @@
 
 @interface Habit : NSObject
 
+-(id)initWithName: (NSString *)newName;
+-(id)initWithName: (NSString *)newName andCompletion:(NSDate *)newCompletion;
+-(void)complete;
+
 @property NSString *name;
 @property NSDate *lastCompletion;
 

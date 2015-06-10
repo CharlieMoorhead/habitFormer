@@ -11,6 +11,7 @@
 #import "Habit.h"
 #import "HabitCell.h"
 #import "utils.h"
+#import "HabitDB.h"
 
 
 @interface MainViewController ()
@@ -24,7 +25,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    //NSLog(NSHomeDirectory()); //uncomment to find where to delete the iphone simulator data
+    //NSLog(NSHomeDirectory()); //uncomment to find the iphone simulator data path
     
     //creating table view
     self.tableView = [[UITableView alloc] initWithFrame:[self.view frame] style:UITableViewStylePlain];
@@ -36,37 +37,20 @@
     [self.view addSubview:self.tableView];
     //table view created
     
-    //initializing habits arrays
-    self.habits = [[NSMutableDictionary alloc] init];
-    self.habitsToView = [[NSMutableArray alloc] init];
+    //load data (refreshTime) from disk
     [self loadDataFromDisk];
+    //end load data
+    
+    
+    //initializing habits arrays
+    self.habitDB = [[HabitDB alloc] init];
+    self.habits = [[NSMutableDictionary alloc] init];
+    [self.habitDB getAllHabits:self.habits];
+    self.habitsToView = [[NSMutableArray alloc] init];
     [self refreshHabits];
     //habits array initialized
     
     [self setNavBarToDisplay];
-    
-    //test with DataBases!!
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"sampledb.db"];
-    
-    NSString *query = @"INSERT INTO peopleInfo VALUES(NULL, 'charlie', 'moorhead', 27);";
-    
-    [self.dbManager executeQuery:query];
-    
-    if(self.dbManager.affectedRows != 0)
-    {
-        NSLog(@"Query was executed successfully. Affected rows = %d", self.dbManager.affectedRows);
-    }
-    else
-    {
-        NSLog(@"Could not execute query. %d", self.dbManager.affectedRows);
-    }
-    
-    query = @"select * from peopleinfo";
-    
-    NSArray *arrPeopleInfo;
-    arrPeopleInfo = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
-    NSLog(@"%@", arrPeopleInfo);
-    //end testing
 }
 
 //one section for each habit
@@ -140,7 +124,7 @@
     //'delete' button
     
     //add days ago label
-    if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
+    if ([habit.lastCompletion compare:[utils startingDate]] == NSOrderedSame)
     {
         cell.daysAgoLabel.text = @"never done";
     }
@@ -157,7 +141,7 @@
     //days ago label added
     
     //add last completion date
-    if ([habit.lastCompletion compare:[self startingDate]] == NSOrderedSame)
+    if ([habit.lastCompletion compare:[utils startingDate]] == NSOrderedSame)
     {
         cell.lastCompletionLabel.text = @"never done";
     }
@@ -197,6 +181,7 @@
                                    handler:^(UIAlertAction *action)
                                    {
                                        [self.tableView beginUpdates];
+                                       [self.habitDB deleteHabit:(Habit *)[self.habits objectForKey:habitKey]];
                                        [self.habits removeObjectForKey:habitKey];
                                        [self.habitsToView removeObjectAtIndex:section];
                                        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:section]
@@ -240,9 +225,11 @@
     else
     {//no problems here
         Habit *h = [[Habit alloc] init];
-        h.name = name;
-        h.lastCompletion = [self startingDate];
-        [self.habits setObject:h forKey:h.name];
+        h = [self.habitDB createHabit:name];
+        [self.habits setObject:h forKey:name];
+        //h.name = name;
+        //h.lastCompletion = [utils startingDate];
+        //[self.habits setObject:h forKey:h.name];
         [self.tableView reloadData];
         return 0;
     }
@@ -266,7 +253,7 @@
     NSInteger section = indexPath.section;
     NSString *habitKey = cell.habitLabel.text;
     Habit *h = [self.habits objectForKey:habitKey];
-    h.lastCompletion = [NSDate date];
+    [self.habitDB completeHabit:h];
     
     [self.tableView beginUpdates];
     [self.habitsToView removeObjectAtIndex:section];
@@ -289,8 +276,8 @@
     //if it is currently earlier in the day than the cutoff time, remove a day from the cutoff date
     //* for some reason this is really trippy for me to think about
     //* I may not be very smart
-    //* Example:    current time - 4am on 13-Feb-15
-    //*             cutoff time  - 8am
+    //* Example:    current time: 4am on 13-Feb-15
+    //*             cutoff time:  8am
     //*             since the current time is before the cutoff time,
     //*             we want to compare with the previous date's 8am,
     //*             so one day is subtracted, and the cutoff datetime should be: 8am on 12-Feb-15
@@ -313,20 +300,6 @@
 
 - (void)determineViewableHabitsForEditing:(BOOL) editMode
 {
-    /*[self.habitsToView removeAllObjects];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastCompletion" ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    NSArray *allHabits = [[self.habits allValues] sortedArrayUsingDescriptors:sortDescriptors];
-    
-    for (Habit *habit in allHabits)
-    {
-        if ([self shouldViewHabit:habit] || editMode)
-        {
-            [self.habitsToView addObject:habit];
-        }
-    }*/
-    
     NSArray *sortedHabitKeys = [[self.habits allKeys] sortedArrayUsingComparator:^NSComparisonResult(id a, id b)
                          {
                              NSDate *dateA = ((Habit *)[self.habits valueForKey:a]).lastCompletion;
@@ -342,12 +315,6 @@
             [self.habitsToView addObject:key];
         }
     }
-}
-
-//a date from eons ago to be used as a stand-in for 'never been done'
-- (NSDate *)startingDate
-{
-    return [utils getDateFromString:@"01-jan-1900" format:@"dd-MMM-yyyy"];
 }
 
 //newHabit: push to the new habit view controller
@@ -380,15 +347,6 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:file]) {
         NSMutableDictionary *data = (NSMutableDictionary *)[NSKeyedUnarchiver unarchiveObjectWithFile:file];
         
-        if ([data objectForKey:@"habits"] != nil)
-        {
-            self.habits = [data objectForKey:@"habits"];
-        }
-        else
-        {
-            self.habits = [[NSMutableDictionary alloc] init];
-        }
-        
         if ([data objectForKey:@"resetTime"] != nil)
         {
             self.resetTime = [data objectForKey:@"resetTime"];
@@ -400,8 +358,6 @@
     }
     else
     {
-        self.habits = [[NSMutableDictionary alloc] init];
-        
         self.resetTime = [utils getDateFromString:@"12:00 am" format:@"hh:mm a"];
     }
 }

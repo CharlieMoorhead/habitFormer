@@ -54,6 +54,11 @@
     return [dateFormatter stringFromDate:date];
 }
 
++ (NSDate *) startingDate
+{
+    return [self getDateFromString:@"01-jan-1900" format:@"dd-MMM-yyyy"];
+}
+
 + (UIColor *) labelColor
 {
     return [UIColor lightGrayColor];

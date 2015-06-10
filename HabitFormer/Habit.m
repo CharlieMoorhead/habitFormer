@@ -12,6 +12,27 @@
 
 @synthesize name, lastCompletion;
 
+-(id)initWithName:(NSString *)newName
+{
+    self = [super init];
+    self.name = newName;
+    self.lastCompletion = [NSDate date];
+    return self;
+}
+
+-(id)initWithName:(NSString *)newName andCompletion:(NSDate *)newCompletion
+{
+    self = [super init];
+    self.name = newName;
+    self.lastCompletion = newCompletion;
+    return self;
+}
+
+-(void)complete
+{
+    self.lastCompletion = [NSDate date];
+}
+
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.name forKey:@"name"];
