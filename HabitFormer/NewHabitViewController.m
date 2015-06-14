@@ -18,23 +18,24 @@
 
 @implementation NewHabitViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+/*- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
     return self;
-}
+}*/
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [utils backgroundColor];
     self.title = @"New Habit";
-    UIColor *labelColor = [utils labelColor];
+    [self.view setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
     
     /*//set up connecting label between name label and text field
     UILabel *connectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(43, 150, 10, 30)];
@@ -43,17 +44,19 @@
     *///end connection
     
     //set up name textfield
-    self.name = [[UITextField alloc] initWithFrame:CGRectMake(50, 150, [utils fullWidth] - 50, 45)];
-    self.name.backgroundColor = labelColor;
+    self.name = [[UITextField alloc] initWithFrame:CGRectMake(50, 10, self.view.frame.size.width - 50, 45)];
+    [self.name setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin)];
+    self.name.backgroundColor = [utils labelColor];
     self.name.delegate = self;
     [self.view addSubview:self.name];
     //end name text field
     
     //set up name label
-    self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, 50, 45)];
-    self.nameLabel.backgroundColor = labelColor;
+    self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 50, 45)];
+    [self.nameLabel setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin];
+    self.nameLabel.backgroundColor = [utils labelColor];
     [self.nameLabel setFont:[UIFont systemFontOfSize:12]];
-    self.nameLabel.textColor = [UIColor whiteColor];
+    self.nameLabel.textColor = [utils textColor];
     self.nameLabel.text = @"name";
     self.nameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.nameLabel];
@@ -61,8 +64,10 @@
     
     //set up create button
     self.create = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.create setTintColor:[utils buttonColor]];
+    [self.create setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [self.create setTitle:@"Create" forState:UIControlStateNormal];
-    [self.create setFrame:CGRectMake(0, 210, [utils fullWidth], 20)];
+    [self.create setFrame:CGRectMake(0, 70, self.view.frame.size.width, 20)];
     [self.create.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [self.create addTarget:self action:@selector(createHabit) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.create];

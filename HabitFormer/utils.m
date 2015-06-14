@@ -10,18 +10,38 @@
 
 @implementation utils
 
+
+//normalize to always be in portrait mode.
+//if the device is in landscape, return values that correspond to portrait instead
+//i.e., if in portrait mode, the width is less than the height, so return width as width
+//BUT if in landscape, the width is greater than the height, so return the height as the width
+//this makes autoresizing masks work correctly
 + (CGFloat)fullWidth
 {
-    CGRect fullScreenRect = [[UIScreen mainScreen] applicationFrame];
-    CGFloat width = fullScreenRect.size.width;
-    return width;
+    //CGRect fullScreenRect = [[UIScreen mainScreen] applicationFrame];
+    //if(fullScreenRect.size.width < fullScreenRect.size.height)
+    //{
+    //    return fullScreenRect.size.width;
+    //}
+    //else
+    //{
+    //    return fullScreenRect.size.height;
+    //}
+    return [[UIScreen mainScreen] applicationFrame].size.width;
 }
 
 + (CGFloat)fullHeight
 {
-    CGRect fullScreenRect = [[UIScreen mainScreen] applicationFrame];
-    CGFloat height = fullScreenRect.size.height;
-    return height;
+    //CGRect fullScreenRect = [[UIScreen mainScreen] applicationFrame];
+    //if(fullScreenRect.size.width > fullScreenRect.size.height)
+    //{
+    //    return fullScreenRect.size.width;
+    //}
+    //else
+    //{
+    //    return fullScreenRect.size.height;
+    //}
+    return [[UIScreen mainScreen] applicationFrame].size.height;
 }
 
 + (NSInteger)daysBetween:(NSDate *)date1 and:(NSDate *)date2
@@ -61,17 +81,33 @@
 
 + (UIColor *) labelColor
 {
-    return [UIColor lightGrayColor];
+    CGFloat red = 80;
+    CGFloat green = 216;
+    CGFloat blue = 215;
+    return [UIColor colorWithRed:red/255 green:green/255 blue:blue/255 alpha:1.0f];
 }
 
 + (UIColor *) backgroundColor
 {
-    return [UIColor colorWithRed:255/255.0f green:247/255.0f blue:145/255.0f alpha:1.0f];
+    CGFloat red = 20;
+    CGFloat green = 122;
+    CGFloat blue = 165;
+    return [UIColor colorWithRed:red/255 green:green/255 blue:blue/255 alpha:1.0f];}
+
++ (UIColor *) textColor
+{
+    CGFloat red = 41;
+    CGFloat green = 41;
+    CGFloat blue = 50;
+    return [UIColor colorWithRed:red/255 green:green/255 blue:blue/255 alpha:1.0f];
 }
 
-+ (UIColor *) subtitleColor
++ (UIColor *) buttonColor
 {
-    return [UIColor darkGrayColor];
+    CGFloat red = 71;
+    CGFloat green = 64;
+    CGFloat blue = 68;
+    return [UIColor colorWithRed:red/255 green:green/255 blue:blue/255 alpha:1.0f];
 }
 
 @end

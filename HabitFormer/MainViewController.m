@@ -27,6 +27,8 @@
     
     //NSLog(NSHomeDirectory()); //uncomment to find the iphone simulator data path
     
+    [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    
     //creating table view
     self.tableView = [[UITableView alloc] initWithFrame:[self.view frame] style:UITableViewStylePlain];
     self.tableView.backgroundColor = [utils backgroundColor];
@@ -34,13 +36,15 @@
     self.tableView.allowsSelection = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    [self.tableView setAutoresizesSubviews:YES];
+    [self.tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    
     [self.view addSubview:self.tableView];
     //table view created
     
     //load data (refreshTime) from disk
     [self loadDataFromDisk];
     //end load data
-    
     
     //initializing habits arrays
     self.habitDB = [[HabitDB alloc] init];
@@ -53,7 +57,7 @@
     [self setNavBarToDisplay];
 }
 
-//one section for each habit
+//one section for each viewable habit
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return self.habitsToView.count;
@@ -96,24 +100,28 @@
     return UITableViewCellEditingStyleNone;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44.0f;
+}
+
 //makes the cells
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"Cell";
+    Habit *habit = (Habit *)[self.habits objectForKey:[self.habitsToView objectAtIndex:[indexPath section]]];
+    
+    NSString *cellIdentifier = [habit name];
     
     HabitCell *cell = (HabitCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil)
     {
         cell = [[HabitCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+
     
     [cell setBackgroundColor:[utils labelColor]];
     [cell.contentView setBackgroundColor:[utils labelColor]];
-    [cell.textLabel setBackgroundColor:[UIColor clearColor]];
-    
-    Habit *habit = (Habit *)[self.habits objectForKey:[self.habitsToView objectAtIndex:[indexPath section]]];
-    
-    cell.habitLabel.text = [habit name];
+    [cell.habitLabel setText:[habit name]];
     
     //add 'done' button
     [cell.doneButton addTarget:self action:@selector(completeHabit:) forControlEvents:UIControlEventTouchDown];

@@ -18,6 +18,7 @@
 + (NSDate *)startingDate;
 + (UIColor *) labelColor;
 + (UIColor *) backgroundColor;
-+ (UIColor *) subtitleColor;
++ (UIColor *) textColor;
++ (UIColor *) buttonColor;
 
 @end

@@ -44,7 +44,7 @@
 
 /* Begin PBXFileReference section */
 		CB00EC4B1A7E184300C2D920 /* HabitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitCell.h; sourceTree = "<group>"; };
-		CB00EC4C1A7E184300C2D920 /* HabitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitCell.m; sourceTree = "<group>"; };
+		CB00EC4C1A7E184300C2D920 /* HabitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HabitCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CB111CDE1AA5F3070018A202 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		CB111CE01AA5F3530018A202 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		CB111CE11AA5F3530018A202 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
@@ -53,8 +53,8 @@
 		CB61096419DB648F00734843 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		CB61096519DB648F00734843 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		CBA0E3F71B0F467C00D125C4 /* habits.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = habits.db; sourceTree = "<group>"; };
-		CBB3631A19DE092D00FBCA5E /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
-		CBB3631B19DE092D00FBCA5E /* utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
+		CBB3631A19DE092D00FBCA5E /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = utils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		CBB3631B19DE092D00FBCA5E /* utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = utils.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CBC0931E1975ECC500CB4274 /* tasks_log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tasks_log; sourceTree = "<group>"; };
 		CBC4711B1B255D7A001840E7 /* HabitDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitDB.h; sourceTree = "<group>"; };
 		CBC4711C1B255D7A001840E7 /* HabitDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitDB.m; sourceTree = "<group>"; };
