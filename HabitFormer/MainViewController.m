@@ -27,20 +27,35 @@
     
     //NSLog(NSHomeDirectory()); //uncomment to find the iphone simulator data path
     
-    [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    
     //creating table view
-    self.tableView = [[UITableView alloc] initWithFrame:[self.view frame] style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] init];
+    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.backgroundColor = [utils backgroundColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.allowsSelection = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView setAutoresizesSubviews:YES];
-    [self.tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    
     [self.view addSubview:self.tableView];
-    //table view created
+    //tableView created
+    
+    //constraints for tableView
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:1.0f
+                                                           constant:0.0f
+                              ]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                         multiplier:1.0f
+                                                           constant:0.0f
+                              ]];
+    //end constraints for tableView
     
     //load data (refreshTime) from disk
     [self loadDataFromDisk];
@@ -55,6 +70,87 @@
     //habits array initialized
     
     [self setNavBarToDisplay];
+
+    //initialize view to display if tableview is currently empty
+    self.emptyView = [[UIView alloc] init];
+    self.emptyView.translatesAutoresizingMaskIntoConstraints = NO;
+    UILabel *emptyLabel1 = [[UILabel alloc] init];
+    emptyLabel1.translatesAutoresizingMaskIntoConstraints = NO;
+    UILabel *emptyLabel2 = [[UILabel alloc] init];
+    emptyLabel2.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [emptyLabel1 setText:@"You have no habits to complete"];
+    [emptyLabel1 setTextAlignment:NSTextAlignmentCenter];
+    [emptyLabel1 setFont:[UIFont systemFontOfSize:17]];
+    [emptyLabel1 setTextColor:[utils textColor]];
+    
+    [emptyLabel2 setText:@"Tap the upper right to form a new habit"];
+    [emptyLabel2 setTextAlignment:NSTextAlignmentCenter];
+    [emptyLabel2 setFont:[UIFont systemFontOfSize:15]];
+    [emptyLabel2 setTextColor:[utils textColor]];
+    
+    [self.emptyView addSubview:emptyLabel1];
+    [self.emptyView addSubview:emptyLabel2];
+    
+    //constraints for emptyLabel1
+    [self.emptyView addConstraint:[NSLayoutConstraint constraintWithItem:emptyLabel1
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.emptyView
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0f
+                                                                constant:0.0f
+                                   ]];
+    [self.emptyView addConstraint:[NSLayoutConstraint constraintWithItem:emptyLabel1
+                                                               attribute:NSLayoutAttributeCenterY
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.emptyView
+                                                               attribute:NSLayoutAttributeCenterY
+                                                              multiplier:0.6f
+                                                                constant:0.0f
+                                   ]];
+    //end constraints for emptyLabel1
+    
+    //constraints for emptyLabel2
+    [self.emptyView addConstraint:[NSLayoutConstraint constraintWithItem:emptyLabel2
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.emptyView
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0f
+                                                                constant:0.0f
+                                   ]];
+    [self.emptyView addConstraint:[NSLayoutConstraint constraintWithItem:emptyLabel2
+                                                               attribute:NSLayoutAttributeCenterY
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:emptyLabel1
+                                                               attribute:NSLayoutAttributeCenterY
+                                                              multiplier:1.0f constant:50.0f
+                                   ]];
+    //end constraints for emptyLabel2
+    
+    [self.view addSubview:self.emptyView];
+    
+    //constraints for emptyView
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.emptyView
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:1.0f
+                                                           constant:0.0f
+                              ]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.emptyView
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                         multiplier:1.0f
+                                                           constant:0.0f
+                              ]];
+    //end constraints for emptyView
+    
+    //empty view initialized
 }
 
 //one section for each viewable habit
@@ -195,6 +291,7 @@
                                        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:section]
                                                      withRowAnimation:UITableViewRowAnimationLeft];
                                        [self.tableView endUpdates];
+                                       [self isTableViewEmpty];
                                    }];
     
     [deleteConfirmAlert addAction:cancelAction];
@@ -217,6 +314,16 @@
 //              returns 3 if the name would be too long to display
 - (NSInteger)createHabit:(NSString *)name
 {
+    CGFloat widthLimit;
+    if([utils fullWidth] < [utils fullHeight])
+    {//the name should be small enough to display when in portrait mode
+        widthLimit = [utils fullWidth] - 100;
+    }
+    else
+    {
+        widthLimit = [utils fullHeight] - 100;
+    }
+    
     if ([self.habits objectForKey:name] != nil)
     {//habit already exists
         return 1;
@@ -225,19 +332,17 @@
     {//already 99 habits
         return 2;
     }
+    
     else if
-        ([name sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]}].width > [utils fullWidth] - 100)
+        ([name sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]}].width > widthLimit)
     {//habit name would be too long to display
         return 3;
     }
     else
     {//no problems here
-        Habit *h = [[Habit alloc] init];
+        Habit *h;
         h = [self.habitDB createHabit:name];
         [self.habits setObject:h forKey:name];
-        //h.name = name;
-        //h.lastCompletion = [utils startingDate];
-        //[self.habits setObject:h forKey:h.name];
         [self.tableView reloadData];
         return 0;
     }
@@ -249,6 +354,7 @@
 {
     [self determineViewableHabitsForEditing:self.tableView.editing];
     [self.tableView reloadData];
+    //[self isTableViewEmpty];
     
     UIRefreshControl *refreshControl = (UIRefreshControl *)[self.view viewWithTag:999];
     [refreshControl endRefreshing];
@@ -267,6 +373,8 @@
     [self.habitsToView removeObjectAtIndex:section];
     [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationLeft];
     [self.tableView endUpdates];
+    
+    [self isTableViewEmpty];
 }
 
 - (BOOL)shouldViewHabit: (Habit *)habit
@@ -376,15 +484,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-//returns the full height of the frame below the nav bar
-- (CGFloat)fullHeight
-{
-    return [utils fullHeight] - self.navigationController.navigationBar.frame.size.height;
-}
-
 //sets up the nav bar
 - (void)setNavBarToDisplay
 {
+    self.navigationController.navigationBar.translucent = NO;
+    
     //new button on nav bar
     UIBarButtonItem *newButton = [[UIBarButtonItem alloc]
                                   initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -430,6 +534,7 @@
         [super setEditing:editing animated:animated];
         
         [self determineViewableHabitsForEditing:YES];
+        [self isTableViewEmpty];
         if (self.habitsToView.count > self.tableView.numberOfSections)
         {//this makes sure ALL habits are viewable while editing
             [self.tableView beginUpdates];
@@ -455,9 +560,16 @@
                 [self.tableView endUpdates];
             }
         }
+        [CATransaction begin];
+        [CATransaction setCompletionBlock: ^{
+            [self isTableViewEmpty];
+        }];
         
         [self.tableView setEditing:editing animated:animated];
         [super setEditing:editing animated:animated];
+
+        
+        [CATransaction commit];
     }
 }
 
@@ -469,6 +581,29 @@
     {
         [self setEditing:NO animated:NO];
         [self refreshHabits];
+    }
+}
+
+-(void)isTableViewEmpty
+{
+    if(self.habitsToView.count == 0)
+    {
+        
+        [self.emptyView setHidden:NO];
+        [UIView animateWithDuration:0.1 animations:^{
+            [self.emptyView setAlpha:1.0f];
+        }];
+    }
+    else
+    {
+        [UIView animateWithDuration:0.1 animations:^{
+            [self.emptyView setAlpha:0.0f];
+        }completion:^(BOOL done){
+            if (done)
+            {
+                [self.emptyView setHidden:YES];
+            }
+        }];
     }
 }
 

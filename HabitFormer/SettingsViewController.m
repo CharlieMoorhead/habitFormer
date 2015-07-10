@@ -20,56 +20,176 @@
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [utils backgroundColor];
-    [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     self.title = @"Settings";
     
-    self.settingsView = [[UIView alloc] initWithFrame:[self.view frame]];
-    [self.settingsView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    self.settingsView = [[UIView alloc] init];
+    self.settingsView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.settingsView];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.settingsView
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:1.0f
+                                                           constant:0.0f
+                              ]];//0
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.settingsView
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                         multiplier:1.0f
+                                                           constant:0.0f
+                              ]];//1
     
     //time label
-    UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.width, 45)];
+    UIView *timeView = [[UIView alloc] init];
+    timeView.translatesAutoresizingMaskIntoConstraints = NO;
     timeView.backgroundColor = [utils labelColor];
-    [timeView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [self.settingsView addSubview:timeView];
+    [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:timeView
+                                                                 attribute:NSLayoutAttributeHeight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0f
+                                                                  constant:45.0f
+                                      ]];//0
+    [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:timeView
+                                                                  attribute:NSLayoutAttributeWidth
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.settingsView
+                                                                  attribute:NSLayoutAttributeWidth
+                                                                 multiplier:1.0f
+                                                                   constant:0.0f
+                                      ]];//1
+    [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:timeView
+                                                                  attribute:NSLayoutAttributeTop
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.settingsView
+                                                                  attribute:NSLayoutAttributeTop
+                                                                 multiplier:1.0f
+                                                                   constant:10.0f
+                                      ]];//2
+    [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:timeView
+                                                                  attribute:NSLayoutAttributeLeft
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.settingsView
+                                                                  attribute:NSLayoutAttributeLeft
+                                                                 multiplier:1.0f
+                                                                   constant:0.0f
+                                      ]];//3
     
-    UILabel *timeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 0, 0)];
+    UILabel *timeTitleLabel = [[UILabel alloc] init];
+    timeTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     timeTitleLabel.text = @"daily reset time";
-    [timeTitleLabel sizeToFit];
-    timeTitleLabel.center = CGPointMake(timeTitleLabel.center.x, 45.0/2);
     [timeView addSubview:timeTitleLabel];
-    
+    [timeView addConstraint:[NSLayoutConstraint constraintWithItem:timeTitleLabel
+                                                         attribute:NSLayoutAttributeLeft
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:timeView
+                                                         attribute:NSLayoutAttributeLeft
+                                                        multiplier:1.0f
+                                                          constant:15.0f
+                             ]];//0
+    [timeView addConstraint:[NSLayoutConstraint constraintWithItem:timeTitleLabel
+                                                         attribute:NSLayoutAttributeCenterY
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:timeView
+                                                         attribute:NSLayoutAttributeCenterY
+                                                        multiplier:1.0f
+                                                          constant:0.0f
+                             ]];//1
     
     MainViewController *mainView = (MainViewController *)self.navigationController.viewControllers[0];
     self.timeViewLabel = [[UILabel alloc] init];
+    self.timeViewLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.timeViewLabel.text = [utils getStringFromDate:mainView.resetTime format:@"hh:mm a"];
-    [self.timeViewLabel sizeToFit];
-    self.timeViewLabel.center = CGPointMake(self.timeViewLabel.center.x, 45.0/2);
-    CGRect newFrame = self.timeViewLabel.frame;
-    newFrame.origin.x = self.view.frame.size.width - 15 - newFrame.size.width;
-    [self.timeViewLabel setFrame:newFrame];
-    [self.timeViewLabel setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
     [timeView addSubview:self.timeViewLabel];
+    [timeView addConstraint:[NSLayoutConstraint constraintWithItem:self.timeViewLabel
+                                                         attribute:NSLayoutAttributeCenterY
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:timeView
+                                                         attribute:NSLayoutAttributeCenterY
+                                                        multiplier:1.0f
+                                                          constant:0.0f
+                             ]];//2
+    [timeView addConstraint:[NSLayoutConstraint constraintWithItem:self.timeViewLabel
+                                                         attribute:NSLayoutAttributeRight
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:timeView
+                                                         attribute:NSLayoutAttributeRight
+                                                        multiplier:1.0f
+                                                          constant:-15.0f
+                             ]];//3
     //end time label
     
     [self.settingsView bringSubviewToFront:timeView];
     
-    UIView *timePickerHider = [[UIView alloc] initWithFrame:CGRectMake(0,-200, self.view.frame.size.width ,210)];
+    UIView *timePickerHider = [[UIView alloc] init];
+    timePickerHider.translatesAutoresizingMaskIntoConstraints = NO;
     timePickerHider.backgroundColor = [utils backgroundColor];
-    [timePickerHider setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [self.settingsView addSubview:timePickerHider];
+    [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:timePickerHider
+                                                                  attribute:NSLayoutAttributeTop
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.settingsView
+                                                                  attribute:NSLayoutAttributeTop
+                                                                 multiplier:1.0f
+                                                                   constant:0.0f
+                                      ]];//4
+    [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:timePickerHider
+                                                                  attribute:NSLayoutAttributeBottom
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:timeView
+                                                                  attribute:NSLayoutAttributeTop
+                                                                 multiplier:1.0f
+                                                                   constant:0.0f
+                                      ]];//5
+    [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:timePickerHider
+                                                                  attribute:NSLayoutAttributeWidth
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.settingsView
+                                                                  attribute:NSLayoutAttributeWidth
+                                                                 multiplier:1.0f
+                                                                   constant:0.0f
+                                      ]];//6
     
-    /*//testing border
-    CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0, timeView.frame.size.height, timeView.frame.size.width, 1);
-    bottomBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
-    [timeView.layer addSublayer:bottomBorder];
+    self.timePicker = [[UIDatePicker alloc] init];
+    self.timePicker.translatesAutoresizingMaskIntoConstraints = NO;
+    self.timePicker.datePickerMode = UIDatePickerModeTime;
+    self.timePicker.backgroundColor = [utils labelColor];
     
-    CALayer *topBorder = [CALayer layer];
-    topBorder.frame = CGRectMake(0, 0, timeView.frame.size.width, 1);
-    topBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
-    [timeView.layer addSublayer:topBorder];
-    *///end border test
+    self.timePicker.date = [utils getDateFromString:self.timeViewLabel.text format:@"hh:mm a"];
+    
+    [self.timePicker addTarget:self action:@selector(timePickerValueChanged) forControlEvents:UIControlEventValueChanged];
+    [self.timePicker setUserInteractionEnabled:NO];
+    [self.settingsView addSubview:self.timePicker];
+    [self.settingsView sendSubviewToBack:self.timePicker];
+    [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:self.timePicker
+                                                                  attribute:NSLayoutAttributeWidth
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.settingsView
+                                                                  attribute:NSLayoutAttributeWidth
+                                                                 multiplier:1.0f
+                                                                   constant:0.0f
+                                      ]];//7
+    [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:self.timePicker
+                                                                  attribute:NSLayoutAttributeHeight
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:nil
+                                                                  attribute:NSLayoutAttributeNotAnAttribute
+                                                                 multiplier:1.0f
+                                                                   constant:162.0f
+                                      ]];//8
+    [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:self.timePicker
+                                                                  attribute:NSLayoutAttributeBottom
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:timeView
+                                                                  attribute:NSLayoutAttributeBottom
+                                                                 multiplier:1.0f
+                                                                   constant:0.0f
+                                      ]];//9
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePicker:)];
     [timeView addGestureRecognizer:tapGestureRecognizer];
@@ -89,56 +209,36 @@
     UIView *timeView = ((UIGestureRecognizer *)sender).view;
     [timeView setUserInteractionEnabled:NO];
     
-    if (self.timePicker.superview == nil)
+    if(self.timePicker.userInteractionEnabled == NO)
     {
-        self.timePicker = [[UIDatePicker alloc] init];
-        self.timePicker.frame = CGRectMake(0, 54 - self.timePicker.frame.size.height, self.view.frame.size.width, 162);
-        self.timePicker.datePickerMode = UIDatePickerModeTime;
-        self.timePicker.backgroundColor = [utils labelColor];
-        
-        /*
-        CALayer *bottomBorder = [CALayer layer];
-        bottomBorder.frame = CGRectMake(0, self.timePicker.frame.size.height, self.timePicker.frame.size.width, 1);
-        bottomBorder.backgroundColor = [UIColor darkGrayColor].CGColor;
-        [self.timePicker.layer addSublayer:bottomBorder];
-         */
-        
         self.timePicker.date = [utils getDateFromString:self.timeViewLabel.text format:@"hh:mm a"];
-        
-        [self.timePicker setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-        [self.settingsView addSubview:self.timePicker];
-        [self.settingsView sendSubviewToBack:self.timePicker];
-        
+        [self.timePicker addTarget:self action:@selector(timePickerValueChanged) forControlEvents:UIControlEventValueChanged];
+        [self.settingsView layoutIfNeeded];
         [UIView animateWithDuration:0.6 animations:^{
-            CGRect newFrame = self.timePicker.frame;
-            newFrame.origin.y = 54;
-            self.timePicker.frame = newFrame;
+            ((NSLayoutConstraint *)self.settingsView.constraints[9]).constant = self.timePicker.frame.size.height;
+            [self.settingsView layoutIfNeeded];
         }completion:^(BOOL done){
             if (done)
             {
                 [timeView setUserInteractionEnabled:YES];
-                [self.timePicker addTarget:self action:@selector(timePickerValueChanged) forControlEvents:UIControlEventValueChanged];
+                [self.timePicker setUserInteractionEnabled:YES];
             }
         }];
-        
     }
     else
     {
         [self.timePicker removeTarget:self action:@selector(timePickerValueChanged) forControlEvents:UIControlEventValueChanged];
+        [self.timePicker setUserInteractionEnabled:NO];
         [UIView animateWithDuration:0.6 animations:^{
-            CGRect newFrame = self.timePicker.frame;
-            newFrame.origin.y = 54 - newFrame.size.height;
-            self.timePicker.frame = newFrame;
+            ((NSLayoutConstraint *)self.settingsView.constraints[9]).constant = 0.0f;
+            [self.settingsView layoutIfNeeded];
         }completion:^(BOOL done){
             if (done)
             {
                 [timeView setUserInteractionEnabled:YES];
-                [self.timePicker removeFromSuperview];
             }
         }];
     }
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {

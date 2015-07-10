@@ -76,13 +76,15 @@
 -(void)saveDataToDisk
 {
     UINavigationController *navigationController = (UINavigationController*)self.window.rootViewController;
-    MainViewController *viewController = (MainViewController*)navigationController.topViewController;
+    //MainViewController *viewController = (MainViewController*)navigationController.topViewController;
+    MainViewController *viewController = (MainViewController *)navigationController.viewControllers[0];
     
     NSString *folder = [self pathForDataFile];
     
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
     if (viewController.resetTime != nil)
     {
+        //[data setObject:self.window.rootViewController.navigationController.topViewController forKey:@"resetTime"];
         [data setObject:viewController.resetTime forKey:@"resetTime"];
     }
     

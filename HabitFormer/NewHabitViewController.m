@@ -35,42 +35,113 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [utils backgroundColor];
     self.title = @"New Habit";
-    [self.view setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
-    
-    /*//set up connecting label between name label and text field
-    UILabel *connectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(43, 150, 10, 30)];
-    connectionLabel.backgroundColor = labelColor;
-    [self.view addSubview:connectionLabel];
-    *///end connection
     
     //set up name textfield
-    self.name = [[UITextField alloc] initWithFrame:CGRectMake(50, 10, self.view.frame.size.width - 50, 45)];
-    [self.name setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin)];
+    self.name = [[UITextField alloc] init];
+    self.name.translatesAutoresizingMaskIntoConstraints = NO;
     self.name.backgroundColor = [utils labelColor];
     self.name.delegate = self;
     [self.view addSubview:self.name];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.name
+                                                          attribute:NSLayoutAttributeLeft
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeLeft
+                                                         multiplier:1.0f
+                                                           constant:50.0f
+                              ]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.name
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0f
+                                                           constant:10.0f
+                              ]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.name
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                         multiplier:1.0f
+                                                           constant:-50.0f
+                              ]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.name
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0f
+                                                           constant:45.0f
+                              ]];
     //end name text field
     
     //set up name label
-    self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 50, 45)];
-    [self.nameLabel setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin];
+    self.nameLabel = [[UILabel alloc] init];
+    self.nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.nameLabel.backgroundColor = [utils labelColor];
     [self.nameLabel setFont:[UIFont systemFontOfSize:12]];
     self.nameLabel.textColor = [utils textColor];
     self.nameLabel.text = @"name";
     self.nameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.nameLabel];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.nameLabel
+                                                          attribute:NSLayoutAttributeLeft
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeLeft
+                                                         multiplier:1.0f
+                                                           constant:0.0f
+                              ]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.nameLabel
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0f
+                                                           constant:10.0f
+                              ]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.nameLabel
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0f
+                                                           constant:50.0f
+                              ]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.nameLabel
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0f
+                                                           constant:45.0f
+                              ]];
     //end name label
     
     //set up create button
     self.create = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.create.translatesAutoresizingMaskIntoConstraints = NO;
     [self.create setTintColor:[utils buttonColor]];
-    [self.create setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [self.create setTitle:@"Create" forState:UIControlStateNormal];
-    [self.create setFrame:CGRectMake(0, 70, self.view.frame.size.width, 20)];
-    [self.create.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [self.create addTarget:self action:@selector(createHabit) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.create];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.create
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:0.21f
+                                                           constant:0.0f
+                              ]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.create
+                                                          attribute:NSLayoutAttributeCenterX
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeCenterX
+                                                         multiplier:1.0f
+                                                           constant:0.0f
+                              ]];
     //end create button
 }
 

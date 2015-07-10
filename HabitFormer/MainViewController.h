@@ -22,5 +22,6 @@
 @property (nonatomic,strong) NSMutableArray *habitsToView;
 @property (nonatomic,strong) HabitDB *habitDB;
 @property (nonatomic,strong) NSDate *resetTime;
+@property (nonatomic,strong) UIView *emptyView;
 
 @end
