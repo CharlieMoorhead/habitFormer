@@ -7,7 +7,6 @@
 //
 
 #import "HabitCell.h"
-#import "utils.h"
 
 @implementation HabitCell
 
@@ -22,6 +21,7 @@
         self.habitLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self.habitLabel setFont:[UIFont systemFontOfSize:17]];
         [self.habitLabel setTextAlignment:NSTextAlignmentCenter];
+        [self.habitLabel setTextColor:textColor];
         [self.contentView addSubview:self.habitLabel];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.habitLabel
                                                                      attribute:NSLayoutAttributeCenterX
@@ -45,7 +45,7 @@
         self.daysAgoLabel = [[UILabel alloc] init];
         self.daysAgoLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self.daysAgoLabel setFont:[UIFont systemFontOfSize:10]];
-        [self.daysAgoLabel setTextColor:[utils textColor]];
+        [self.daysAgoLabel setTextColor:textColor];
         [self.contentView addSubview:self.daysAgoLabel];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.daysAgoLabel
                                                                      attribute:NSLayoutAttributeLeft
@@ -69,7 +69,7 @@
         self.lastCompletionLabel = [[UILabel alloc] init];
         self.lastCompletionLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self.lastCompletionLabel setFont:[UIFont systemFontOfSize:10]];
-        [self.lastCompletionLabel setTextColor:[utils textColor]];
+        [self.lastCompletionLabel setTextColor:textColor];
         [self.contentView addSubview:self.lastCompletionLabel];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.lastCompletionLabel
                                                                      attribute:NSLayoutAttributeRight
@@ -94,7 +94,7 @@
         self.doneButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.doneButton setTitle:@"done" forState:UIControlStateNormal];
         //[self.doneButton setBackgroundColor:[UIColor colorWithRed:0/255.0f green:150/255.0f blue:43/255.0f alpha:1.0f]];
-        [self.doneButton setBackgroundColor:[utils buttonColor]];
+        [self.doneButton setBackgroundColor:buttonColor];
         [self.doneButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
         //[self.doneButton.titleLabel setTextColor:[UIColor colorWithRed:30/255.0f green:198/255.0f blue:20/255.0f alpha:1.0f]];
         [self.doneButton.titleLabel setTextColor:[UIColor whiteColor]];
@@ -138,7 +138,7 @@
         self.deleteButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.deleteButton setTitle:@"delete" forState:UIControlStateNormal];
         //[self.deleteButton setBackgroundColor:[UIColor colorWithRed:147/255.0f green:18/255.0f blue:0/255.0f alpha:1.0f]];
-        [self.deleteButton setBackgroundColor:[utils buttonColor]];
+        [self.deleteButton setBackgroundColor:buttonColor];
         [self.deleteButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
         //[self.deleteButton.titleLabel setTextColor:[UIColor colorWithRed:30/255.0f green:198/255.0f blue:20/255.0f alpha:1.0f]];
         [self.deleteButton.titleLabel setTextColor:[UIColor whiteColor]];
@@ -179,19 +179,19 @@
     return self;
 }
 
-- (void)willTransitionToState:(UITableViewCellStateMask)state
+/*- (void)willTransitionToState:(UITableViewCellStateMask)state
 {
     [super willTransitionToState:state];
     
     //this is not really necessary at this point
     //
     //show the done button before it animates back into view
-    /*
+ 
     if (state == UITableViewCellStateDefaultMask)
     {
         [self.doneButton setAlpha:1];
     }
-    */
+ 
 }
 
 - (void)didTransitionToState:(UITableViewCellStateMask)state
@@ -201,13 +201,13 @@
     //this is not really necessary at this point
     //
     //hide the done button after it animates off view
-    /*
+ 
     if (state == UITableViewCellStateEditingMask)
     {
         [self.doneButton setAlpha:0];
     }
-    */
-}
+ 
+}*/
 
 - (void)layoutSubviews
 {

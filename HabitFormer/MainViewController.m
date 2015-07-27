@@ -10,7 +10,6 @@
 #import "SettingsViewController.h"
 #import "Habit.h"
 #import "HabitCell.h"
-#import "utils.h"
 #import "HabitDB.h"
 
 
@@ -23,14 +22,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	
+    
+    // Do any additional setup after loading the view.
     
     //NSLog(NSHomeDirectory()); //uncomment to find the iphone simulator data path
     
     //creating table view
     self.tableView = [[UITableView alloc] init];
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.tableView.backgroundColor = [utils backgroundColor];
+    self.tableView.backgroundColor = backgroundColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.allowsSelection = NO;
     self.tableView.delegate = self;
@@ -64,7 +65,7 @@
     //initializing habits arrays
     self.habitDB = [[HabitDB alloc] init];
     self.habits = [[NSMutableDictionary alloc] init];
-    [self.habitDB getAllHabits:self.habits];
+    self.habits = [self.habitDB getAllHabits:self.habits];
     self.habitsToView = [[NSMutableArray alloc] init];
     [self refreshHabits];
     //habits array initialized
@@ -82,12 +83,12 @@
     [emptyLabel1 setText:@"You have no habits to complete"];
     [emptyLabel1 setTextAlignment:NSTextAlignmentCenter];
     [emptyLabel1 setFont:[UIFont systemFontOfSize:17]];
-    [emptyLabel1 setTextColor:[utils textColor]];
+    [emptyLabel1 setTextColor:textColor];
     
     [emptyLabel2 setText:@"Tap the upper right to form a new habit"];
     [emptyLabel2 setTextAlignment:NSTextAlignmentCenter];
     [emptyLabel2 setFont:[UIFont systemFontOfSize:15]];
-    [emptyLabel2 setTextColor:[utils textColor]];
+    [emptyLabel2 setTextColor:textColor];
     
     [self.emptyView addSubview:emptyLabel1];
     [self.emptyView addSubview:emptyLabel2];
@@ -214,9 +215,8 @@
         cell = [[HabitCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
 
-    
-    [cell setBackgroundColor:[utils labelColor]];
-    [cell.contentView setBackgroundColor:[utils labelColor]];
+    [cell setBackgroundColor:labelColor];
+    [cell.contentView setBackgroundColor:labelColor];
     [cell.habitLabel setText:[habit name]];
     
     //add 'done' button
@@ -228,11 +228,11 @@
     //'delete' button
     
     //add days ago label
-    if ([habit.lastCompletion compare:[utils startingDate]] == NSOrderedSame)
+    if ([habit.lastCompletion compare:[DateUtils startingDate]] == NSOrderedSame)
     {
         cell.daysAgoLabel.text = @"never done";
     }
-    else if ([utils daysBetween:habit.lastCompletion and:[NSDate date]] == 1)
+    else if ([DateUtils daysBetween:habit.lastCompletion and:[NSDate date]] == 1)
     {
         cell.daysAgoLabel.text = @"last done: 1 day ago";
     }
@@ -240,19 +240,19 @@
     {
         cell.daysAgoLabel.text =
         [NSString stringWithFormat:@"last done: %d days ago",
-         (int)[utils daysBetween:habit.lastCompletion and:[NSDate date]]];
+         (int)[DateUtils daysBetween:habit.lastCompletion and:[NSDate date]]];
     }
     //days ago label added
     
     //add last completion date
-    if ([habit.lastCompletion compare:[utils startingDate]] == NSOrderedSame)
+    if ([habit.lastCompletion compare:[DateUtils startingDate]] == NSOrderedSame)
     {
         cell.lastCompletionLabel.text = @"never done";
     }
     else
     {
         cell.lastCompletionLabel.text =
-            [NSString stringWithFormat:@"last: %@", [utils getStringFromDate:habit.lastCompletion format:@"MM/dd/yy hh:mma"]];
+            [NSString stringWithFormat:@"last: %@", [DateUtils getStringFromDate:habit.lastCompletion format:@"MM/dd/yy hh:mma"]];
     }
     //last completion date added
     
@@ -284,14 +284,7 @@
                                    style:UIAlertActionStyleDestructive
                                    handler:^(UIAlertAction *action)
                                    {
-                                       [self.tableView beginUpdates];
-                                       [self.habitDB deleteHabit:(Habit *)[self.habits objectForKey:habitKey]];
-                                       [self.habits removeObjectForKey:habitKey];
-                                       [self.habitsToView removeObjectAtIndex:section];
-                                       [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:section]
-                                                     withRowAnimation:UITableViewRowAnimationLeft];
-                                       [self.tableView endUpdates];
-                                       [self isTableViewEmpty];
+                                       [self deleteHabitWithName:habitKey atSectionIndex:section];
                                    }];
     
     [deleteConfirmAlert addAction:cancelAction];
@@ -299,6 +292,18 @@
     
     [self presentViewController:deleteConfirmAlert animated:YES completion:nil];
     //end confirm deleting
+}
+
+- (void)deleteHabitWithName:(NSString *)name atSectionIndex:(NSInteger)section
+{
+    [self.tableView beginUpdates];
+    [self.habitDB deleteHabit:name];
+    [self.habits removeObjectForKey:name];
+    [self.habitsToView removeObjectAtIndex:section];
+    [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:section]
+                  withRowAnimation:UITableViewRowAnimationLeft];
+    [self.tableView endUpdates];
+    [self isTableViewEmpty];
 }
 
 //addNewHabit: called when returning from the new habit view
@@ -315,13 +320,13 @@
 - (NSInteger)createHabit:(NSString *)name
 {
     CGFloat widthLimit;
-    if([utils fullWidth] < [utils fullHeight])
+    if(self.view.frame.size.width < self.view.frame.size.height)
     {//the name should be small enough to display when in portrait mode
-        widthLimit = [utils fullWidth] - 100;
+        widthLimit = self.view.frame.size.width - 100;
     }
     else
     {
-        widthLimit = [utils fullHeight] - 100;
+        widthLimit = self.view.frame.size.height - 100;
     }
     
     if ([self.habits objectForKey:name] != nil)
@@ -343,7 +348,9 @@
         Habit *h;
         h = [self.habitDB createHabit:name];
         [self.habits setObject:h forKey:name];
-        [self.tableView reloadData];
+        [self.habitsToView addObject:h];
+        //[self.tableView reloadData];
+        [self refreshHabits];
         return 0;
     }
 }
@@ -469,12 +476,12 @@
         }
         else
         {
-            self.resetTime = [utils getDateFromString:@"12:00 am" format:@"hh:mm a"];
+            self.resetTime = [DateUtils getDateFromString:@"12:00 am" format:@"hh:mm a"];
         }
     }
     else
     {
-        self.resetTime = [utils getDateFromString:@"12:00 am" format:@"hh:mm a"];
+        self.resetTime = [DateUtils getDateFromString:@"12:00 am" format:@"hh:mm a"];
     }
 }
 

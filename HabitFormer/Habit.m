@@ -16,7 +16,7 @@
 {
     self = [super init];
     self.name = newName;
-    self.lastCompletion = [NSDate date];
+    self.lastCompletion = [DateUtils startingDate];
     return self;
 }
 
@@ -30,21 +30,14 @@
 
 -(void)complete
 {
-    self.lastCompletion = [NSDate date];
-}
-
--(void)encodeWithCoder:(NSCoder *)aCoder
-{
-    [aCoder encodeObject:self.name forKey:@"name"];
-    [aCoder encodeObject:self.lastCompletion forKey:@"lastCompletion"];
-}
-
--(id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super init];
-    self.name = (NSString *)[aDecoder decodeObjectForKey:@"name"];
-    self.lastCompletion = (NSDate *)[aDecoder decodeObjectForKey:@"lastCompletion"];
-    return self;
+    NSDate *newCompletion;
+    //I got some errors when directly using [NSDate date] as the new self.lastCompletion
+    newCompletion =
+        [DateUtils getDateFromString:[DateUtils getStringFromDate:[NSDate date]
+                                                           format:@"yyyy-MM-dd HH:mm"]
+                              format:@"yyyy-MM-dd HH:mm"];
+    
+    self.lastCompletion = newCompletion;
 }
 
 @end

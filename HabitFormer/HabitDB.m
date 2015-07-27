@@ -6,8 +6,13 @@
 //  Copyright (c) 2015 Charlie Moorhead. All rights reserved.
 //
 
+#ifdef TEST
+#define HABIT_DB_FILENAME @"habits_test.db"
+#else
+#define HABIT_DB_FILENAME @"habits.db"
+#endif
+
 #import "HabitDB.h"
-#import "utils.h"
 
 @implementation HabitDB
 
@@ -24,13 +29,13 @@
 {
     Habit *newHabit;
     
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"habits.db"];
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:HABIT_DB_FILENAME];
     
     NSString *insertQuery, *getQuery;
     insertQuery = [NSString stringWithFormat:
                    @"INSERT INTO Habits VALUES(NULL, '%@', '%@');",
                     name,
-                    [utils getStringFromDate:[utils startingDate] format:self.dateFormat]];
+                    [DateUtils getStringFromDate:[DateUtils startingDate] format:self.dateFormat]];
     getQuery = [NSString stringWithFormat:@"select * from habits where name='%@'", name];
     [self.dbManager executeQuery:insertQuery];
     
@@ -41,11 +46,8 @@
         if(habitInfo.count == 1)
         {
             NSString *name = habitInfo[0][1];
-            NSDate *completionDate = [utils getDateFromString:habitInfo[0][2] format:self.dateFormat];
+            NSDate *completionDate = [DateUtils getDateFromString:habitInfo[0][2] format:self.dateFormat];
             newHabit = [[Habit alloc] initWithName:name andCompletion:completionDate];
-            //newHabit = [[Habit alloc] init];
-            //newHabit.name = habitInfo[0][1];
-            //newHabit.lastCompletion = [utils getDateFromString:habitInfo[0][2] format:@"ddMMMyyyy HH:mm"];
             return newHabit;
         }
         else
@@ -64,12 +66,12 @@
 
 //-delete habit
     // input: name, output: did it work?
--(BOOL)deleteHabit: (Habit *)habit
+-(BOOL)deleteHabit: (NSString *)name
 {
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"habits.db"];
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:HABIT_DB_FILENAME];
     
     NSString *deleteQuery;
-    deleteQuery = [NSString stringWithFormat:@"DELETE FROM Habits WHERE UPPER(name)=UPPER('%@')", habit.name];
+    deleteQuery = [NSString stringWithFormat:@"DELETE FROM Habits WHERE UPPER(name)=UPPER('%@')", name];
     [self.dbManager executeQuery:deleteQuery];
     
     if([self.dbManager affectedRows] == 1)
@@ -88,13 +90,13 @@
     // input name, output: did it work?
 -(BOOL)completeHabit: (Habit *)habit
 {
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"habits.db"];
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:HABIT_DB_FILENAME];
     
     [habit complete];
     
     NSString *updateQuery =
         [NSString stringWithFormat:@"UPDATE Habits SET lastCompletionDate='%@' WHERE name='%@'",
-         [utils getStringFromDate:habit.lastCompletion format:self.dateFormat],
+         [DateUtils getStringFromDate:habit.lastCompletion format:self.dateFormat],
          habit.name];
     [self.dbManager executeQuery:updateQuery];
     
@@ -115,13 +117,17 @@
 
 
 //-get all habits
-    // input: mutable array, output: mutable array of all habits, sorted by last completion date, ascending
--(void)getAllHabits: (NSMutableDictionary *)habitDict
+    // input: mutable dict, output: mutable dict of all habits
+-(NSMutableDictionary *)getAllHabits: (NSMutableDictionary *)habitDict
 {
     NSArray *habits;
+    if (habitDict == nil)
+    {
+        habitDict = [[NSMutableDictionary alloc] init];
+    }
     [habitDict removeAllObjects];
     
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"habits.db"];
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:HABIT_DB_FILENAME];
     
     NSString *selectQuery = @"SELECT * FROM Habits ORDER BY lastCompletionDate";
     
@@ -130,9 +136,11 @@
     for(NSArray *a in habits)
     {
         NSString *name = a[1];
-        NSDate *completionDate = [utils getDateFromString:a[2] format:self.dateFormat];
+        NSDate *completionDate = [DateUtils getDateFromString:a[2] format:self.dateFormat];
         [habitDict setObject:[[Habit alloc] initWithName:name andCompletion:completionDate] forKey:name];
     }
+    
+    return habitDict;
 }
 
 
@@ -142,7 +150,7 @@
 {
     Habit *habit;
     
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"habits.db"];
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:HABIT_DB_FILENAME];
     
     NSString *selectQuery = [NSString stringWithFormat:@"SELECT * FROM Habits WHERE UPPER(name)=UPPER('%@')",
                              name];
@@ -153,11 +161,11 @@
     if(habitArray.count == 1)
     {
         NSString *name = habitArray[0][1];
-        NSDate *completionDate = [utils getDateFromString:habitArray[0][2] format:self.dateFormat];
+        NSDate *completionDate = [DateUtils getDateFromString:habitArray[0][2] format:self.dateFormat];
         habit = [[Habit alloc] initWithName:name andCompletion:completionDate];
         //habit = [[Habit alloc] init];
         //habit.name = habitArray[0][1];
-        //habit.lastCompletion = [utils getDateFromString:habitArray[0][2] format:@"ddMMMyyyy hh:mm"];
+        //habit.lastCompletion = [DateUtils getDateFromString:habitArray[0][2] format:@"ddMMMyyyy hh:mm"];
         return habit;
     }
     else

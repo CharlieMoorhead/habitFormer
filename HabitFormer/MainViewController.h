@@ -25,3 +25,11 @@
 @property (nonatomic,strong) UIView *emptyView;
 
 @end
+
+
+@interface MainViewController (test)
+
+- (NSInteger)createHabit:(NSString *)name;
+- (void)deleteHabitWithName:(NSString *)name atSectionIndex:(NSInteger)section;
+
+@end

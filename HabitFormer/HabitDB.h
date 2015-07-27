@@ -13,10 +13,10 @@
 @interface HabitDB : NSObject
 
 -(Habit *)createHabit: (NSString *)name;
--(BOOL)deleteHabit: (Habit *)habit;
+-(BOOL)deleteHabit: (NSString *)name;
 -(BOOL)completeHabit: (Habit *)habit;
 -(Habit *)getHabitFromName: (NSString *)name;
--(void)getAllHabits: (NSMutableDictionary *)habitDict;
+-(NSMutableDictionary *)getAllHabits: (NSMutableDictionary *)habitDict;
 
 @property (strong, nonatomic) DBManager *dbManager;
 @property (strong, nonatomic) NSString *dateFormat;

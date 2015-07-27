@@ -10,7 +10,6 @@
 #import "NewHabitViewController.h"
 #import "MainViewController.h"
 #import "Habit.h"
-#import "utils.h"
 
 @interface NewHabitViewController ()
 
@@ -33,13 +32,14 @@
     // Do any additional setup after loading the view.
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.view.backgroundColor = [utils backgroundColor];
+    self.view.backgroundColor = backgroundColor;
     self.title = @"New Habit";
     
     //set up name textfield
     self.name = [[UITextField alloc] init];
     self.name.translatesAutoresizingMaskIntoConstraints = NO;
-    self.name.backgroundColor = [utils labelColor];
+    self.name.backgroundColor = labelColor;
+    self.name.textColor = textColor;
     self.name.delegate = self;
     [self.view addSubview:self.name];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.name
@@ -49,7 +49,7 @@
                                                           attribute:NSLayoutAttributeLeft
                                                          multiplier:1.0f
                                                            constant:50.0f
-                              ]];
+                              ]];//0
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.name
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
@@ -57,7 +57,7 @@
                                                           attribute:NSLayoutAttributeTop
                                                          multiplier:1.0f
                                                            constant:10.0f
-                              ]];
+                              ]];//1
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.name
                                                           attribute:NSLayoutAttributeWidth
                                                           relatedBy:NSLayoutRelationEqual
@@ -65,7 +65,7 @@
                                                           attribute:NSLayoutAttributeWidth
                                                          multiplier:1.0f
                                                            constant:-50.0f
-                              ]];
+                              ]];//2
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.name
                                                           attribute:NSLayoutAttributeHeight
                                                           relatedBy:NSLayoutRelationEqual
@@ -73,15 +73,15 @@
                                                           attribute:NSLayoutAttributeNotAnAttribute
                                                          multiplier:1.0f
                                                            constant:45.0f
-                              ]];
+                              ]];//3
     //end name text field
     
     //set up name label
     self.nameLabel = [[UILabel alloc] init];
     self.nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.nameLabel.backgroundColor = [utils labelColor];
+    self.nameLabel.backgroundColor = labelColor;
     [self.nameLabel setFont:[UIFont systemFontOfSize:12]];
-    self.nameLabel.textColor = [utils textColor];
+    self.nameLabel.textColor = textColor;
     self.nameLabel.text = @"name";
     self.nameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.nameLabel];
@@ -92,7 +92,7 @@
                                                           attribute:NSLayoutAttributeLeft
                                                          multiplier:1.0f
                                                            constant:0.0f
-                              ]];
+                              ]];//4
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.nameLabel
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
@@ -100,7 +100,7 @@
                                                           attribute:NSLayoutAttributeTop
                                                          multiplier:1.0f
                                                            constant:10.0f
-                              ]];
+                              ]];//5
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.nameLabel
                                                           attribute:NSLayoutAttributeWidth
                                                           relatedBy:NSLayoutRelationEqual
@@ -108,7 +108,7 @@
                                                           attribute:NSLayoutAttributeNotAnAttribute
                                                          multiplier:1.0f
                                                            constant:50.0f
-                              ]];
+                              ]];//6
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.nameLabel
                                                           attribute:NSLayoutAttributeHeight
                                                           relatedBy:NSLayoutRelationEqual
@@ -116,13 +116,13 @@
                                                           attribute:NSLayoutAttributeNotAnAttribute
                                                          multiplier:1.0f
                                                            constant:45.0f
-                              ]];
+                              ]];//7
     //end name label
     
     //set up create button
     self.create = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.create.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.create setTintColor:[utils buttonColor]];
+    [self.create setTintColor:buttonColor];
     [self.create setTitle:@"Create" forState:UIControlStateNormal];
     [self.create addTarget:self action:@selector(createHabit) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.create];
@@ -133,7 +133,7 @@
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:0.21f
                                                            constant:0.0f
-                              ]];
+                              ]];//8
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.create
                                                           attribute:NSLayoutAttributeCenterX
                                                           relatedBy:NSLayoutRelationEqual
@@ -141,31 +141,30 @@
                                                           attribute:NSLayoutAttributeCenterX
                                                          multiplier:1.0f
                                                            constant:0.0f
-                              ]];
+                              ]];//9
     //end create button
 }
 
--(void)createHabit {
+//returns:
+//  0   success
+//  4   too short (0 characters entered)
+//  3   too long
+//  2   too many habits (99 already exist)
+//  1   name is already used
+//
+-(NSInteger)createHabit {
     NSString *habitName = [self.name.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
     if (habitName.length == 0) {
-        UIAlertController *tooShortAlert = [UIAlertController
-                                         alertControllerWithTitle:nil
-                                         message:@"Please enter a name"
-                                         preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertView *tooShortAlert = [[UIAlertView alloc] initWithTitle:@"please enter a name"
+                                                                message:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:@"of course"
+                                                      otherButtonTitles:nil];
+        [self displayAlert:tooShortAlert];
         
-        
-        UIAlertAction *okAction = [UIAlertAction
-                                   actionWithTitle:@"of course"
-                                   style:UIAlertActionStyleCancel
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       //of course...
-                                   }];
-        
-        [tooShortAlert addAction:okAction];
-        
-        [self presentViewController:tooShortAlert animated:YES completion:nil];
+        [self displayAlert:tooShortAlert];
+        return 4;
     }
     else
     {
@@ -174,72 +173,46 @@
         switch (statusCode) {
             case 1: //name is already used
             {
-                UIAlertController *inUseAlert = [UIAlertController
-                                                 alertControllerWithTitle:nil
-                                                 message:@"That habit already exists!"
-                                                 preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertView *inUseAlert = [[UIAlertView alloc] initWithTitle:@"that habit already exists"
+                                                                     message:nil
+                                                                    delegate:self
+                                                           cancelButtonTitle:@"oh, ok"
+                                                           otherButtonTitles:nil];
+                [self displayAlert:inUseAlert];
                 
-                
-                UIAlertAction *okAction = [UIAlertAction
-                                           actionWithTitle:@"oh, ok"
-                                           style:UIAlertActionStyleCancel
-                                           handler:^(UIAlertAction *action)
-                                           {
-                                               //okay...
-                                           }];
-                
-                [inUseAlert addAction:okAction];
-                
-                [self presentViewController:inUseAlert animated:YES completion:nil];
+                return 1;
                 break;
             }
                 
             case 2: //already 99 habits
             {
-                UIAlertController *tooManyAlert = [UIAlertController
-                                                   alertControllerWithTitle:nil
-                                                   message:@"Maybe you should focus on\nyour 99 other habits"
-                                                   preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertView *tooManyAlert = [[UIAlertView alloc] initWithTitle:@"maybe you should focus on\nyour 99 other habits"
+                                                                       message:nil
+                                                                      delegate:self
+                                                             cancelButtonTitle:@"fine"
+                                                             otherButtonTitles:nil];
+                [self displayAlert:tooManyAlert];
                 
-                UIAlertAction *okAction = [UIAlertAction
-                                           actionWithTitle:@"fine"
-                                           style:UIAlertActionStyleCancel
-                                           handler:^(UIAlertAction *action)
-                                           {
-                                               //fine...
-                                           }];
-                
-                [tooManyAlert addAction:okAction];
-                
-                [self presentViewController:tooManyAlert animated:YES completion:nil];
+                return 2;
                 break;
             }
             
             case 3: //name is too long to be displayed
             {
-                UIAlertController *tooLongAlert = [UIAlertController
-                                                   alertControllerWithTitle:nil
-                                                   message:@"That name is too long"
-                                                   preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction *okAction = [UIAlertAction
-                                           actionWithTitle:@"ok"
-                                           style:UIAlertActionStyleCancel
-                                           handler:^(UIAlertAction *action)
-                                           {
-                                               //Ok...
-                                           }];
-                
-                [tooLongAlert addAction:okAction];
-                
-                [self presentViewController:tooLongAlert animated:YES completion:nil];
+                UIAlertView *tooLongAlert = [[UIAlertView alloc] initWithTitle:@"that name is too long"
+                                                                           message:nil delegate:self
+                                                                 cancelButtonTitle:@"ok"
+                                                                 otherButtonTitles:nil];
+                [self displayAlert:tooLongAlert];
+
+                return 3;
                 break;
             }
                 
             case 0: //habit created successfully
             default:
                 [[self navigationController] popToRootViewControllerAnimated:YES];
-                break;
+                return 0;
         }
         
         
@@ -256,6 +229,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)displayAlert:(UIAlertView *)alert
+{
+    [alert show];
 }
 
 @end

@@ -8,7 +8,6 @@
 
 #import "SettingsViewController.h"
 #import "MainViewController.h"
-#import "utils.h"
 
 @interface SettingsViewController ()
 
@@ -19,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.view.backgroundColor = [utils backgroundColor];
+    self.view.backgroundColor = backgroundColor;
     self.title = @"Settings";
     
     self.settingsView = [[UIView alloc] init];
@@ -45,7 +44,7 @@
     //time label
     UIView *timeView = [[UIView alloc] init];
     timeView.translatesAutoresizingMaskIntoConstraints = NO;
-    timeView.backgroundColor = [utils labelColor];
+    timeView.backgroundColor = labelColor;
     [self.settingsView addSubview:timeView];
     [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:timeView
                                                                  attribute:NSLayoutAttributeHeight
@@ -82,7 +81,8 @@
     
     UILabel *timeTitleLabel = [[UILabel alloc] init];
     timeTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    timeTitleLabel.text = @"daily reset time";
+    [timeTitleLabel setText:@"daily reset time"];
+    [timeTitleLabel setTextColor:textColor];
     [timeView addSubview:timeTitleLabel];
     [timeView addConstraint:[NSLayoutConstraint constraintWithItem:timeTitleLabel
                                                          attribute:NSLayoutAttributeLeft
@@ -104,7 +104,8 @@
     MainViewController *mainView = (MainViewController *)self.navigationController.viewControllers[0];
     self.timeViewLabel = [[UILabel alloc] init];
     self.timeViewLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.timeViewLabel.text = [utils getStringFromDate:mainView.resetTime format:@"hh:mm a"];
+    [self.timeViewLabel setText:[DateUtils getStringFromDate:mainView.resetTime format:@"hh:mm a"]];
+    [self.timeViewLabel setTextColor:textColor];
     [timeView addSubview:self.timeViewLabel];
     [timeView addConstraint:[NSLayoutConstraint constraintWithItem:self.timeViewLabel
                                                          attribute:NSLayoutAttributeCenterY
@@ -128,7 +129,7 @@
     
     UIView *timePickerHider = [[UIView alloc] init];
     timePickerHider.translatesAutoresizingMaskIntoConstraints = NO;
-    timePickerHider.backgroundColor = [utils backgroundColor];
+    timePickerHider.backgroundColor = backgroundColor;
     [self.settingsView addSubview:timePickerHider];
     [self.settingsView addConstraint:[NSLayoutConstraint constraintWithItem:timePickerHider
                                                                   attribute:NSLayoutAttributeTop
@@ -158,9 +159,10 @@
     self.timePicker = [[UIDatePicker alloc] init];
     self.timePicker.translatesAutoresizingMaskIntoConstraints = NO;
     self.timePicker.datePickerMode = UIDatePickerModeTime;
-    self.timePicker.backgroundColor = [utils labelColor];
+    self.timePicker.backgroundColor = labelColor;
+    [self.timePicker setTintColor:textColor];
     
-    self.timePicker.date = [utils getDateFromString:self.timeViewLabel.text format:@"hh:mm a"];
+    self.timePicker.date = [DateUtils getDateFromString:self.timeViewLabel.text format:@"hh:mm a"];
     
     [self.timePicker addTarget:self action:@selector(timePickerValueChanged) forControlEvents:UIControlEventValueChanged];
     [self.timePicker setUserInteractionEnabled:NO];
@@ -198,7 +200,7 @@
 
 - (void) timePickerValueChanged
 {
-    self.timeViewLabel.text = [utils getStringFromDate:[self.timePicker date] format:@"hh:mm a"];
+    self.timeViewLabel.text = [DateUtils getStringFromDate:[self.timePicker date] format:@"hh:mm a"];
     
     MainViewController *mainView = (MainViewController *)self.navigationController.viewControllers[0];
     mainView.resetTime = [self.timePicker date];
@@ -211,7 +213,12 @@
     
     if(self.timePicker.userInteractionEnabled == NO)
     {
-        self.timePicker.date = [utils getDateFromString:self.timeViewLabel.text format:@"hh:mm a"];
+        //the next two lines reset the timepicker to the right time, and stop any rolling animation
+        //I had to set the timepicker to the current date, otherwise the rolling animation wouldn't always be stopped
+        //...for some reason I don't understand
+        [self.timePicker setDate:[NSDate date] animated:NO];
+        [self.timePicker setDate:[DateUtils getDateFromString:self.timeViewLabel.text format:@"hh:mm a"] animated:NO];
+        
         [self.timePicker addTarget:self action:@selector(timePickerValueChanged) forControlEvents:UIControlEventValueChanged];
         [self.settingsView layoutIfNeeded];
         [UIView animateWithDuration:0.6 animations:^{
@@ -221,7 +228,7 @@
             if (done)
             {
                 [timeView setUserInteractionEnabled:YES];
-                [self.timePicker setUserInteractionEnabled:YES];
+                [self.timePicker setUserInteractionEnabled:YES];               
             }
         }];
     }

@@ -1,5 +1,5 @@
 //
-//  utils.h
+//  DateUtils.h
 //  HabitFormer
 //
 //  Created by Charlie Moorhead on 10/2/14.
@@ -8,17 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface utils : NSObject
+@interface DateUtils : NSObject
 
-+ (CGFloat)fullWidth;
-+ (CGFloat)fullHeight;
 + (NSInteger)daysBetween:(NSDate *)date1 and:(NSDate *)date2;
 + (NSDate *) getDateFromString:(NSString *)dateString format:(NSString *)formatString;
 + (NSString *) getStringFromDate:(NSDate *)date format:(NSString *)formatString;
 + (NSDate *)startingDate;
-+ (UIColor *) labelColor;
-+ (UIColor *) backgroundColor;
-+ (UIColor *) textColor;
-+ (UIColor *) buttonColor;
 
 @end

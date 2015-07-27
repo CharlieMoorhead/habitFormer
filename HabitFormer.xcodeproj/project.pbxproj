@@ -8,13 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		CB00EC4D1A7E184300C2D920 /* HabitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB00EC4C1A7E184300C2D920 /* HabitCell.m */; };
+		CB0AB0371B4F8E41004172D0 /* DateUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB0AB0361B4F8E41004172D0 /* DateUtilsTests.m */; };
+		CB0AB03A1B4F9792004172D0 /* Colors.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB0AB0391B4F9792004172D0 /* Colors.mm */; };
 		CB111CDF1AA5F3070018A202 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CB111CDE1AA5F3070018A202 /* libsqlite3.dylib */; };
 		CB111CE21AA5F3530018A202 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CB111CE11AA5F3530018A202 /* DBManager.m */; };
+		CB1575911B4FBAE900BBA908 /* HabitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1575901B4FBAE900BBA908 /* HabitTests.m */; };
+		CB1575931B4FC30E00BBA908 /* HabitCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1575921B4FC30E00BBA908 /* HabitCellTests.m */; };
 		CB2C1897194140AD0013628B /* NewHabitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB2C1896194140AD0013628B /* NewHabitViewController.m */; };
+		CB2F970A1B5D0CF600632DEF /* HabitDB.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC4711C1B255D7A001840E7 /* HabitDB.m */; };
+		CB2F970B1B5D11EF00632DEF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBEB2A35193E3D5C006BD85E /* MainViewController.m */; };
+		CB36B2D31B662D330037B4EF /* SettingsViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB36B2D21B662D330037B4EF /* SettingsViewControllerTests.m */; };
+		CB525CF31B50E2660061DD19 /* HabitDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB525CF21B50E2660061DD19 /* HabitDBTests.m */; };
 		CB61096619DB648F00734843 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB61096519DB648F00734843 /* SettingsViewController.m */; };
+		CB88BAA51B53B5AE0036677B /* NewHabitViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB88BAA41B53B5AE0036677B /* NewHabitViewControllerTests.m */; };
 		CBA0E3F81B0F467C00D125C4 /* habits.db in Resources */ = {isa = PBXBuildFile; fileRef = CBA0E3F71B0F467C00D125C4 /* habits.db */; };
-		CBB3631C19DE092D00FBCA5E /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB3631B19DE092D00FBCA5E /* utils.m */; };
+		CBB3631C19DE092D00FBCA5E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB3631B19DE092D00FBCA5E /* DateUtils.m */; };
+		CBB4E2B11B5CE84B0016FE0C /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB4E2B01B5CE84B0016FE0C /* libOCMock.a */; };
 		CBC0931F1975ECC500CB4274 /* tasks_log in Resources */ = {isa = PBXBuildFile; fileRef = CBC0931E1975ECC500CB4274 /* tasks_log */; };
+		CBC470971B52547500CEB014 /* habits_test.db in Resources */ = {isa = PBXBuildFile; fileRef = CBC470941B5250F800CEB014 /* habits_test.db */; };
+		CBC470981B52547700CEB014 /* habits_test.db in Resources */ = {isa = PBXBuildFile; fileRef = CBC470941B5250F800CEB014 /* habits_test.db */; };
 		CBC4711D1B255D7A001840E7 /* HabitDB.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC4711C1B255D7A001840E7 /* HabitDB.m */; };
 		CBEB2A04193E3CD0006BD85E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEB2A03193E3CD0006BD85E /* Foundation.framework */; };
 		CBEB2A06193E3CD0006BD85E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEB2A05193E3CD0006BD85E /* CoreGraphics.framework */; };
@@ -27,7 +39,6 @@
 		CBEB2A1E193E3CD0006BD85E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEB2A03193E3CD0006BD85E /* Foundation.framework */; };
 		CBEB2A1F193E3CD0006BD85E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEB2A07193E3CD0006BD85E /* UIKit.framework */; };
 		CBEB2A27193E3CD0006BD85E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CBEB2A25193E3CD0006BD85E /* InfoPlist.strings */; };
-		CBEB2A29193E3CD0006BD85E /* HabitFormerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CBEB2A28193E3CD0006BD85E /* HabitFormerTests.m */; };
 		CBEB2A36193E3D5C006BD85E /* Habit.m in Sources */ = {isa = PBXBuildFile; fileRef = CBEB2A33193E3D5C006BD85E /* Habit.m */; };
 		CBEB2A37193E3D5C006BD85E /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBEB2A35193E3D5C006BD85E /* MainViewController.m */; };
 /* End PBXBuildFile section */
@@ -45,19 +56,29 @@
 /* Begin PBXFileReference section */
 		CB00EC4B1A7E184300C2D920 /* HabitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitCell.h; sourceTree = "<group>"; };
 		CB00EC4C1A7E184300C2D920 /* HabitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HabitCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CB0AB0361B4F8E41004172D0 /* DateUtilsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DateUtilsTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CB0AB0381B4F9792004172D0 /* Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
+		CB0AB0391B4F9792004172D0 /* Colors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Colors.mm; sourceTree = "<group>"; };
 		CB111CDE1AA5F3070018A202 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		CB111CE01AA5F3530018A202 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		CB111CE11AA5F3530018A202 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		CB1575901B4FBAE900BBA908 /* HabitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitTests.m; sourceTree = "<group>"; };
+		CB1575921B4FC30E00BBA908 /* HabitCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitCellTests.m; sourceTree = "<group>"; };
 		CB2C1895194140AD0013628B /* NewHabitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHabitViewController.h; sourceTree = "<group>"; };
-		CB2C1896194140AD0013628B /* NewHabitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHabitViewController.m; sourceTree = "<group>"; };
+		CB2C1896194140AD0013628B /* NewHabitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NewHabitViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CB36B2D21B662D330037B4EF /* SettingsViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewControllerTests.m; sourceTree = "<group>"; };
+		CB525CF21B50E2660061DD19 /* HabitDBTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitDBTests.m; sourceTree = "<group>"; };
 		CB61096419DB648F00734843 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		CB61096519DB648F00734843 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		CB61096519DB648F00734843 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SettingsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CB88BAA41B53B5AE0036677B /* NewHabitViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHabitViewControllerTests.m; sourceTree = "<group>"; };
 		CBA0E3F71B0F467C00D125C4 /* habits.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = habits.db; sourceTree = "<group>"; };
-		CBB3631A19DE092D00FBCA5E /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = utils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		CBB3631B19DE092D00FBCA5E /* utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = utils.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		CBC0931E1975ECC500CB4274 /* tasks_log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tasks_log; sourceTree = "<group>"; };
+		CBB3631A19DE092D00FBCA5E /* DateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DateUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		CBB3631B19DE092D00FBCA5E /* DateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DateUtils.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CBB4E2B01B5CE84B0016FE0C /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = usr/lib/libOCMock.a; sourceTree = "<group>"; };
+		CBC0931E1975ECC500CB4274 /* tasks_log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; path = tasks_log; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = "<none>"; };
+		CBC470941B5250F800CEB014 /* habits_test.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = habits_test.db; path = HabitFormerTests/habits_test.db; sourceTree = SOURCE_ROOT; };
 		CBC4711B1B255D7A001840E7 /* HabitDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitDB.h; sourceTree = "<group>"; };
-		CBC4711C1B255D7A001840E7 /* HabitDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitDB.m; sourceTree = "<group>"; };
+		CBC4711C1B255D7A001840E7 /* HabitDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HabitDB.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CBEB2A00193E3CD0006BD85E /* HabitFormer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitFormer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBEB2A03193E3CD0006BD85E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CBEB2A05193E3CD0006BD85E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -73,7 +94,6 @@
 		CBEB2A1C193E3CD0006BD85E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		CBEB2A24193E3CD0006BD85E /* HabitFormerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HabitFormerTests-Info.plist"; sourceTree = "<group>"; };
 		CBEB2A26193E3CD0006BD85E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CBEB2A28193E3CD0006BD85E /* HabitFormerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HabitFormerTests.m; sourceTree = "<group>"; };
 		CBEB2A32193E3D5C006BD85E /* Habit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Habit.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CBEB2A33193E3D5C006BD85E /* Habit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Habit.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CBEB2A34193E3D5C006BD85E /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MainViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -96,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBB4E2B11B5CE84B0016FE0C /* libOCMock.a in Frameworks */,
 				CBEB2A1D193E3CD0006BD85E /* XCTest.framework in Frameworks */,
 				CBEB2A1F193E3CD0006BD85E /* UIKit.framework in Frameworks */,
 				CBEB2A1E193E3CD0006BD85E /* Foundation.framework in Frameworks */,
@@ -105,6 +126,68 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CBB4E2AA1B5CE6940016FE0C /* Main View */ = {
+			isa = PBXGroup;
+			children = (
+				CBEB2A34193E3D5C006BD85E /* MainViewController.h */,
+				CBEB2A35193E3D5C006BD85E /* MainViewController.m */,
+				CB00EC4B1A7E184300C2D920 /* HabitCell.h */,
+				CB00EC4C1A7E184300C2D920 /* HabitCell.m */,
+			);
+			name = "Main View";
+			sourceTree = "<group>";
+		};
+		CBB4E2AB1B5CE6B30016FE0C /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				CBB3631A19DE092D00FBCA5E /* DateUtils.h */,
+				CBB3631B19DE092D00FBCA5E /* DateUtils.m */,
+				CB0AB0381B4F9792004172D0 /* Colors.h */,
+				CB0AB0391B4F9792004172D0 /* Colors.mm */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		CBB4E2AC1B5CE6CD0016FE0C /* Settings View */ = {
+			isa = PBXGroup;
+			children = (
+				CB61096419DB648F00734843 /* SettingsViewController.h */,
+				CB61096519DB648F00734843 /* SettingsViewController.m */,
+			);
+			name = "Settings View";
+			sourceTree = "<group>";
+		};
+		CBB4E2AD1B5CE6F40016FE0C /* New Habit View */ = {
+			isa = PBXGroup;
+			children = (
+				CB2C1895194140AD0013628B /* NewHabitViewController.h */,
+				CB2C1896194140AD0013628B /* NewHabitViewController.m */,
+			);
+			name = "New Habit View";
+			sourceTree = "<group>";
+		};
+		CBB4E2AE1B5CE71C0016FE0C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				CBEB2A33193E3D5C006BD85E /* Habit.m */,
+				CBEB2A32193E3D5C006BD85E /* Habit.h */,
+				CB111CE01AA5F3530018A202 /* DBManager.h */,
+				CB111CE11AA5F3530018A202 /* DBManager.m */,
+				CBC4711B1B255D7A001840E7 /* HabitDB.h */,
+				CBC4711C1B255D7A001840E7 /* HabitDB.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		CBB4E2AF1B5CE73D0016FE0C /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				CBEB2A12193E3CD0006BD85E /* HabitFormerAppDelegate.h */,
+				CBEB2A13193E3CD0006BD85E /* HabitFormerAppDelegate.m */,
+			);
+			name = "App Delegate";
+			sourceTree = "<group>";
+		};
 		CBEB29F7193E3CD0006BD85E = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +210,7 @@
 		CBEB2A02193E3CD0006BD85E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CBB4E2B01B5CE84B0016FE0C /* libOCMock.a */,
 				CB111CDE1AA5F3070018A202 /* libsqlite3.dylib */,
 				CBEB2A03193E3CD0006BD85E /* Foundation.framework */,
 				CBEB2A05193E3CD0006BD85E /* CoreGraphics.framework */,
@@ -139,28 +223,17 @@
 		CBEB2A09193E3CD0006BD85E /* HabitFormer */ = {
 			isa = PBXGroup;
 			children = (
-				CBA0E3F71B0F467C00D125C4 /* habits.db */,
-				CB2C1895194140AD0013628B /* NewHabitViewController.h */,
-				CB2C1896194140AD0013628B /* NewHabitViewController.m */,
+				CBB4E2AF1B5CE73D0016FE0C /* App Delegate */,
+				CBB4E2AA1B5CE6940016FE0C /* Main View */,
+				CBB4E2AC1B5CE6CD0016FE0C /* Settings View */,
+				CBB4E2AD1B5CE6F40016FE0C /* New Habit View */,
+				CBB4E2AE1B5CE71C0016FE0C /* Classes */,
+				CBB4E2AB1B5CE6B30016FE0C /* Utilities */,
 				CBC0931E1975ECC500CB4274 /* tasks_log */,
-				CBEB2A32193E3D5C006BD85E /* Habit.h */,
-				CBEB2A33193E3D5C006BD85E /* Habit.m */,
-				CBEB2A34193E3D5C006BD85E /* MainViewController.h */,
-				CBEB2A35193E3D5C006BD85E /* MainViewController.m */,
-				CB111CE01AA5F3530018A202 /* DBManager.h */,
-				CB111CE11AA5F3530018A202 /* DBManager.m */,
-				CBEB2A12193E3CD0006BD85E /* HabitFormerAppDelegate.h */,
-				CBEB2A13193E3CD0006BD85E /* HabitFormerAppDelegate.m */,
+				CBC470941B5250F800CEB014 /* habits_test.db */,
+				CBA0E3F71B0F467C00D125C4 /* habits.db */,
 				CBEB2A15193E3CD0006BD85E /* Images.xcassets */,
 				CBEB2A0A193E3CD0006BD85E /* Supporting Files */,
-				CB61096419DB648F00734843 /* SettingsViewController.h */,
-				CB61096519DB648F00734843 /* SettingsViewController.m */,
-				CBB3631A19DE092D00FBCA5E /* utils.h */,
-				CBB3631B19DE092D00FBCA5E /* utils.m */,
-				CB00EC4B1A7E184300C2D920 /* HabitCell.h */,
-				CB00EC4C1A7E184300C2D920 /* HabitCell.m */,
-				CBC4711B1B255D7A001840E7 /* HabitDB.h */,
-				CBC4711C1B255D7A001840E7 /* HabitDB.m */,
 			);
 			path = HabitFormer;
 			sourceTree = "<group>";
@@ -179,8 +252,13 @@
 		CBEB2A22193E3CD0006BD85E /* HabitFormerTests */ = {
 			isa = PBXGroup;
 			children = (
-				CBEB2A28193E3CD0006BD85E /* HabitFormerTests.m */,
 				CBEB2A23193E3CD0006BD85E /* Supporting Files */,
+				CB0AB0361B4F8E41004172D0 /* DateUtilsTests.m */,
+				CB1575901B4FBAE900BBA908 /* HabitTests.m */,
+				CB1575921B4FC30E00BBA908 /* HabitCellTests.m */,
+				CB525CF21B50E2660061DD19 /* HabitDBTests.m */,
+				CB88BAA41B53B5AE0036677B /* NewHabitViewControllerTests.m */,
+				CB36B2D21B662D330037B4EF /* SettingsViewControllerTests.m */,
 			);
 			path = HabitFormerTests;
 			sourceTree = "<group>";
@@ -274,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBA0E3F81B0F467C00D125C4 /* habits.db in Resources */,
+				CBC470971B52547500CEB014 /* habits_test.db in Resources */,
 				CBEB2A0E193E3CD0006BD85E /* InfoPlist.strings in Resources */,
 				CBEB2A16193E3CD0006BD85E /* Images.xcassets in Resources */,
 				CBC0931F1975ECC500CB4274 /* tasks_log in Resources */,
@@ -284,6 +363,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBC470981B52547700CEB014 /* habits_test.db in Resources */,
 				CBEB2A27193E3CD0006BD85E /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,8 +380,9 @@
 				CB2C1897194140AD0013628B /* NewHabitViewController.m in Sources */,
 				CBEB2A14193E3CD0006BD85E /* HabitFormerAppDelegate.m in Sources */,
 				CB111CE21AA5F3530018A202 /* DBManager.m in Sources */,
-				CBB3631C19DE092D00FBCA5E /* utils.m in Sources */,
+				CBB3631C19DE092D00FBCA5E /* DateUtils.m in Sources */,
 				CB61096619DB648F00734843 /* SettingsViewController.m in Sources */,
+				CB0AB03A1B4F9792004172D0 /* Colors.mm in Sources */,
 				CBEB2A10193E3CD0006BD85E /* main.m in Sources */,
 				CB00EC4D1A7E184300C2D920 /* HabitCell.m in Sources */,
 				CBEB2A37193E3D5C006BD85E /* MainViewController.m in Sources */,
@@ -312,7 +393,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBEB2A29193E3CD0006BD85E /* HabitFormerTests.m in Sources */,
+				CB2F970A1B5D0CF600632DEF /* HabitDB.m in Sources */,
+				CB2F970B1B5D11EF00632DEF /* MainViewController.m in Sources */,
+				CB1575911B4FBAE900BBA908 /* HabitTests.m in Sources */,
+				CB36B2D31B662D330037B4EF /* SettingsViewControllerTests.m in Sources */,
+				CB88BAA51B53B5AE0036677B /* NewHabitViewControllerTests.m in Sources */,
+				CB0AB0371B4F8E41004172D0 /* DateUtilsTests.m in Sources */,
+				CB525CF31B50E2660061DD19 /* HabitDBTests.m in Sources */,
+				CB1575931B4FC30E00BBA908 /* HabitCellTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +434,101 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		CB2F970C1B5D1AD000632DEF /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"TEST=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Test;
+		};
+		CB2F970D1B5D1AD000632DEF /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HabitFormer/HabitFormer-Prefix.pch";
+				INFOPLIST_FILE = "HabitFormer/HabitFormer-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Test;
+		};
+		CB2F970E1B5D1AD000632DEF /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/HabitFormer.app/HabitFormer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HabitFormer/HabitFormer-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/usr/include",
+				);
+				INFOPLIST_FILE = "HabitFormerTests/HabitFormerTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/usr/lib",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Test;
+		};
 		CBEB2A2A193E3CD0006BD85E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -469,7 +652,22 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/usr/include",
+				);
 				INFOPLIST_FILE = "HabitFormerTests/HabitFormerTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/usr/lib",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -487,7 +685,22 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HabitFormer/HabitFormer-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/usr/include",
+				);
 				INFOPLIST_FILE = "HabitFormerTests/HabitFormerTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/usr/lib",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -501,6 +714,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CBEB2A2A193E3CD0006BD85E /* Debug */,
+				CB2F970C1B5D1AD000632DEF /* Test */,
 				CBEB2A2B193E3CD0006BD85E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -510,6 +724,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CBEB2A2D193E3CD0006BD85E /* Debug */,
+				CB2F970D1B5D1AD000632DEF /* Test */,
 				CBEB2A2E193E3CD0006BD85E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -519,6 +734,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CBEB2A30193E3CD0006BD85E /* Debug */,
+				CB2F970E1B5D1AD000632DEF /* Test */,
 				CBEB2A31193E3CD0006BD85E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
