@@ -11,7 +11,7 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import "HabitFormerAppDelegate.h"
-#import "MainViewController.h"
+#import "MainViewController+Test.h"
 #import "HabitCell.h"
 
 

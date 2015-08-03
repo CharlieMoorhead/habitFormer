@@ -20,6 +20,7 @@
 		CB36B2D31B662D330037B4EF /* SettingsViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB36B2D21B662D330037B4EF /* SettingsViewControllerTests.m */; };
 		CB525CF31B50E2660061DD19 /* HabitDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB525CF21B50E2660061DD19 /* HabitDBTests.m */; };
 		CB61096619DB648F00734843 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB61096519DB648F00734843 /* SettingsViewController.m */; };
+		CB6169EA1B6F632D00299B61 /* UIView+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6169E91B6F632D00299B61 /* UIView+Test.m */; };
 		CB88BAA51B53B5AE0036677B /* NewHabitViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB88BAA41B53B5AE0036677B /* NewHabitViewControllerTests.m */; };
 		CBA0E3F81B0F467C00D125C4 /* habits.db in Resources */ = {isa = PBXBuildFile; fileRef = CBA0E3F71B0F467C00D125C4 /* habits.db */; };
 		CBB3631C19DE092D00FBCA5E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB3631B19DE092D00FBCA5E /* DateUtils.m */; };
@@ -70,6 +71,11 @@
 		CB525CF21B50E2660061DD19 /* HabitDBTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitDBTests.m; sourceTree = "<group>"; };
 		CB61096419DB648F00734843 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		CB61096519DB648F00734843 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SettingsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CB6169E81B6F632D00299B61 /* UIView+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Test.h"; sourceTree = "<group>"; };
+		CB6169E91B6F632D00299B61 /* UIView+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Test.m"; sourceTree = "<group>"; };
+		CB6169EB1B6F69F900299B61 /* MainViewController+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainViewController+Test.h"; sourceTree = "<group>"; };
+		CB6169EE1B6F6AC400299B61 /* SettingsViewController+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SettingsViewController+Test.h"; sourceTree = "<group>"; };
+		CB6169F11B6F6B3100299B61 /* NewHabitViewController+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NewHabitViewController+Test.h"; sourceTree = "<group>"; };
 		CB88BAA41B53B5AE0036677B /* NewHabitViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHabitViewControllerTests.m; sourceTree = "<group>"; };
 		CBA0E3F71B0F467C00D125C4 /* habits.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = habits.db; sourceTree = "<group>"; };
 		CBB3631A19DE092D00FBCA5E /* DateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DateUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -126,6 +132,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB6169F51B6F6BDC00299B61 /* TestClassMods */ = {
+			isa = PBXGroup;
+			children = (
+				CB6169E81B6F632D00299B61 /* UIView+Test.h */,
+				CB6169E91B6F632D00299B61 /* UIView+Test.m */,
+				CB6169EB1B6F69F900299B61 /* MainViewController+Test.h */,
+				CB6169EE1B6F6AC400299B61 /* SettingsViewController+Test.h */,
+				CB6169F11B6F6B3100299B61 /* NewHabitViewController+Test.h */,
+			);
+			name = TestClassMods;
+			sourceTree = "<group>";
+		};
 		CBB4E2AA1B5CE6940016FE0C /* Main View */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,6 +277,7 @@
 				CB525CF21B50E2660061DD19 /* HabitDBTests.m */,
 				CB88BAA41B53B5AE0036677B /* NewHabitViewControllerTests.m */,
 				CB36B2D21B662D330037B4EF /* SettingsViewControllerTests.m */,
+				CB6169F51B6F6BDC00299B61 /* TestClassMods */,
 			);
 			path = HabitFormerTests;
 			sourceTree = "<group>";
@@ -396,6 +415,7 @@
 				CB2F970A1B5D0CF600632DEF /* HabitDB.m in Sources */,
 				CB2F970B1B5D11EF00632DEF /* MainViewController.m in Sources */,
 				CB1575911B4FBAE900BBA908 /* HabitTests.m in Sources */,
+				CB6169EA1B6F632D00299B61 /* UIView+Test.m in Sources */,
 				CB36B2D31B662D330037B4EF /* SettingsViewControllerTests.m in Sources */,
 				CB88BAA51B53B5AE0036677B /* NewHabitViewControllerTests.m in Sources */,
 				CB0AB0371B4F8E41004172D0 /* DateUtilsTests.m in Sources */,

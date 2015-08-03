@@ -25,10 +25,3 @@
 @property (nonatomic,weak) id <NewHabitViewControllerDelegate> delegate;
 
 @end
-
-@interface NewHabitViewController (test)
-
-- (NSInteger)createHabit;
-- (void)displayAlert:(UIAlertView *)alert;
-
-@end

@@ -11,8 +11,10 @@
 
 @interface SettingsViewController : UIViewController
 
-@property (nonatomic,strong) UIView *settingsView;
+@property (nonatomic,strong) UIView *timeView;
 @property (nonatomic,strong) UILabel *timeViewLabel;
+@property (nonatomic,strong) UILabel *timeTitleLabel;
 @property (nonatomic,strong) UIDatePicker *timePicker;
+@property (nonatomic,strong) UIView *timePickerHider;
 
 @end

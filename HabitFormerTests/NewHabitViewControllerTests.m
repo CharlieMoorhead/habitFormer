@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import "HabitFormerAppDelegate.h"
-#import "NewHabitViewController.h"
+#import "NewHabitViewController+Test.h"
 #import "MainViewController.h"
 #import <OCMock/OCMock.h>
 
