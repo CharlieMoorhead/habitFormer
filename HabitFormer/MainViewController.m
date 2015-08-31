@@ -22,8 +22,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-    
     // Do any additional setup after loading the view.
     
     //NSLog(NSHomeDirectory()); //uncomment to find the iphone simulator data path
@@ -36,10 +34,13 @@
     self.tableView.allowsSelection = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"ReusableHeaderOrFooter"];
     [self.view addSubview:self.tableView];
     //tableView created
     
     //constraints for tableView
+
+
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView
                                                           attribute:NSLayoutAttributeHeight
                                                           relatedBy:NSLayoutRelationEqual
@@ -47,7 +48,7 @@
                                                           attribute:NSLayoutAttributeHeight
                                                          multiplier:1.0f
                                                            constant:0.0f
-                              ]];
+                              ]];//0
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView
                                                           attribute:NSLayoutAttributeWidth
                                                           relatedBy:NSLayoutRelationEqual
@@ -55,7 +56,7 @@
                                                           attribute:NSLayoutAttributeWidth
                                                          multiplier:1.0f
                                                            constant:0.0f
-                              ]];
+                              ]];//1
     //end constraints for tableView
     
     //load data (refreshTime) from disk
@@ -101,7 +102,7 @@
                                                                attribute:NSLayoutAttributeCenterX
                                                               multiplier:1.0f
                                                                 constant:0.0f
-                                   ]];
+                                   ]];//0
     [self.emptyView addConstraint:[NSLayoutConstraint constraintWithItem:emptyLabel1
                                                                attribute:NSLayoutAttributeCenterY
                                                                relatedBy:NSLayoutRelationEqual
@@ -109,7 +110,7 @@
                                                                attribute:NSLayoutAttributeCenterY
                                                               multiplier:0.6f
                                                                 constant:0.0f
-                                   ]];
+                                   ]];//1
     //end constraints for emptyLabel1
     
     //constraints for emptyLabel2
@@ -120,14 +121,15 @@
                                                                attribute:NSLayoutAttributeCenterX
                                                               multiplier:1.0f
                                                                 constant:0.0f
-                                   ]];
+                                   ]];//2
     [self.emptyView addConstraint:[NSLayoutConstraint constraintWithItem:emptyLabel2
                                                                attribute:NSLayoutAttributeCenterY
                                                                relatedBy:NSLayoutRelationEqual
                                                                   toItem:emptyLabel1
                                                                attribute:NSLayoutAttributeCenterY
-                                                              multiplier:1.0f constant:50.0f
-                                   ]];
+                                                              multiplier:1.0f
+                                                                constant:50.0f
+                                   ]];//3
     //end constraints for emptyLabel2
     
     [self.view addSubview:self.emptyView];
@@ -140,7 +142,7 @@
                                                           attribute:NSLayoutAttributeHeight
                                                          multiplier:1.0f
                                                            constant:0.0f
-                              ]];
+                              ]];//2
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.emptyView
                                                           attribute:NSLayoutAttributeWidth
                                                           relatedBy:NSLayoutRelationEqual
@@ -148,7 +150,7 @@
                                                           attribute:NSLayoutAttributeWidth
                                                          multiplier:1.0f
                                                            constant:0.0f
-                              ]];
+                              ]];//3
     //end constraints for emptyView
     
     //empty view initialized
@@ -175,15 +177,12 @@
 //this is the buffer between habit cells
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *headerView = [[UIView alloc] init];
-    headerView.backgroundColor = [UIColor clearColor];
-    return headerView;
-}
+    static NSString *headerIdentifier = @"ReusableHeaderOrFooter";
+    UITableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:headerIdentifier];
+    headerView.backgroundView = [[UIView alloc] init];
+    headerView.backgroundView.backgroundColor = [UIColor clearColor];
 
-//every habit should be deletable
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
+    return headerView;
 }
 
 //next two methods make it so the '-' delete button doesn't slide in while entering edit mode

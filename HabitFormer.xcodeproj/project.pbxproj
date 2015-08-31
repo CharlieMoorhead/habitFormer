@@ -21,6 +21,7 @@
 		CB525CF31B50E2660061DD19 /* HabitDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB525CF21B50E2660061DD19 /* HabitDBTests.m */; };
 		CB61096619DB648F00734843 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB61096519DB648F00734843 /* SettingsViewController.m */; };
 		CB6169EA1B6F632D00299B61 /* UIView+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6169E91B6F632D00299B61 /* UIView+Test.m */; };
+		CB6169F71B6F6CE400299B61 /* MainViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6169F61B6F6CE400299B61 /* MainViewControllerTests.m */; };
 		CB88BAA51B53B5AE0036677B /* NewHabitViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB88BAA41B53B5AE0036677B /* NewHabitViewControllerTests.m */; };
 		CBA0E3F81B0F467C00D125C4 /* habits.db in Resources */ = {isa = PBXBuildFile; fileRef = CBA0E3F71B0F467C00D125C4 /* habits.db */; };
 		CBB3631C19DE092D00FBCA5E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB3631B19DE092D00FBCA5E /* DateUtils.m */; };
@@ -76,6 +77,7 @@
 		CB6169EB1B6F69F900299B61 /* MainViewController+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainViewController+Test.h"; sourceTree = "<group>"; };
 		CB6169EE1B6F6AC400299B61 /* SettingsViewController+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SettingsViewController+Test.h"; sourceTree = "<group>"; };
 		CB6169F11B6F6B3100299B61 /* NewHabitViewController+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NewHabitViewController+Test.h"; sourceTree = "<group>"; };
+		CB6169F61B6F6CE400299B61 /* MainViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewControllerTests.m; sourceTree = "<group>"; };
 		CB88BAA41B53B5AE0036677B /* NewHabitViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHabitViewControllerTests.m; sourceTree = "<group>"; };
 		CBA0E3F71B0F467C00D125C4 /* habits.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = habits.db; sourceTree = "<group>"; };
 		CBB3631A19DE092D00FBCA5E /* DateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DateUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -241,17 +243,17 @@
 		CBEB2A09193E3CD0006BD85E /* HabitFormer */ = {
 			isa = PBXGroup;
 			children = (
-				CBB4E2AF1B5CE73D0016FE0C /* App Delegate */,
-				CBB4E2AA1B5CE6940016FE0C /* Main View */,
-				CBB4E2AC1B5CE6CD0016FE0C /* Settings View */,
-				CBB4E2AD1B5CE6F40016FE0C /* New Habit View */,
-				CBB4E2AE1B5CE71C0016FE0C /* Classes */,
-				CBB4E2AB1B5CE6B30016FE0C /* Utilities */,
 				CBC0931E1975ECC500CB4274 /* tasks_log */,
 				CBC470941B5250F800CEB014 /* habits_test.db */,
 				CBA0E3F71B0F467C00D125C4 /* habits.db */,
 				CBEB2A15193E3CD0006BD85E /* Images.xcassets */,
+				CBB4E2AF1B5CE73D0016FE0C /* App Delegate */,
+				CBB4E2AE1B5CE71C0016FE0C /* Classes */,
+				CBB4E2AA1B5CE6940016FE0C /* Main View */,
+				CBB4E2AD1B5CE6F40016FE0C /* New Habit View */,
+				CBB4E2AC1B5CE6CD0016FE0C /* Settings View */,
 				CBEB2A0A193E3CD0006BD85E /* Supporting Files */,
+				CBB4E2AB1B5CE6B30016FE0C /* Utilities */,
 			);
 			path = HabitFormer;
 			sourceTree = "<group>";
@@ -270,13 +272,14 @@
 		CBEB2A22193E3CD0006BD85E /* HabitFormerTests */ = {
 			isa = PBXGroup;
 			children = (
-				CBEB2A23193E3CD0006BD85E /* Supporting Files */,
 				CB0AB0361B4F8E41004172D0 /* DateUtilsTests.m */,
-				CB1575901B4FBAE900BBA908 /* HabitTests.m */,
 				CB1575921B4FC30E00BBA908 /* HabitCellTests.m */,
 				CB525CF21B50E2660061DD19 /* HabitDBTests.m */,
+				CB1575901B4FBAE900BBA908 /* HabitTests.m */,
+				CB6169F61B6F6CE400299B61 /* MainViewControllerTests.m */,
 				CB88BAA41B53B5AE0036677B /* NewHabitViewControllerTests.m */,
 				CB36B2D21B662D330037B4EF /* SettingsViewControllerTests.m */,
+				CBEB2A23193E3CD0006BD85E /* Supporting Files */,
 				CB6169F51B6F6BDC00299B61 /* TestClassMods */,
 			);
 			path = HabitFormerTests;
@@ -413,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB2F970A1B5D0CF600632DEF /* HabitDB.m in Sources */,
+				CB6169F71B6F6CE400299B61 /* MainViewControllerTests.m in Sources */,
 				CB2F970B1B5D11EF00632DEF /* MainViewController.m in Sources */,
 				CB1575911B4FBAE900BBA908 /* HabitTests.m in Sources */,
 				CB6169EA1B6F632D00299B61 /* UIView+Test.m in Sources */,

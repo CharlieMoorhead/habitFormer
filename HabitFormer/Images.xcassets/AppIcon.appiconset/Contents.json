@@ -3,61 +3,61 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "habitformer58.png",
+      "filename" : "habitFormer_logo_WIP_58.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "habitformer80.png",
+      "filename" : "habitFormer_logo_WIP_80.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "habitformer120.png",
+      "filename" : "habitFormer_logo_WIP_120.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "habitformer180.png",
+      "filename" : "habitFormer_logo_WIP_180.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "habitformer29.png",
+      "filename" : "habitFormer_logo_WIP_29.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "habitformer58-1.png",
+      "filename" : "habitFormer_logo_WIP_58-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "habitformer40.png",
+      "filename" : "habitFormer_logo_WIP_40.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "habitformer80-1.png",
+      "filename" : "habitFormer_logo_WIP_80-1.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "habitformer76.png",
+      "filename" : "habitFormer_logo_WIP_76.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "habitformer152.png",
+      "filename" : "habitFormer_logo_WIP_152.png",
       "scale" : "2x"
     }
   ],
