@@ -223,7 +223,7 @@
     //'streak' exists!
     
     //FOR TESTING
-    [self addTestValues];
+    //[self addTestValues];
 }
 
 -(BOOL)initializeDatabase

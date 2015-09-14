@@ -37,7 +37,6 @@
     [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"ReusableHeaderOrFooter"];
     [self.view addSubview:self.tableView];
     
-    [self displayMessageBar];
     //tableView created
     
     //constraints for tableView
@@ -391,6 +390,7 @@
     NSString *habitKey = cell.habitLabel.text;
     Habit *h = [self.habits objectForKey:habitKey];
     [self.habitDB completeHabit:h andExtendStreak:[self shouldExtendStreak:h]];
+    [self displayMessageBar:[NSString stringWithFormat:@"streak for %@: %ld", h.name, (long)h.streak]];
     
     [self.tableView beginUpdates];
     [self.habitsToView removeObjectAtIndex:section];
@@ -665,26 +665,72 @@
     }
 }
 
--(void)displayMessageBar
+-(void)displayMessageBar: (NSString *)message
 {
-    UILabel *testView = [[UILabel alloc] initWithFrame:CGRectMake(0, -25, 250, 25)];
-    [testView setText:@"testing"];
-    [testView setBackgroundColor:[UIColor redColor]];
-    [self.view addSubview:testView];
+    UILabel *messageBar = [[UILabel alloc] init];
+    messageBar.translatesAutoresizingMaskIntoConstraints = NO;
     
+    [messageBar setText:message];
+    [messageBar setTextAlignment:NSTextAlignmentCenter];
+    [messageBar setBackgroundColor:[UIColor redColor]];
+    [self.view addSubview:messageBar];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:messageBar
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                         multiplier:1.0f
+                                                           constant:0.0f
+                              ]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:messageBar
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0f
+                                                           constant:25.0f
+                              ]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:messageBar
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0f
+                                                           constant:-25.0f
+                              ]];
+    NSLayoutConstraint *topConstraint = [self.view.constraints lastObject];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:messageBar
+                                                          attribute:NSLayoutAttributeLeft
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeLeft
+                                                         multiplier:1.0f
+                                                           constant:0.0f
+                              ]];
+
+    [self.view layoutIfNeeded];
     [UIView animateWithDuration:0.5 animations:^{
-        [testView setFrame:CGRectMake(0, 0, 250, 25)];
+        [topConstraint setConstant:0.0f];
+        [self.view layoutIfNeeded];
     }completion:^(BOOL done){
        //done
     }];
+    NSArray *parameters = @[messageBar, topConstraint];
     
-    [self performSelector:@selector(dismissMessageBar:) withObject:testView afterDelay:5.0];
+    [self performSelector:@selector(dismissMessageBar:) withObject:parameters afterDelay:4.0];
 }
 
--(void)dismissMessageBar: (UILabel *)messageBar
+-(void)dismissMessageBar: (NSArray *)parameters
 {
+    UILabel *messageBar = (UILabel *)[parameters objectAtIndex:0];
+    NSLayoutConstraint *topConstraint = (NSLayoutConstraint *)[parameters objectAtIndex:1];
+    
     [UIView animateWithDuration:0.5 animations:^{
-        [messageBar setFrame:CGRectMake(0, -25, 250, 25)];
+        [topConstraint setConstant:-25.0f];
+        [self.view layoutIfNeeded];
+    }completion:^(BOOL done){
+        [messageBar removeFromSuperview];
     }];
 }
 

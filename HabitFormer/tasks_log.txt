@@ -148,6 +148,8 @@
             changed the labels to display streak at appropriate times
             began adding a message bar to give the user a bit of information
 
+09/14/15:   continued working on message bar / got the functionality there, need to work on the look
+
 
 TODO:   add unit tests for everything else
 TODO:   separate the tableview from the mainviewcontroller ??
