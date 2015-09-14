@@ -65,6 +65,7 @@
     
     //initializing habits arrays
     self.habitDB = [[HabitDB alloc] init];
+    [self.habitDB validateDatabase];
     self.habits = [[NSMutableDictionary alloc] init];
     self.habits = [self.habitDB getAllHabits:self.habits];
     self.habitsToView = [[NSMutableArray alloc] init];

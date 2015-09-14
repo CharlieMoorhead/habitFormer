@@ -33,7 +33,7 @@
     
     NSString *insertQuery, *getQuery;
     insertQuery = [NSString stringWithFormat:
-                   @"INSERT INTO Habits VALUES(NULL, '%@', '%@');",
+                   @"INSERT INTO Habits VALUES(NULL, '%@', '%@', 'nil');",
                     name,
                     [DateUtils getStringFromDate:[DateUtils startingDate] format:self.dateFormat]];
     getQuery = [NSString stringWithFormat:@"select * from habits where name='%@'", name];
@@ -173,6 +173,73 @@
         //didn't find it - habit is null
         return habit;
     }
+}
+
+-(void)validateDatabase
+{
+    NSString *query;
+    NSArray *tables;
+    NSArray *sqlInfo;
+    NSMutableArray *columns;
+    
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:HABIT_DB_FILENAME];
+    
+    //Checking if tables exist
+    tables = [[NSArray alloc] initWithObjects:@"Habits", @"Completions", nil];
+    
+    for (NSString *tableName in tables)
+    {
+        query = [NSString stringWithFormat:@"SELECT name FROM sqlite_master WHERE type='table' AND name='%@'", tableName];
+        if ([[[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]] count] == 1)
+        {
+            //table exists
+            //everything's fine
+        }
+        else
+        {
+            //table does not exist
+            [self initializeDatabase];
+        };
+    }
+    //Tables exist!
+    
+    //Checking if 'Habits' table has 'streak' column
+    columns = [[NSMutableArray alloc] init];
+    
+    query = @"pragma table_info(Habits)";
+    sqlInfo = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
+    
+    for (NSArray *row in sqlInfo)
+    {
+        [columns addObject:row[1]];
+    }
+    
+    if (![columns containsObject:@"streak"])
+    {
+        //column does not exist
+        query = @"ALTER TABLE Habits ADD streak integer DEFAULT 0";
+        [self.dbManager executeQuery:query];
+    }
+    //'streak' exists!
+}
+
+-(BOOL)initializeDatabase
+{
+    
+    NSString *createHabitsQuery = @"CREATE TABLE Habits(habitID integer, name text NOT NULL, lastCompletionDate text, PRIMARY KEY(habitID))";
+    
+    NSString *createCompletionsQuery = @"CREATE TABLE Completions(completionID integer, habitID integer NOT NULL, completionDate text NOT NULL, PRIMARY KEY(completionID), FOREIGN KEY(habitID) REFERENCES Habits(habitID))";
+    
+    NSString *createHabitIndexQuery = @"CREATE UNIQUE INDEX HIndex ON Habits(name)";
+    
+    NSString *addStreakColumnQuery = @"ALTER TABLE Habits ADD streak integer DEFAULT 0";
+    
+    [self.dbManager executeQuery:createHabitsQuery];
+    [self.dbManager executeQuery:createCompletionsQuery];
+    [self.dbManager executeQuery:createHabitIndexQuery];
+    [self.dbManager executeQuery:addStreakColumnQuery];
+    
+    return YES;
 }
 
 @end

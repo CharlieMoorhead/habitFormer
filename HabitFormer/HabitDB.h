@@ -17,6 +17,7 @@
 -(BOOL)completeHabit: (Habit *)habit;
 -(Habit *)getHabitFromName: (NSString *)name;
 -(NSMutableDictionary *)getAllHabits: (NSMutableDictionary *)habitDict;
+-(void)validateDatabase;
 
 @property (strong, nonatomic) DBManager *dbManager;
 @property (strong, nonatomic) NSString *dateFormat;

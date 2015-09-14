@@ -1,0 +1,162 @@
+
+
+07/15/14:   Started this log
+            Played with dates. Need to figure out how to represent/calculate habit completion dates.
+            
+07/21:14:   Played with dates more. Getting a firmer grasp.
+            Rearranged methods to make things more clear.
+            Change Habit.creationDate to Habit.lastCompletion
+            
+07/24/14:   Learned how to sort arrays.
+            Added a UIView to hold each habit's label, button, etc.
+            Easier to add and remove elements in the future.
+            Started using git!
+            habitLabels now sort by lastCompletionDate
+            Trying to work out how to figure out when to show/hide labels. my brain hurts.
+            
+07/27/14:   Figured out how to know when to show/hide labels. It wasn't really that hard.
+            Need to learn how to work with completion dates of newly created habits
+            
+07/28/14:   Added a starting date (01-Jan-1900) for newly created habits.
+            Checks if a habit with the same name already exists before creating.
+            Strips whitespace from the start and end of new habit names.
+            Playing with adding in a pull-to-refresh
+            Combined removeAllHabits and displayAllHabits into a single refreshHabits method
+
+08/03/14:   Added pull-to-refresh
+            Playing with dates. Time zones are weird!
+            
+08/04/14:   Turns out time zones weren't causing problems. Still, dates are hard.
+            Labels now display days since habit was last completed
+            Added an edit button to the nav bar
+            When pressed, switches to a view that allows deletion of habits
+
+09/23/14:   Playing with the new UIAlertController but I'm too tired so I gave up pretty quickly
+
+09/24/14:   Figured out UIAlertControllers
+            Moved the actual alerts to the NewHabitViewController
+            This means that it will stay on the create-a-habit view when you get a creation error
+
+09/29/14:   Changed all the alerts to UIAlertControllers
+            Added an action sheet to confirm deletion
+            Creation of a habit now check's the length of the name and rejects creation if the name couldn't be displayed
+
+09/30/14:   Added the settings view and the button to move to it
+            did some minor refactoring
+
+10/02/14:   Moved some methods to a utility class
+            Created a couple views on the settings view for testing
+
+10/03/14:   Got the time picker viewable, and it updates and stuff
+            Started working on animating it
+
+10/03/14:   time picker animates nicely now
+
+01/24/15:   been a while!!
+            Started making the mainViewController a UITableView instead of a ScrollView
+            It just makes sense
+
+01/25/15:   added some of the old visuals: done button, buffer space, last completed labels
+            just started working on edit mode
+
+01/31/15:   created a subclass for custom cells for the habit table
+            working on the transition between editing mode
+
+02/01/15:   got the done button working
+            edit mode shows all the habits / normal mode shows the correct habits
+            the animation into edit mode works ok
+
+02/07/15:   the done button animates more nicely when it's disappearing
+            the deletion animation is weird and I don't know what that's about
+
+02/09/15:   added animations for the transition to/from edit mode
+            still don't know why the deletion animation is borked
+            posted a question on stackoverflow but got no answers
+
+02/12/15:   added the old style delete button to avoid the weird animation issues
+            the app is basically back to where I left it off in october, except rebuilt with tableview
+            easier to work with, and animations!
+            Also fixed alignment issues on the settingsView and newHabitView
+
+03/01/15:   made habitsToView an array of just keys for habits, instead of an array of habits
+
+05/20/15:   added a class for sqlite3 usage.. and it works!!
+
+06/10/15:   implemented a schema in the db for habits
+            changed the habit data saving over to the database
+            now the old data file only saves the refresh time
+            TODO: app crashes when closed on a view that isn't the main view because it tries to save
+               refresh time to the file, but that only exists on the main view
+
+06/14/15:   changed the color scheme to something more pleasing... maybe???
+            fixed all views so that they mutate correctly when the screen rotates
+            correctly...knock on wood
+
+06/15/15:   ...I did a few small things, and then I got caught up switching everything to autolayout with contraints
+            so much easier!
+            I've finished all views except the settingsView
+
+06/15/15:   finished converting everything to autolayout & contraints
+            finished TODO:  app crashes when closed on a view that isn't the main view because it tries to save
+                            refresh time to the file, but that only exists on the main view
+
+07/06/15:   added launchImages so that the app scales correctly on iphone 6/6+
+
+07/09/15:   removed fullHeight and fullWidth from utils
+            moved all the colors from utils to a separate colors class, and made them constants instead of methods
+            renamed utils class to DateUtils since only date methods were left
+            finished TODO:  the timepicker keeps rolling after it hides, causing errors. fix it
+            added unit tests for DateUtils and Habit
+
+07/10/15:   added unit tests for HabitCell
+            started unit tests for HabitDB
+
+07/11/15:   CHANGED HABIT.DB TO HABIT_TESTS.DB
+            BECAUSE I'M TOO LAZY TO FIGURE OUT A GOOD WAY TO MAKE IT DIFFERENT DURING TESTS
+            DO NOT FORGET TO CHANGE THIS BACK!!!
+
+07/12/15:   Finished tests for HabitDB class
+            Started tests for the new habit view controller
+            need to work on constraints, and the actual create method
+
+07/14/15:   made tests for contraints for newhabitviewcontroller
+            need to learn mocks?? I guess to test alert popups
+
+07/19/15:   added OCMock to project
+            learned the basics of mocking
+            added tests for createHabit in NewHabitViewController
+            added a new "test" configuration so I can use a different db for testing vs. debugging
+            stayed up too late doing this :(
+
+07/26/15:   removed a superfluous uiview in SettingsViewController
+            started tests for SettingsViewController
+            next up: constraints :(
+
+08/02/15:   finished tests for SettingsViewController
+            started tests for MainViewController
+            constraints are weird for MainViewController
+
+08/03/15:   worked on tests for MainViewController
+
+09/08/15:   changed completion date data to NOT have hours/minutes
+            this paves the way for streak data to make sense
+
+            ^^^ this ruins everything. don't know what I was thinking. rolled back these changes
+
+09/14/15:   added a check to validate the database. this should prevent crashes like when zain updated to a new version
+
+
+TODO:   add unit tests for everything else
+TODO:   separate the tableview from the mainviewcontroller ??
+TODO:   figure out how to make the nav bar translucent but not look weird
+TODO:   figure out setup for Habits.db vs. Habit_tests.db
+TODO:   change name of NewHabitViewController to HabitViewController
+
+Future feature ideas:
+
+    - streak data (i.e., how many days in a row has a habit been completed)
+    - calendar view
+    - unit tests
+    - different repeat lengths (do a habit once a day, week, month, etc)
+    - editable habits
+    - social add-ins ('share your habit streak on facebook!')

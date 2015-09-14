@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CB00EC4D1A7E184300C2D920 /* HabitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB00EC4C1A7E184300C2D920 /* HabitCell.m */; };
+		CB01A36D1BA69E6000BB9237 /* tasks_log.txt in Resources */ = {isa = PBXBuildFile; fileRef = CB01A36C1BA69E6000BB9237 /* tasks_log.txt */; };
 		CB0AB0371B4F8E41004172D0 /* DateUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB0AB0361B4F8E41004172D0 /* DateUtilsTests.m */; };
 		CB0AB03A1B4F9792004172D0 /* Colors.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB0AB0391B4F9792004172D0 /* Colors.mm */; };
 		CB111CDF1AA5F3070018A202 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CB111CDE1AA5F3070018A202 /* libsqlite3.dylib */; };
@@ -26,7 +27,6 @@
 		CBA0E3F81B0F467C00D125C4 /* habits.db in Resources */ = {isa = PBXBuildFile; fileRef = CBA0E3F71B0F467C00D125C4 /* habits.db */; };
 		CBB3631C19DE092D00FBCA5E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB3631B19DE092D00FBCA5E /* DateUtils.m */; };
 		CBB4E2B11B5CE84B0016FE0C /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB4E2B01B5CE84B0016FE0C /* libOCMock.a */; };
-		CBC0931F1975ECC500CB4274 /* tasks_log in Resources */ = {isa = PBXBuildFile; fileRef = CBC0931E1975ECC500CB4274 /* tasks_log */; };
 		CBC470971B52547500CEB014 /* habits_test.db in Resources */ = {isa = PBXBuildFile; fileRef = CBC470941B5250F800CEB014 /* habits_test.db */; };
 		CBC470981B52547700CEB014 /* habits_test.db in Resources */ = {isa = PBXBuildFile; fileRef = CBC470941B5250F800CEB014 /* habits_test.db */; };
 		CBC4711D1B255D7A001840E7 /* HabitDB.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC4711C1B255D7A001840E7 /* HabitDB.m */; };
@@ -58,6 +58,7 @@
 /* Begin PBXFileReference section */
 		CB00EC4B1A7E184300C2D920 /* HabitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitCell.h; sourceTree = "<group>"; };
 		CB00EC4C1A7E184300C2D920 /* HabitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HabitCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CB01A36C1BA69E6000BB9237 /* tasks_log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tasks_log.txt; sourceTree = "<group>"; };
 		CB0AB0361B4F8E41004172D0 /* DateUtilsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DateUtilsTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CB0AB0381B4F9792004172D0 /* Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
 		CB0AB0391B4F9792004172D0 /* Colors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Colors.mm; sourceTree = "<group>"; };
@@ -83,7 +84,6 @@
 		CBB3631A19DE092D00FBCA5E /* DateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DateUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CBB3631B19DE092D00FBCA5E /* DateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DateUtils.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CBB4E2B01B5CE84B0016FE0C /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = usr/lib/libOCMock.a; sourceTree = "<group>"; };
-		CBC0931E1975ECC500CB4274 /* tasks_log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; path = tasks_log; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = "<none>"; };
 		CBC470941B5250F800CEB014 /* habits_test.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = habits_test.db; path = HabitFormerTests/habits_test.db; sourceTree = SOURCE_ROOT; };
 		CBC4711B1B255D7A001840E7 /* HabitDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitDB.h; sourceTree = "<group>"; };
 		CBC4711C1B255D7A001840E7 /* HabitDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HabitDB.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -243,7 +243,7 @@
 		CBEB2A09193E3CD0006BD85E /* HabitFormer */ = {
 			isa = PBXGroup;
 			children = (
-				CBC0931E1975ECC500CB4274 /* tasks_log */,
+				CB01A36C1BA69E6000BB9237 /* tasks_log.txt */,
 				CBC470941B5250F800CEB014 /* habits_test.db */,
 				CBA0E3F71B0F467C00D125C4 /* habits.db */,
 				CBEB2A15193E3CD0006BD85E /* Images.xcassets */,
@@ -373,11 +373,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB01A36D1BA69E6000BB9237 /* tasks_log.txt in Resources */,
 				CBA0E3F81B0F467C00D125C4 /* habits.db in Resources */,
 				CBC470971B52547500CEB014 /* habits_test.db in Resources */,
 				CBEB2A0E193E3CD0006BD85E /* InfoPlist.strings in Resources */,
 				CBEB2A16193E3CD0006BD85E /* Images.xcassets in Resources */,
-				CBC0931F1975ECC500CB4274 /* tasks_log in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
