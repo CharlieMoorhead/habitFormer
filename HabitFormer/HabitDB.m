@@ -33,7 +33,7 @@
     
     NSString *insertQuery, *getQuery;
     insertQuery = [NSString stringWithFormat:
-                   @"INSERT INTO Habits VALUES(NULL, '%@', '%@', 'nil');",
+                   @"INSERT INTO Habits VALUES(NULL, '%@', '%@', '0');",
                     name,
                     [DateUtils getStringFromDate:[DateUtils startingDate] format:self.dateFormat]];
     getQuery = [NSString stringWithFormat:@"select * from habits where name='%@'", name];
@@ -88,15 +88,16 @@
 
 //-complete habit
     // input name, output: did it work?
--(BOOL)completeHabit: (Habit *)habit
+-(BOOL)completeHabit:(Habit *)habit andExtendStreak:(BOOL)extend
 {
     self.dbManager = [[DBManager alloc] initWithDatabaseFilename:HABIT_DB_FILENAME];
     
-    [habit complete];
+    [habit completeAndExtendStreak:extend];
     
     NSString *updateQuery =
-        [NSString stringWithFormat:@"UPDATE Habits SET lastCompletionDate='%@' WHERE name='%@'",
+        [NSString stringWithFormat:@"UPDATE Habits SET lastCompletionDate='%@', streak=%ld WHERE name='%@'",
          [DateUtils getStringFromDate:habit.lastCompletion format:self.dateFormat],
+         (long)habit.streak,
          habit.name];
     [self.dbManager executeQuery:updateQuery];
     
@@ -137,7 +138,8 @@
     {
         NSString *name = a[1];
         NSDate *completionDate = [DateUtils getDateFromString:a[2] format:self.dateFormat];
-        [habitDict setObject:[[Habit alloc] initWithName:name andCompletion:completionDate] forKey:name];
+        NSInteger streak = [a[3] integerValue];
+        [habitDict setObject:[[Habit alloc] initWithName:name andCompletion:completionDate andStreak:streak] forKey:name];
     }
     
     return habitDict;
@@ -162,10 +164,8 @@
     {
         NSString *name = habitArray[0][1];
         NSDate *completionDate = [DateUtils getDateFromString:habitArray[0][2] format:self.dateFormat];
-        habit = [[Habit alloc] initWithName:name andCompletion:completionDate];
-        //habit = [[Habit alloc] init];
-        //habit.name = habitArray[0][1];
-        //habit.lastCompletion = [DateUtils getDateFromString:habitArray[0][2] format:@"ddMMMyyyy hh:mm"];
+        NSInteger streak = [habitArray[0][3] integerValue];
+        habit = [[Habit alloc] initWithName:name andCompletion:completionDate andStreak:streak];
         return habit;
     }
     else
@@ -221,6 +221,9 @@
         [self.dbManager executeQuery:query];
     }
     //'streak' exists!
+    
+    //FOR TESTING
+    [self addTestValues];
 }
 
 -(BOOL)initializeDatabase
@@ -240,6 +243,19 @@
     [self.dbManager executeQuery:addStreakColumnQuery];
     
     return YES;
+}
+
+-(void)addTestValues
+{
+    //yyyy-MM-dd HH:mm"
+    NSString *query0 = @"DELETE FROM Habits WHERE name='test habit'";
+    NSString *query1 = @"INSERT INTO Habits VALUES(NULL, 'test habit', '2015-09-13 00:01', 0)";
+    
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:HABIT_DB_FILENAME];
+    
+    [self.dbManager executeQuery:query0];
+    [self.dbManager executeQuery:query1];
+    
 }
 
 @end

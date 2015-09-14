@@ -144,6 +144,9 @@
             ^^^ this ruins everything. don't know what I was thinking. rolled back these changes
 
 09/14/15:   added a check to validate the database. this should prevent crashes like when zain updated to a new version
+            added 'streak' to Habits
+            changed the labels to display streak at appropriate times
+            began adding a message bar to give the user a bit of information
 
 
 TODO:   add unit tests for everything else

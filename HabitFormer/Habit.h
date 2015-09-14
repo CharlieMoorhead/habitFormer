@@ -12,9 +12,11 @@
 
 -(id)initWithName: (NSString *)newName;
 -(id)initWithName: (NSString *)newName andCompletion:(NSDate *)newCompletion;
--(void)complete;
+-(id)initWithName: (NSString *)newName andCompletion:(NSDate *)newCompletion andStreak:(NSInteger)streak;
+-(void)completeAndExtendStreak: (BOOL)extend;
 
 @property NSString *name;
+@property NSInteger streak;
 @property NSDate *lastCompletion;
 
 @end

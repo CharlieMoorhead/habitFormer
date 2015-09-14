@@ -36,6 +36,8 @@
     self.tableView.dataSource = self;
     [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"ReusableHeaderOrFooter"];
     [self.view addSubview:self.tableView];
+    
+    [self displayMessageBar];
     //tableView created
     
     //constraints for tableView
@@ -234,13 +236,27 @@
     }
     else if ([DateUtils daysBetween:habit.lastCompletion and:[NSDate date]] == 1)
     {
-        cell.daysAgoLabel.text = @"last done: 1 day ago";
+        if ([self shouldExtendStreak:habit])
+        {
+            cell.daysAgoLabel.text = [NSString stringWithFormat:@"streak: %ld", (long)habit.streak];
+        }
+        else
+        {
+            cell.daysAgoLabel.text = @"last done: 1 day ago";
+        }
     }
     else
     {
-        cell.daysAgoLabel.text =
-        [NSString stringWithFormat:@"last done: %d days ago",
-         (int)[DateUtils daysBetween:habit.lastCompletion and:[NSDate date]]];
+        if ([self shouldExtendStreak:habit])
+        {
+            cell.daysAgoLabel.text = [NSString stringWithFormat:@"streak: %ld", (long)habit.streak];
+        }
+        else
+        {
+            cell.daysAgoLabel.text =
+                [NSString stringWithFormat:@"last done: %d days ago",
+                (int)[DateUtils daysBetween:habit.lastCompletion and:[NSDate date]]];
+        }
     }
     //days ago label added
     
@@ -374,7 +390,7 @@
     NSInteger section = indexPath.section;
     NSString *habitKey = cell.habitLabel.text;
     Habit *h = [self.habits objectForKey:habitKey];
-    [self.habitDB completeHabit:h];
+    [self.habitDB completeHabit:h andExtendStreak:[self shouldExtendStreak:h]];
     
     [self.tableView beginUpdates];
     [self.habitsToView removeObjectAtIndex:section];
@@ -418,7 +434,42 @@
     
     cutoffDate = [calendar dateByAddingComponents:currentTime toDate:cutoffDate options:0];
     return [cutoffDate compare:habit.lastCompletion] == NSOrderedDescending;
+}
+
+- (BOOL)shouldExtendStreak: (Habit *)habit
+{
+    NSDate *cutoffDate = [NSDate date];
     
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
+    cutoffDate = [calendar dateFromComponents:[calendar components:preservedComponents fromDate:[NSDate date]]];
+    
+    NSDateComponents *currentTime = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
+    NSDateComponents *cutoffTime = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:self.resetTime];
+    
+    
+    //if it is currently earlier in the day than the cutoff time, remove a day from the cutoff date
+    //* for some reason this is really trippy for me to think about
+    //* I may not be very smart
+    //* Example:    current time: 4am on 13-Feb-15
+    //*             cutoff time:  8am
+    //*             since the current time is before the cutoff time,
+    //*             we want to compare with the previous date's 8am,
+    //*             so one day is subtracted, and the cutoff datetime should be: 8am on 12-Feb-15
+    //* Pefectly explained
+    if (currentTime.hour + (1.0f/60)*currentTime.minute < cutoffTime.hour + (1.0f/60)*cutoffTime.minute)
+    {
+        currentTime.day = -2;
+    }
+    else
+    {
+        currentTime.day = -1;
+    }
+    currentTime.hour = cutoffTime.hour;
+    currentTime.minute = cutoffTime.minute;
+    
+    cutoffDate = [calendar dateByAddingComponents:currentTime toDate:cutoffDate options:0];
+    return [cutoffDate compare:habit.lastCompletion] == NSOrderedAscending;
 }
 
 - (void)determineViewableHabitsForEditing:(BOOL) editMode
@@ -612,6 +663,29 @@
             }
         }];
     }
+}
+
+-(void)displayMessageBar
+{
+    UILabel *testView = [[UILabel alloc] initWithFrame:CGRectMake(0, -25, 250, 25)];
+    [testView setText:@"testing"];
+    [testView setBackgroundColor:[UIColor redColor]];
+    [self.view addSubview:testView];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [testView setFrame:CGRectMake(0, 0, 250, 25)];
+    }completion:^(BOOL done){
+       //done
+    }];
+    
+    [self performSelector:@selector(dismissMessageBar:) withObject:testView afterDelay:5.0];
+}
+
+-(void)dismissMessageBar: (UILabel *)messageBar
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        [messageBar setFrame:CGRectMake(0, -25, 250, 25)];
+    }];
 }
 
 @end

@@ -14,7 +14,7 @@
 
 -(Habit *)createHabit: (NSString *)name;
 -(BOOL)deleteHabit: (NSString *)name;
--(BOOL)completeHabit: (Habit *)habit;
+-(BOOL)completeHabit: (Habit *)habit andExtendStreak:(BOOL)extend;
 -(Habit *)getHabitFromName: (NSString *)name;
 -(NSMutableDictionary *)getAllHabits: (NSMutableDictionary *)habitDict;
 -(void)validateDatabase;
