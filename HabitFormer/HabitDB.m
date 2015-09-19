@@ -13,6 +13,7 @@
 #endif
 
 #import "HabitDB.h"
+#import <sqlite3.h>
 
 @implementation HabitDB
 
@@ -32,6 +33,10 @@
     self.dbManager = [[DBManager alloc] initWithDatabaseFilename:HABIT_DB_FILENAME];
     
     NSString *insertQuery, *getQuery;
+    
+    //testing <<<<<<<<<<<<<<<<<<<<<<<<
+    
+    //testing >>>>>>>>>>>>>>>>>>>>>>>>>
     insertQuery = [NSString stringWithFormat:
                    @"INSERT INTO Habits VALUES(NULL, '%@', '%@', '0');",
                     name,
@@ -93,6 +98,7 @@
     self.dbManager = [[DBManager alloc] initWithDatabaseFilename:HABIT_DB_FILENAME];
     
     [habit completeAndExtendStreak:extend];
+    
     
     NSString *updateQuery =
         [NSString stringWithFormat:@"UPDATE Habits SET lastCompletionDate='%@', streak=%ld WHERE name='%@'",

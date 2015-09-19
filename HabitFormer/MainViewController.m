@@ -670,9 +670,13 @@
     UILabel *messageBar = [[UILabel alloc] init];
     messageBar.translatesAutoresizingMaskIntoConstraints = NO;
     
+    
     [messageBar setText:message];
+    [messageBar setAlpha:0.90f];
+    [messageBar setTextColor:[UIColor whiteColor]];
     [messageBar setTextAlignment:NSTextAlignmentCenter];
-    [messageBar setBackgroundColor:[UIColor redColor]];
+    [messageBar setBackgroundColor:textColor];
+    [messageBar setUserInteractionEnabled:YES];
     [self.view addSubview:messageBar];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:messageBar
@@ -691,15 +695,15 @@
                                                          multiplier:1.0f
                                                            constant:25.0f
                               ]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:messageBar
-                                                          attribute:NSLayoutAttributeTop
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeTop
-                                                         multiplier:1.0f
-                                                           constant:-25.0f
-                              ]];
-    NSLayoutConstraint *topConstraint = [self.view.constraints lastObject];
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:messageBar
+                                                                     attribute:NSLayoutAttributeTop
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.view
+                                                                     attribute:NSLayoutAttributeTop
+                                                                    multiplier:1.0f
+                                                                      constant:-25.0f
+                                         ];
+    [self.view addConstraint:topConstraint];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:messageBar
                                                           attribute:NSLayoutAttributeLeft
                                                           relatedBy:NSLayoutRelationEqual

@@ -150,11 +150,11 @@
 
 09/14/15:   continued working on message bar / got the functionality there, need to work on the look
 
+09/18/15:   must have changed the look at some point in the last few days: looks pretty good past charlie!
+            fixed a few bugs for iOS 9
+
 
 TODO:   add unit tests for everything else
-TODO:   separate the tableview from the mainviewcontroller ??
-TODO:   figure out how to make the nav bar translucent but not look weird
-TODO:   figure out setup for Habits.db vs. Habit_tests.db
 TODO:   change name of NewHabitViewController to HabitViewController
 
 Future feature ideas:
