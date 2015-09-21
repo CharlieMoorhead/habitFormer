@@ -254,13 +254,25 @@
 -(void)addTestValues
 {
     //yyyy-MM-dd HH:mm"
-    NSString *query0 = @"DELETE FROM Habits WHERE name='test habit'";
-    NSString *query1 = @"INSERT INTO Habits VALUES(NULL, 'test habit', '2015-09-13 00:01', 0)";
+    NSString *query0;
+    NSString *query1;
+    NSArray *names = @[@"Meditate", @"Exercise", @"Take Medicine", @"Go to sleep early"];
+    NSArray *dates = @[@"2015-09-20 10:00", @"2015-09-20 10:00", @"2015-09-19 10:36", @"2015-09-13 21:25"];
+    NSArray *streaks = @[@5, @12, @3, @3];
+    
+   
     
     self.dbManager = [[DBManager alloc] initWithDatabaseFilename:HABIT_DB_FILENAME];
     
-    [self.dbManager executeQuery:query0];
-    [self.dbManager executeQuery:query1];
+    for (int i = 0; i<4; i++)
+    {
+        query0 = [NSString stringWithFormat:@"DELETE FROM Habits WHERE name='%@'", [names objectAtIndex:i]];
+        query1 = [NSString stringWithFormat:@"INSERT INTO Habits VALUES(NULL, '%@', '%@', '%@')", [names objectAtIndex:i], [dates objectAtIndex:i], [streaks objectAtIndex:i]];
+        [self.dbManager executeQuery:query0];
+        [self.dbManager executeQuery:query1];
+    }
+    
+    
     
 }
 

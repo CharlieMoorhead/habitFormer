@@ -155,15 +155,21 @@
 -(NSInteger)createHabit {
     NSString *habitName = [self.name.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"ok"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    
     if (habitName.length == 0) {
-        UIAlertView *tooShortAlert = [[UIAlertView alloc] initWithTitle:@"please enter a name"
-                                                                message:nil
-                                                               delegate:self
-                                                      cancelButtonTitle:@"of course"
-                                                      otherButtonTitles:nil];
-        [self displayAlert:tooShortAlert];
+        UIAlertController *tooShortController = [UIAlertController alertControllerWithTitle:@"please enter a name"
+                                                                                    message:nil
+                                                                             preferredStyle:UIAlertControllerStyleAlert];
+        [tooShortController addAction:okAction];
         
-        [self displayAlert:tooShortAlert];
+        [self presentViewController:tooShortController
+                           animated:YES
+                         completion:nil
+         ];
+        
         return 4;
     }
     else
@@ -173,12 +179,16 @@
         switch (statusCode) {
             case 1: //name is already used
             {
-                UIAlertView *inUseAlert = [[UIAlertView alloc] initWithTitle:@"that habit already exists"
-                                                                     message:nil
-                                                                    delegate:self
-                                                           cancelButtonTitle:@"oh, ok"
-                                                           otherButtonTitles:nil];
-                [self displayAlert:inUseAlert];
+                UIAlertController *inUseController = [UIAlertController alertControllerWithTitle:@"that habit already exists"
+                                                                                          message:nil
+                                                                                   preferredStyle:UIAlertControllerStyleAlert
+                                                      ];
+                [inUseController addAction:okAction];
+                
+                [self presentViewController:inUseController
+                                   animated:YES
+                                 completion:nil
+                 ];
                 
                 return 1;
                 break;
@@ -186,12 +196,16 @@
                 
             case 2: //already 99 habits
             {
-                UIAlertView *tooManyAlert = [[UIAlertView alloc] initWithTitle:@"maybe you should focus on\nyour 99 other habits"
-                                                                       message:nil
-                                                                      delegate:self
-                                                             cancelButtonTitle:@"fine"
-                                                             otherButtonTitles:nil];
-                [self displayAlert:tooManyAlert];
+                UIAlertController *tooManyController = [UIAlertController alertControllerWithTitle:@"maybe you should focus on\nyour 99 other habits"
+                                                                                           message:nil
+                                                                                    preferredStyle:UIAlertControllerStyleAlert
+                                                        ];
+                [tooManyController addAction:okAction];
+                
+                [self presentViewController:tooManyController
+                                   animated:YES
+                                 completion:nil
+                 ];
                 
                 return 2;
                 break;
@@ -199,11 +213,16 @@
             
             case 3: //name is too long to be displayed
             {
-                UIAlertView *tooLongAlert = [[UIAlertView alloc] initWithTitle:@"that name is too long"
-                                                                           message:nil delegate:self
-                                                                 cancelButtonTitle:@"ok"
-                                                                 otherButtonTitles:nil];
-                [self displayAlert:tooLongAlert];
+                UIAlertController *tooLongController = [UIAlertController alertControllerWithTitle:@"that name is too long"
+                                                                                           message:nil
+                                                                                    preferredStyle:UIAlertControllerStyleAlert
+                                                        ];
+                [tooLongController addAction:okAction];
+                
+                [self presentViewController:tooLongController
+                                   animated:YES
+                                 completion:nil
+                 ];
 
                 return 3;
                 break;
@@ -229,11 +248,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)displayAlert:(UIAlertView *)alert
-{
-    [alert show];
 }
 
 @end

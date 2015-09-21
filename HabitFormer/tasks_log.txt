@@ -153,6 +153,9 @@
 09/18/15:   must have changed the look at some point in the last few days: looks pretty good past charlie!
             fixed a few bugs for iOS 9
 
+09/20/15:   more fixes for iOS 9
+            added a launch screen storyboard because that's required now apparently
+
 
 TODO:   add unit tests for everything else
 TODO:   change name of NewHabitViewController to HabitViewController

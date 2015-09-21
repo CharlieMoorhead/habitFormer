@@ -390,7 +390,7 @@
     NSString *habitKey = cell.habitLabel.text;
     Habit *h = [self.habits objectForKey:habitKey];
     [self.habitDB completeHabit:h andExtendStreak:[self shouldExtendStreak:h]];
-    [self displayMessageBar:[NSString stringWithFormat:@"streak for %@: %ld", h.name, (long)h.streak]];
+    [self displayMessageBar:[NSString stringWithFormat:@"days in a row for '%@': %ld", h.name, (long)h.streak]];
     
     [self.tableView beginUpdates];
     [self.habitsToView removeObjectAtIndex:section];
@@ -402,14 +402,14 @@
 
 - (BOOL)shouldViewHabit: (Habit *)habit
 {
-    NSDate *cutoffDate = [NSDate date];
+    NSDate *cutoffDate;
     
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-    NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
+    NSUInteger preservedComponents = (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay);
     cutoffDate = [calendar dateFromComponents:[calendar components:preservedComponents fromDate:[NSDate date]]];
     
-    NSDateComponents *currentTime = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
-    NSDateComponents *cutoffTime = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:self.resetTime];
+    NSDateComponents *currentTime = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:[NSDate date]];
+    NSDateComponents *cutoffTime = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:self.resetTime];
     
     
     //if it is currently earlier in the day than the cutoff time, remove a day from the cutoff date
@@ -438,14 +438,14 @@
 
 - (BOOL)shouldExtendStreak: (Habit *)habit
 {
-    NSDate *cutoffDate = [NSDate date];
+    NSDate *cutoffDate;
     
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-    NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
+    NSUInteger preservedComponents = (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay);
     cutoffDate = [calendar dateFromComponents:[calendar components:preservedComponents fromDate:[NSDate date]]];
     
-    NSDateComponents *currentTime = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
-    NSDateComponents *cutoffTime = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:self.resetTime];
+    NSDateComponents *currentTime = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:[NSDate date]];
+    NSDateComponents *cutoffTime = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:self.resetTime];
     
     
     //if it is currently earlier in the day than the cutoff time, remove a day from the cutoff date
@@ -562,7 +562,7 @@
     //add settings button on nav bar
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc]
                                        initWithTitle:@"\u2699"
-                                       style:UIBarButtonItemStyleBordered
+                                       style:UIBarButtonItemStylePlain
                                        target:self
                                        action:@selector(pushToSettingsView)];
     [settingsButton setTitleTextAttributes:@{

@@ -18,6 +18,7 @@
 		CB2C1897194140AD0013628B /* NewHabitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB2C1896194140AD0013628B /* NewHabitViewController.m */; };
 		CB2F970A1B5D0CF600632DEF /* HabitDB.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC4711C1B255D7A001840E7 /* HabitDB.m */; };
 		CB2F970B1B5D11EF00632DEF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBEB2A35193E3D5C006BD85E /* MainViewController.m */; };
+		CB34ED171BAFFEB80029E788 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB34ED161BAFFEB80029E788 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
 		CB36B2D31B662D330037B4EF /* SettingsViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB36B2D21B662D330037B4EF /* SettingsViewControllerTests.m */; };
 		CB525CF31B50E2660061DD19 /* HabitDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB525CF21B50E2660061DD19 /* HabitDBTests.m */; };
 		CB61096619DB648F00734843 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB61096519DB648F00734843 /* SettingsViewController.m */; };
@@ -69,6 +70,7 @@
 		CB1575921B4FC30E00BBA908 /* HabitCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitCellTests.m; sourceTree = "<group>"; };
 		CB2C1895194140AD0013628B /* NewHabitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHabitViewController.h; sourceTree = "<group>"; };
 		CB2C1896194140AD0013628B /* NewHabitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NewHabitViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CB34ED161BAFFEB80029E788 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		CB36B2D21B662D330037B4EF /* SettingsViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewControllerTests.m; sourceTree = "<group>"; };
 		CB525CF21B50E2660061DD19 /* HabitDBTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitDBTests.m; sourceTree = "<group>"; };
 		CB61096419DB648F00734843 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 		CBEB29F7193E3CD0006BD85E = {
 			isa = PBXGroup;
 			children = (
+				CB34ED161BAFFEB80029E788 /* Launch Screen.storyboard */,
 				CBEB2A09193E3CD0006BD85E /* HabitFormer */,
 				CBEB2A22193E3CD0006BD85E /* HabitFormerTests */,
 				CBEB2A02193E3CD0006BD85E /* Frameworks */,
@@ -373,6 +376,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB34ED171BAFFEB80029E788 /* Launch Screen.storyboard in Resources */,
 				CB01A36D1BA69E6000BB9237 /* tasks_log.txt in Resources */,
 				CBA0E3F81B0F467C00D125C4 /* habits.db in Resources */,
 				CBC470971B52547500CEB014 /* habits_test.db in Resources */,
@@ -508,7 +512,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HabitFormer/HabitFormer-Prefix.pch";
 				INFOPLIST_FILE = "HabitFormer/HabitFormer-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.charliemoorhead.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -638,7 +642,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HabitFormer/HabitFormer-Prefix.pch";
 				INFOPLIST_FILE = "HabitFormer/HabitFormer-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.charliemoorhead.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -657,7 +661,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HabitFormer/HabitFormer-Prefix.pch";
 				INFOPLIST_FILE = "HabitFormer/HabitFormer-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.charliemoorhead.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

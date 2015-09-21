@@ -16,7 +16,7 @@
     NSDate *fromDate;
     NSDate *toDate;
     
-    NSUInteger unitFlags = NSDayCalendarUnit;
+    NSUInteger unitFlags = NSCalendarUnitDay;
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
     
     [calendar rangeOfUnit:unitFlags startDate:&fromDate interval:nil forDate:date1];
