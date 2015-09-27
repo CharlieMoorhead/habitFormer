@@ -257,7 +257,7 @@
     NSString *query0;
     NSString *query1;
     NSArray *names = @[@"Meditate", @"Exercise", @"Take Medicine", @"Go to sleep early"];
-    NSArray *dates = @[@"2015-09-20 10:00", @"2015-09-20 10:00", @"2015-09-19 10:36", @"2015-09-13 21:25"];
+    NSArray *dates = @[@"2015-09-22 10:00", @"2015-09-22 10:00", @"2015-09-21 10:36", @"2015-09-13 21:25"];
     NSArray *streaks = @[@5, @12, @3, @3];
     
    

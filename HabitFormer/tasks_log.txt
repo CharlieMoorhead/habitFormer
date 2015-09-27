@@ -156,6 +156,8 @@
 09/20/15:   more fixes for iOS 9
             added a launch screen storyboard because that's required now apparently
 
+09/26/15:   modified the launch screen storyboard
+
 
 TODO:   add unit tests for everything else
 TODO:   change name of NewHabitViewController to HabitViewController
