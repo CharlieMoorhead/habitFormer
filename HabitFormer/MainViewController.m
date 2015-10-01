@@ -276,7 +276,8 @@
 
 - (void)deleteHabit: (id)sender
 {
-    HabitCell *cell = (HabitCell *)[[sender superview] superview];
+    UIButton *deleteButton = (UIButton *)sender;
+    HabitCell *cell = (HabitCell *)[[deleteButton superview] superview];
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSInteger section = indexPath.section;
     NSString *habitKey = cell.habitLabel.text;
@@ -304,6 +305,11 @@
     
     [deleteConfirmAlert addAction:cancelAction];
     [deleteConfirmAlert addAction:deleteAction];
+    
+    //following required for iPad
+    deleteConfirmAlert.popoverPresentationController.sourceView = cell;
+    deleteConfirmAlert.popoverPresentationController.sourceRect = deleteButton.frame;
+    //done with iPad code
     
     [self presentViewController:deleteConfirmAlert animated:YES completion:nil];
     //end confirm deleting

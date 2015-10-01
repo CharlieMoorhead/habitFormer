@@ -188,17 +188,15 @@
 			name = "New Habit View";
 			sourceTree = "<group>";
 		};
-		CBB4E2AE1B5CE71C0016FE0C /* Classes */ = {
+		CBB4E2AE1B5CE71C0016FE0C /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				CBEB2A33193E3D5C006BD85E /* Habit.m */,
-				CBEB2A32193E3D5C006BD85E /* Habit.h */,
 				CB111CE01AA5F3530018A202 /* DBManager.h */,
 				CB111CE11AA5F3530018A202 /* DBManager.m */,
 				CBC4711B1B255D7A001840E7 /* HabitDB.h */,
 				CBC4711C1B255D7A001840E7 /* HabitDB.m */,
 			);
-			name = Classes;
+			name = Database;
 			sourceTree = "<group>";
 		};
 		CBB4E2AF1B5CE73D0016FE0C /* App Delegate */ = {
@@ -250,8 +248,10 @@
 				CBC470941B5250F800CEB014 /* habits_test.db */,
 				CBA0E3F71B0F467C00D125C4 /* habits.db */,
 				CBEB2A15193E3CD0006BD85E /* Images.xcassets */,
+				CBEB2A32193E3D5C006BD85E /* Habit.h */,
+				CBEB2A33193E3D5C006BD85E /* Habit.m */,
 				CBB4E2AF1B5CE73D0016FE0C /* App Delegate */,
-				CBB4E2AE1B5CE71C0016FE0C /* Classes */,
+				CBB4E2AE1B5CE71C0016FE0C /* Database */,
 				CBB4E2AA1B5CE6940016FE0C /* Main View */,
 				CBB4E2AD1B5CE6F40016FE0C /* New Habit View */,
 				CBB4E2AC1B5CE6CD0016FE0C /* Settings View */,
