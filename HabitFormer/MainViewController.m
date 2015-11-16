@@ -567,7 +567,7 @@
     
     //add settings button on nav bar
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc]
-                                       initWithTitle:@"\u2699"
+                                       initWithTitle:@"\u2699\ufE0E" // the '\uFEOE' makes sure the gear is NOT displayed as an emoji
                                        style:UIBarButtonItemStylePlain
                                        target:self
                                        action:@selector(pushToSettingsView)];
