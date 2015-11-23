@@ -15,5 +15,6 @@
 @property (nonatomic, strong) UILabel *lastCompletionLabel;
 @property (nonatomic, strong) UIButton *doneButton;
 @property (nonatomic, strong) UIButton *deleteButton;
+@property (nonatomic, strong) UIButton *editButton;
 
 @end

@@ -14,6 +14,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
     if (self)
     {
         //add habit label
@@ -93,11 +94,9 @@
         self.doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.doneButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.doneButton setTitle:@"done" forState:UIControlStateNormal];
-        //[self.doneButton setBackgroundColor:[UIColor colorWithRed:0/255.0f green:150/255.0f blue:43/255.0f alpha:1.0f]];
         [self.doneButton setBackgroundColor:buttonColor];
         [self.doneButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
-        //[self.doneButton.titleLabel setTextColor:[UIColor colorWithRed:30/255.0f green:198/255.0f blue:20/255.0f alpha:1.0f]];
-        [self.doneButton.titleLabel setTextColor:[UIColor whiteColor]];
+        [self.doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.contentView addSubview:self.doneButton];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.doneButton
                                                                      attribute:NSLayoutAttributeWidth
@@ -137,11 +136,9 @@
         self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.deleteButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.deleteButton setTitle:@"delete" forState:UIControlStateNormal];
-        //[self.deleteButton setBackgroundColor:[UIColor colorWithRed:147/255.0f green:18/255.0f blue:0/255.0f alpha:1.0f]];
         [self.deleteButton setBackgroundColor:buttonColor];
         [self.deleteButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
-        //[self.deleteButton.titleLabel setTextColor:[UIColor colorWithRed:30/255.0f green:198/255.0f blue:20/255.0f alpha:1.0f]];
-        [self.deleteButton.titleLabel setTextColor:[UIColor whiteColor]];
+        [self.deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.contentView addSubview:self.deleteButton];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.deleteButton
                                                                      attribute:NSLayoutAttributeWidth
@@ -175,6 +172,32 @@
                                                                     multiplier:1.0f
                                                                       constant:0.0f
                                          ]];//13
+        //delete button added
+        
+        //add edit button
+        self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.editButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.editButton setTitle:@">" forState:UIControlStateNormal];
+        [self.editButton setTitleColor:buttonColor forState:UIControlStateNormal];
+        [self.editButton.titleLabel setFont:[UIFont systemFontOfSize:25]];
+        [self.contentView addSubview:self.editButton];
+        [self.contentView sendSubviewToBack:self.editButton];
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.editButton
+                                                                     attribute:NSLayoutAttributeRight
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.contentView
+                                                                     attribute:NSLayoutAttributeRight
+                                                                    multiplier:1.0f
+                                                                      constant:0.0f
+                                         ]];//14
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.editButton
+                                                                     attribute:NSLayoutAttributeCenterY
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.contentView
+                                                                     attribute:NSLayoutAttributeCenterY
+                                                                    multiplier:1.0f
+                                                                      constant:0.0
+                                         ]];//15
     }
     return self;
 }
@@ -211,6 +234,7 @@
 
 - (void)layoutSubviews
 {
+
     if(self.editing)
     {
         [self.daysAgoLabel setAlpha:0];
@@ -227,6 +251,7 @@
 
 -(void)updateConstraints
 {
+    
     if (self.contentView.constraints.count > 12)
     {
         NSLayoutConstraint *doneConstraint = (NSLayoutConstraint *)self.contentView.constraints[8];

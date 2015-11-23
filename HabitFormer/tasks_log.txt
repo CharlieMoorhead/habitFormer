@@ -158,6 +158,8 @@
 
 09/26/15:   modified the launch screen storyboard
 
+11/22/15:   implemented a daily reminder notification
+
 
 TODO:   add unit tests for everything else
 TODO:   change name of NewHabitViewController to HabitViewController

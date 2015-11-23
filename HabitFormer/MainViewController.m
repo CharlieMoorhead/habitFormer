@@ -11,6 +11,7 @@
 #import "Habit.h"
 #import "HabitCell.h"
 #import "HabitDB.h"
+#import "ReminderViewController.h"
 
 
 @interface MainViewController ()
@@ -25,6 +26,12 @@
     // Do any additional setup after loading the view.
     
     //NSLog(NSHomeDirectory()); //uncomment to find the iphone simulator data path
+    
+    //TESTING FOR LOCALNOTIFICATIONS
+    UIUserNotificationType types = UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
+    UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+    //TESTING FOR LOCALNOTIFICATIONS
     
     //creating table view
     self.tableView = [[UITableView alloc] init];
@@ -227,6 +234,9 @@
     //add 'delete' button
     [cell.deleteButton addTarget:self action:@selector(deleteHabit:) forControlEvents:UIControlEventTouchDown];
     //'delete' button
+    
+    //add 'edit' button
+    [cell.editButton addTarget:self action:@selector(pushToReminderView:) forControlEvents:UIControlEventTouchDown];
     
     //add days ago label
     if ([habit.lastCompletion compare:[DateUtils startingDate]] == NSOrderedSame)
@@ -510,6 +520,18 @@
 {
     SettingsViewController *settingsView = [[SettingsViewController alloc] init];
     [self.navigationController pushViewController:settingsView animated:YES];
+}
+
+//reminderView: push to the reminder view controller
+- (void)pushToReminderView: (id)sender
+{
+    UIButton *editButton = (UIButton *)sender;
+    HabitCell *cell = (HabitCell *)[[editButton superview] superview];
+    Habit *habit = [self.habits objectForKey:cell.habitLabel.text];
+    
+    ReminderViewController *reminderView = [[ReminderViewController alloc] init];
+    reminderView.habit = habit;
+    [self.navigationController pushViewController:reminderView animated:YES];
 }
 
 - (NSString *)pathForDataFile

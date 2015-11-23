@@ -11,6 +11,7 @@
 		CB01A36D1BA69E6000BB9237 /* tasks_log.txt in Resources */ = {isa = PBXBuildFile; fileRef = CB01A36C1BA69E6000BB9237 /* tasks_log.txt */; };
 		CB0AB0371B4F8E41004172D0 /* DateUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB0AB0361B4F8E41004172D0 /* DateUtilsTests.m */; };
 		CB0AB03A1B4F9792004172D0 /* Colors.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB0AB0391B4F9792004172D0 /* Colors.mm */; };
+		CB0C3AE81C02EF6D0026C095 /* ReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB0C3AE71C02EF6D0026C095 /* ReminderViewController.m */; };
 		CB111CDF1AA5F3070018A202 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CB111CDE1AA5F3070018A202 /* libsqlite3.dylib */; };
 		CB111CE21AA5F3530018A202 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CB111CE11AA5F3530018A202 /* DBManager.m */; };
 		CB1575911B4FBAE900BBA908 /* HabitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1575901B4FBAE900BBA908 /* HabitTests.m */; };
@@ -18,7 +19,7 @@
 		CB2C1897194140AD0013628B /* NewHabitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB2C1896194140AD0013628B /* NewHabitViewController.m */; };
 		CB2F970A1B5D0CF600632DEF /* HabitDB.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC4711C1B255D7A001840E7 /* HabitDB.m */; };
 		CB2F970B1B5D11EF00632DEF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBEB2A35193E3D5C006BD85E /* MainViewController.m */; };
-		CB34ED171BAFFEB80029E788 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB34ED161BAFFEB80029E788 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
+		CB34ED171BAFFEB80029E788 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB34ED161BAFFEB80029E788 /* Launch Screen.storyboard */; };
 		CB36B2D31B662D330037B4EF /* SettingsViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB36B2D21B662D330037B4EF /* SettingsViewControllerTests.m */; };
 		CB525CF31B50E2660061DD19 /* HabitDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB525CF21B50E2660061DD19 /* HabitDBTests.m */; };
 		CB61096619DB648F00734843 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB61096519DB648F00734843 /* SettingsViewController.m */; };
@@ -63,6 +64,8 @@
 		CB0AB0361B4F8E41004172D0 /* DateUtilsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DateUtilsTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CB0AB0381B4F9792004172D0 /* Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
 		CB0AB0391B4F9792004172D0 /* Colors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Colors.mm; sourceTree = "<group>"; };
+		CB0C3AE61C02EF6D0026C095 /* ReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderViewController.h; sourceTree = "<group>"; };
+		CB0C3AE71C02EF6D0026C095 /* ReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderViewController.m; sourceTree = "<group>"; };
 		CB111CDE1AA5F3070018A202 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		CB111CE01AA5F3530018A202 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		CB111CE11AA5F3530018A202 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
@@ -257,6 +260,8 @@
 				CBB4E2AC1B5CE6CD0016FE0C /* Settings View */,
 				CBEB2A0A193E3CD0006BD85E /* Supporting Files */,
 				CBB4E2AB1B5CE6B30016FE0C /* Utilities */,
+				CB0C3AE61C02EF6D0026C095 /* ReminderViewController.h */,
+				CB0C3AE71C02EF6D0026C095 /* ReminderViewController.m */,
 			);
 			path = HabitFormer;
 			sourceTree = "<group>";
@@ -409,6 +414,7 @@
 				CBB3631C19DE092D00FBCA5E /* DateUtils.m in Sources */,
 				CB61096619DB648F00734843 /* SettingsViewController.m in Sources */,
 				CB0AB03A1B4F9792004172D0 /* Colors.mm in Sources */,
+				CB0C3AE81C02EF6D0026C095 /* ReminderViewController.m in Sources */,
 				CBEB2A10193E3CD0006BD85E /* main.m in Sources */,
 				CB00EC4D1A7E184300C2D920 /* HabitCell.m in Sources */,
 				CBEB2A37193E3D5C006BD85E /* MainViewController.m in Sources */,
