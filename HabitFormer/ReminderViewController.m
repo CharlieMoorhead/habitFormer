@@ -174,12 +174,9 @@
 {
     if(self.toggle.on)
     {
-        NSArray *s = [[UIApplication sharedApplication] scheduledLocalNotifications];
         [self cancelNotification:[self.reminder alertBody]];
         [self.reminder setFireDate:self.datePicker.date];
         [[UIApplication sharedApplication] scheduleLocalNotification:self.reminder];
-        s = [[UIApplication sharedApplication] scheduledLocalNotifications];
-        int i = 1;
     }
 }
 
